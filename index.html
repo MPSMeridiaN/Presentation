@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control & Instrumentation (C&I) - EGAT Maintenance</title>
     
-    <!-- โหลด Tailwind CSS -->
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- กำหนด Tailwind Config เพื่อเพิ่มสี EGAT Blue และ EGAT Yellow/Gold -->
+    <!-- Define Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -16,23 +16,21 @@
                     colors: {
                         'egat-blue': '#004d99',   /* สีน้ำเงินเข้มหลักของ EGAT */
                         'egat-yellow': '#FFD700', /* สีเหลือง/ทอง (Accent) ของ EGAT */
-                        'gemini-purple': '#5A189A', /* สีม่วงสำหรับ Gemini */
-                        'solution-green': '#10b981', /* สีเขียวสำหรับเฉลย */
                     },
                 }
             }
         }
     </script>
 
-    <!-- กำหนด Font Inter และการตั้งค่าพื้นฐาน พร้อมปรับ Minimal Style -->
+    <!-- Base Styles: Font, Background, Transitions -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb; /* สีพื้นหลังอ่อนๆ เพื่อความสบายตา */
+            background-color: #f7f9fb;
         }
 
-        /* Custom scrollbar style (Optional but good for aesthetics) */
+        /* Custom scrollbar style */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -50,50 +48,14 @@
             background: #999;
         }
 
-        /* เพิ่มความโปร่งใสสำหรับการเปลี่ยนเนื้อหา (Optional, but smoother) */
         .content-section {
             transition: opacity 0.3s ease-in-out;
-        }
-        
-        .loading-animation {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #004d99; /* EGAT Blue */
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .solution-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
-            padding: 0 1rem; /* Adjust padding to match surrounding container */
-        }
-
-        .solution-content.active {
-            max-height: 1000px; /* Large enough value */
-            padding: 1rem;
         }
     </style>
 
 </head>
 <body class="antialiased">
     
-    <!-- API Key and Config placeholders (Required for Canvas environment) -->
-    <script>
-        // These global variables are provided by the canvas environment
-        const apiKey = "";
-        const apiUrlBase = "https://generativelanguage.googleapis.com/v1beta/models/";
-        const modelName = "gemini-2.5-flash-preview-09-2025";
-    </script>
-
-
     <!-- Header Section -->
     <header class="bg-egat-blue shadow-lg sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4 md:py-5 flex justify-between items-center">
@@ -101,12 +63,9 @@
                 C&I Maintenance Team
             </h1>
             <nav id="main-nav">
-                <!-- เปลี่ยนชื่อเมนูเป็นภาษาอังกฤษ -->
                 <a href="#overview" data-target="overview" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline font-bold">Overview</a>
                 <a href="#details" data-target="details" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Details</a>
                 <a href="#combined_cycle" data-target="combined_cycle" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Combined Cycle</a>
-                <!-- เมนูใหม่: Simulation -->
-                <a href="#simulation" data-target="simulation" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Simulation</a>
             </nav>
         </div>
     </header>
@@ -114,10 +73,7 @@
     <!-- Main Content Section -->
     <main class="container mx-auto px-4 py-10 md:py-16">
         
-        <!-- ========================================================================================= -->
-        <!-- 1. Overview Section -->
-        <!-- ... (Unchanged content for Overview) ... -->
-        <!-- ========================================================================================= -->
+        <!-- 1. Overview Section (Unchanged) -->
         <section id="overview" class="content-section mb-16">
             <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
@@ -133,7 +89,7 @@
                     </p>
                 </div>
 
-                <!-- Key Mission Points in a Grid (h4 เป็นภาษาอังกฤษ) -->
+                <!-- Key Mission Points in a Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     
                     <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
@@ -166,10 +122,7 @@
         </section>
 
 
-        <!-- ========================================================================================= -->
-        <!-- 2. Detail Cards Section -->
-        <!-- ... (Unchanged content for Details) ... -->
-        <!-- ========================================================================================= -->
+        <!-- 2. Detail Cards Section (Unchanged) -->
         <section id="details" class="content-section hidden mb-16">
             <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
@@ -181,7 +134,7 @@
                     คลิกที่หัวข้อด้านล่างเพื่อดูรายละเอียดเชิงลึกเกี่ยวกับขอบเขตความรับผิดชอบและหน้าที่หลักของทีม C&I
                 </p>
 
-                <!-- Detail Cards Grid (h3 เป็นภาษาอังกฤษ) -->
+                <!-- Detail Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
                     <!-- Card 1: Introduction -->
@@ -242,10 +195,7 @@
             </div>
         </section>
         
-        <!-- ========================================================================================= -->
-        <!-- 3. Combined Cycle Section: เพิ่ม Detail Cards สำหรับเนื้อหาเชิงลึก -->
-        <!-- ... (Unchanged content for Combined Cycle) ... -->
-        <!-- ========================================================================================= -->
+        <!-- 3. Combined Cycle Section -->
         <section id="combined_cycle" class="content-section hidden mb-16">
             <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
@@ -259,38 +209,37 @@
                     </p>
                 </div>
 
-                <!-- Foundation and Cycle Overview (h3/h4 เป็นภาษาอังกฤษ) -->
+                <!-- Foundation and Cycle Overview -->
                 <div class="mb-10 p-6 bg-egat-blue/5 rounded-lg border border-egat-blue/10">
                     <h3 class="text-2xl font-bold text-egat-blue mb-3 text-center">Fundamental Principles and Operating Cycles</h3>
-                    <p class="text-gray-700 mb-4 text-center">Combined Cycle คือการรวม **วัฏจักรเบรย์ตัน (Brayton Cycle)** จากกังหันก๊าซ เข้ากับ **วัฏจักรแรงคิน (Rankine Cycle)** จากกังหันไอน้ำ เพื่อนำความร้อนเหลือทิ้งมาใช้ซ้ำ</p>
+                    <p class="text-gray-700 mb-4 text-center">Combined Cycle คือการรวม วัฏจักรเบรย์ตัน (Brayton Cycle) จากกังหันก๊าซ เข้ากับ วัฏจักรแรงคิน (Rankine Cycle) จากกังหันไอน้ำ เพื่อนำความร้อนเหลือทิ้งมาใช้ซ้ำ</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                            <h4 class="font-semibold text-xl text-gray-800 mb-1 flex items-center">
-                                <span class="text-egat-yellow text-2xl mr-2">1.</span> Brayton Cycle (Gas Turbine)
+                        <!-- Brayton Cycle Card (Now Clickable) -->
+                        <div class="detail-card bg-white p-6 rounded-lg shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_brayton_cycle">
+                            <h4 class="font-semibold text-xl text-gray-800 mb-2 flex items-center">
+                                <span class="text-egat-yellow text-2xl mr-2 font-extrabold">1.</span> Brayton Cycle (Gas Turbine)
                             </h4>
-                            <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
-                                <li><strong>การผลิต:</strong> เผาไหม้ก๊าซเพื่อขับกังหัน (Gas Turbine) ผลิตไฟฟ้ารอบแรก</li>
-                                <li><strong>ผลลัพธ์:</strong> ได้ก๊าซร้อน (ประมาณ 550 - 650°C) ซึ่งถูกส่งต่อไปยัง HRSG</li>
-                            </ul>
+                            <p class="text-sm text-gray-600 mb-2">เผาไหม้ก๊าซเพื่อขับกังหัน (Gas Turbine) ผลิตไฟฟ้ารอบแรก</p>
+                            <p class="text-sm text-egat-blue font-medium">คลิกเพื่อดูบทบาท C&I ในวัฏจักรเบรย์ตัน...</p>
                         </div>
-                        <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                            <h4 class="font-semibold text-xl text-gray-800 mb-1 flex items-center">
-                                <span class="text-egat-yellow text-2xl mr-2">2.</span> Rankine Cycle (Steam Turbine)
+
+                        <!-- Rankine Cycle Card (Now Clickable) -->
+                        <div class="detail-card bg-white p-6 rounded-lg shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_rankine_cycle">
+                            <h4 class="font-semibold text-xl text-gray-800 mb-2 flex items-center">
+                                <span class="text-egat-yellow text-2xl mr-2 font-extrabold">2.</span> Rankine Cycle (Steam Turbine)
                             </h4>
-                            <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
-                                <li><strong>การผลิต:</strong> นำความร้อนจากก๊าซไอเสียมาผลิตไอน้ำแรงดันสูง (HRSG)</li>
-                                <li><strong>ผลลัพธ์:</strong> ไอน้ำขับกังหันไอน้ำ (Steam Turbine) ผลิตไฟฟ้ารอบที่สอง</li>
-                            </ul>
+                            <p class="text-sm text-gray-600 mb-2">นำความร้อนจากไอเสียมาผลิตไอน้ำ (HRSG) ขับกังหันไอน้ำ</p>
+                            <p class="text-sm text-egat-blue font-medium">คลิกเพื่อดูบทบาท C&I ในวัฏจักรแรงคิน...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- NEW: C&I Detail Cards for Combined Cycle (h3 เป็นภาษาอังกฤษ) -->
+                <!-- C&I Detail Cards for Combined Cycle -->
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">In-Depth Details (Click for C&I Role)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     
-                    <!-- Card CC-1: Gas Turbine & Combustion -->
+                    <!-- Card CC-1: Gas Turbine & Combustion (Keep this card for the physical component details) -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_gasturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔥</span>
@@ -319,70 +268,42 @@
 
                 </div>
                 
-                <!-- C&I Roles Grid (h3/h4 เป็นภาษาอังกฤษ) -->
+                <!-- C&I Roles Grid: MODIFIED TO DETAIL-CARDS -->
                 <div class="mt-12">
                     <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Central Control Systems</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
-                        <div class="p-4 rounded-lg bg-gray-50 border border-egat-blue/20">
-                            <h4 class="font-semibold text-lg text-gray-800">DCS</h4>
-                            <p class="text-sm text-gray-600">ควบคุมรวมทั้งหมด</p>
+                        
+                        <!-- DCS Card -->
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_dcs">
+                            <span class="text-3xl text-egat-blue block mb-1">🖥️</span>
+                            <h4 class="font-semibold text-lg text-gray-800">DCS (Distributed Control System)</h4>
+                            <p class="text-sm text-gray-600">ควบคุมรวม, แสดงผล, และบริหารจัดการการผลิต</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-gray-50 border border-egat-blue/20">
-                            <h4 class="font-semibold text-lg text-gray-800">BMS</h4>
-                            <p class="text-sm text-gray-600">จัดการการจุดระเบิด</p>
+                        
+                        <!-- BMS Card -->
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_bms">
+                            <span class="text-3xl text-egat-blue block mb-1">🚨</span>
+                            <h4 class="font-semibold text-lg text-gray-800">BMS (Burner Management System)</h4>
+                            <p class="text-sm text-gray-600">จัดการการจุดระเบิดและการดับฉุกเฉิน</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-gray-50 border border-egat-blue/20">
-                            <h4 class="font-semibold text-lg text-gray-800">Vibration System</h4>
-                            <p class="text-sm text-gray-600">ตรวจจับการสั่น</p>
+                        
+                        <!-- Vibration System Card -->
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_vibration">
+                            <span class="text-3xl text-egat-blue block mb-1">⚙️</span>
+                            <h4 class="font-semibold text-lg text-gray-800">Vibration Monitoring System</h4>
+                            <p class="text-sm text-gray-600">ตรวจวัดและป้องกันความเสียหายจากแรงสั่นสะเทือน</p>
                         </div>
-                        <div class="p-4 rounded-lg bg-gray-50 border border-egat-blue/20">
-                            <h4 class="font-semibold text-lg text-gray-800">CEMS</h4>
-                            <p class="text-sm text-gray-600">ตรวจสอบมลพิษ</p>
+                        
+                        <!-- CEMS Card -->
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="cc_cems">
+                            <span class="text-3xl text-egat-blue block mb-1">🧪</span>
+                            <h4 class="font-semibold text-lg text-gray-800">CEMS (Continuous Emission Monitoring)</h4>
+                            <p class="text-sm text-gray-600">ตรวจสอบมลพิษจากปล่องอย่างต่อเนื่อง</p>
                         </div>
+                        
                     </div>
                 </div>
 
-            </div>
-        </section>
-        
-        <!-- ========================================================================================= -->
-        <!-- 4. Simulation Section (New) -->
-        <!-- ========================================================================================= -->
-        <section id="simulation" class="content-section hidden mb-16">
-            <!-- Card Container Standard -->
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
-                
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
-                        Simulation Scenario Generator ✨
-                    </h2>
-                    <p class="text-lg text-gray-600 max-w-4xl mx-auto border-b border-egat-yellow pb-4 mb-8">
-                        ใช้ AI ในการสร้างสถานการณ์การฝึกซ้อมการซ่อมบำรุง C&I ที่ซับซ้อนและสมจริงสำหรับทีมงานของคุณ!
-                    </p>
-                </div>
-
-                <div class="flex flex-col items-center space-y-4 mb-8">
-                    <button 
-                        id="generate-scenario-btn" 
-                        onclick="generateSimulationIdea()"
-                        class="px-8 py-3 bg-gemini-purple text-white font-bold rounded-full shadow-lg hover:bg-gemini-purple/90 transition duration-300 transform hover:scale-[1.02] active:scale-95 flex items-center justify-center disabled:opacity-50"
-                    >
-                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-5 8a5 5 0 0110 0h-2a3 3 0 10-6 0H5z"></path></svg>
-                        สร้างสถานการณ์จำลอง (Complex Scenario)
-                    </button>
-                    <div id="simulation-loading" class="hidden flex items-center text-egat-blue">
-                        <div class="loading-animation mr-3"></div>
-                        กำลังสร้างสถานการณ์... โปรดรอสักครู่
-                    </div>
-                </div>
-
-                <!-- Result Display Area -->
-                <div id="simulation-result-container" class="mt-8 border border-gray-200 rounded-xl p-6 bg-white shadow-inner min-h-[150px]">
-                    <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">สถานการณ์การฝึกซ้อมที่สร้างโดย AI:</h3>
-                    <div id="simulation-result" class="text-gray-700 whitespace-pre-wrap">
-                        คลิกปุ่มด้านบนเพื่อสร้างสถานการณ์การซ่อมบำรุง C&I แบบสมจริงสำหรับโรงไฟฟ้าพลังความร้อนร่วม
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -405,42 +326,6 @@
                     <!-- Detail content will be injected here -->
                 </div>
                 
-                <!-- Divider for AI Section -->
-                <hr class="my-6 border-t border-gray-200">
-
-                <!-- AI Technical Assistant Section (NEW) -->
-                <div class="mt-6 p-4 bg-gemini-purple/5 rounded-xl border border-gemini-purple/10">
-                    <h4 class="text-xl font-semibold text-gemini-purple mb-3 flex items-center">
-                        ✨ AI Technical Assistant (ถามข้อมูลเพิ่มเติม)
-                    </h4>
-                    
-                    <input type="text" id="ai-question-input" placeholder="พิมพ์คำถามทางเทคนิคเพิ่มเติมเกี่ยวกับหัวข้อนี้ (เช่น 'Calibration frequency for flow transmitters?')" 
-                           class="w-full p-2 border border-gray-300 rounded-lg focus:ring-egat-blue focus:border-egat-blue transition duration-150 mb-3">
-                    
-                    <button 
-                        id="ask-ai-btn" 
-                        onclick="askAIAssistant()" 
-                        class="px-4 py-2 bg-egat-blue text-white font-semibold rounded-lg shadow-md hover:bg-egat-blue/90 transition duration-300 disabled:opacity-50"
-                        disabled
-                    >
-                        ค้นหาคำตอบด้วย AI
-                    </button>
-
-                    <!-- AI Response Area -->
-                    <div id="ai-response-container" class="mt-4 hidden">
-                        <div id="ai-loading" class="hidden flex items-center text-gemini-purple">
-                            <div class="loading-animation mr-3"></div>
-                            กำลังค้นหาคำตอบ...
-                        </div>
-                        <div id="ai-answer" class="p-3 bg-white border border-gemini-purple/20 rounded-lg text-gray-700">
-                            <!-- AI response will be injected here -->
-                        </div>
-                        <div id="ai-sources" class="mt-2 text-xs text-gray-500">
-                            <!-- Sources will be injected here -->
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Close Button -->
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -454,7 +339,7 @@
     <!-- Detail Content Definitions (Hidden) -->
     <div class="hidden">
         
-        <!-- Detail 1: Introduction (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 1: Introduction (Unchanged) -->
         <div id="detail-content-intro">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Introduction and Organizational Structure</h3>
             <span id="detail-topic-intro" class="hidden">Organizational Structure and Key Responsibilities of C&I Team in Power Plant</span>
@@ -483,7 +368,7 @@
             </section>
         </div>
 
-        <!-- Detail 2: Core Work (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 2: Core Work (Unchanged) -->
         <div id="detail-content-core_work">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Core C&I Functions</h3>
              <span id="detail-topic-core_work" class="hidden">DCS and PLC maintenance in power generation.</span>
@@ -508,7 +393,7 @@
             </section>
         </div>
 
-        <!-- Detail 3: System Overview (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 3: System Overview (Unchanged) -->
         <div id="detail-content-system_overview">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Control and Instrumentation Systems</h3>
              <span id="detail-topic-system_overview" class="hidden">Power Plant Control Systems (DCS/PLC, Sensors, and Safety Systems)</span>
@@ -528,7 +413,7 @@
             </section>
         </div>
         
-        <!-- Detail 4: Maintenance (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 4: Maintenance (Unchanged) -->
         <div id="detail-content-maintenance">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Maintenance and Repair</h3>
             <span id="detail-topic-maintenance" class="hidden">Preventive and Corrective Maintenance for C&I systems including calibration standards</span>
@@ -553,7 +438,7 @@
             </section>
         </div>
 
-        <!-- Detail 5: Safety & Compliance (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 5: Safety & Compliance (Unchanged) -->
         <div id="detail-content-safety">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Safety and Compliance</h3>
             <span id="detail-topic-safety" class="hidden">Safety standards, compliance, and risk management for C&I systems (e.g., IEC 61511)</span>
@@ -573,7 +458,7 @@
             </section>
         </div>
 
-        <!-- Detail 6: Technology & Future (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- Detail 6: Technology & Future (Unchanged) -->
         <div id="detail-content-future">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Technology and Future</h3>
             <span id="detail-topic-future" class="hidden">Digital Transformation, Cybersecurity, and future trends in C&I maintenance</span>
@@ -593,12 +478,10 @@
             </section>
         </div>
         
-        <!-- ========================================================================================= -->
-        <!-- CC Detail 1: Gas Turbine & Combustion (h3/h4 เป็นภาษาอังกฤษ) -->
-        <!-- ========================================================================================= -->
+        <!-- CC Detail 1: Gas Turbine & Combustion (Unchanged) -->
         <div id="detail-content-cc_gasturbine">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Gas Turbine (GT) and Combustion</h3>
-            <span id="detail-topic-cc_gasturbine" class="hidden">Gas Turbine and Combustion control systems in combined cycle power plants</span>
+            <span id="detail-topic-cc_gasturbine" class="hidden">Gas Turbine and Combustion control systems in combined cycle power plants.</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">GT Principles and Cycle</h4>
                 <p class="text-gray-600">อากาศถูกอัดโดยคอมเพรสเซอร์ (Compressor) ผสมกับเชื้อเพลิงในห้องเผาไหม้ (Combustion Chamber) และก๊าซร้อนที่ได้จะขับเคลื่อนกังหัน (Turbine) เพื่อผลิตไฟฟ้าตามวัฏจักร Brayton การควบคุมอุณหภูมิที่เข้าและออกจากกังหันมีความสำคัญสูงสุดต่ออายุการใช้งาน</p>
@@ -607,9 +490,9 @@
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Control and Protection</h4>
                 <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>**Turbine Control System (TCS):** ควบคุมความเร็ว, โหลด (Load), และอุณหภูมิไอเสีย (Exhaust Temperature) อย่างต่อเนื่อง</li>
-                    <li>**Protection System:** รับผิดชอบระบบป้องกันอันตรายจากการสั่นสะเทือน (Vibration), ความเร็วเกิน (Overspeed), และอุณหภูมิสูงเกิน</li>
-                    <li>**Flame Monitoring:** ติดตั้งและสอบเทียบ UV/IR Detector เพื่อตรวจสอบความเสถียรของการเผาไหม้ (Flame Stability)</li>
+                    <li>Turbine Control System (TCS): ควบคุมความเร็ว, โหลด (Load), และอุณหภูมิไอเสีย (Exhaust Temperature) อย่างต่อเนื่อง</li>
+                    <li>Protection System: รับผิดชอบระบบป้องกันอันตรายจากการสั่นสะเทือน (Vibration), ความเร็วเกิน (Overspeed), และอุณหภูมิสูงเกิน</li>
+                    <li>Flame Monitoring: ติดตั้งและสอบเทียบ UV/IR Detector เพื่อตรวจสอบความเสถียรของการเผาไหม้ (Flame Stability)</li>
                 </ul>
             </section>
 
@@ -619,9 +502,7 @@
             </section>
         </div>
         
-        <!-- ========================================================================================= -->
-        <!-- CC Detail 2: HRSG & Water/Steam (h3/h4 เป็นภาษาอังกฤษ) -->
-        <!-- ========================================================================================= -->
+        <!-- CC Detail 2: HRSG & Water/Steam (Unchanged) -->
         <div id="detail-content-cc_hrsg">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">HRSG (Heat Recovery Steam Generator)</h3>
             <span id="detail-topic-cc_hrsg" class="hidden">Heat Recovery Steam Generator (HRSG) C&I systems and 3-Element Drum Level Control</span>
@@ -633,9 +514,9 @@
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Level and Temperature Control</h4>
                 <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>**Drum Level Control:** รับผิดชอบระบบควบคุมระดับน้ำในหม้อไอน้ำ (Drum) แบบ 3-Element Control ซึ่งมีความสำคัญต่อความปลอดภัยสูงสุด</li>
-                    <li>**Temperature Control:** ควบคุมอุณหภูมิไอน้ำออก (Superheat/Reheat Temperature) โดยใช้ Desuperheater (Spray Water Control) เพื่อป้องกันความเสียหายต่อ ST</li>
-                    <li>**Pressure Control:** ควบคุมแรงดันไอน้ำในแต่ละระดับ (HP, IP, LP) และป้องกันแรงดันเกิน</li>
+                    <li>Drum Level Control: รับผิดชอบระบบควบคุมระดับน้ำในหม้อไอน้ำ (Drum) แบบ 3-Element Control ซึ่งมีความสำคัญต่อความปลอดภัยสูงสุด</li>
+                    <li>Temperature Control: ควบคุมอุณหภูมิไอน้ำออก (Superheat/Reheat Temperature) โดยใช้ Desuperheater (Spray Water Control) เพื่อป้องกันความเสียหายต่อ ST</li>
+                    <li>Pressure Control: ควบคุมแรงดันไอน้ำในแต่ละระดับ (HP, IP, LP) และป้องกันแรงดันเกิน</li>
                 </ul>
             </section>
 
@@ -645,9 +526,7 @@
             </section>
         </div>
         
-        <!-- ========================================================================================= -->
-        <!-- CC Detail 3: Steam Turbine & BOP (h3/h4 เป็นภาษาอังกฤษ) -->
-        <!-- ========================================================================================= -->
+        <!-- CC Detail 3: Steam Turbine & BOP (Unchanged) -->
         <div id="detail-content-cc_steamturbine">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Steam Turbine (ST) and Balance of Plant (BOP)</h3>
             <span id="detail-topic-cc_steamturbine" class="hidden">Steam Turbine, BOP, and Vibration Monitoring C&I systems in combined cycle power plants</span>
@@ -659,10 +538,10 @@
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Monitoring and Protection</h4>
                 <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>**Valve Control:** ควบคุมวาล์วควบคุมหลัก (Governor Valve) และวาล์วฉุกเฉิน (Stop Valve) ที่ใช้ในการ Start-up/Shutdown และควบคุมโหลด</li>
-                    <li>**Vibration & Rotor Position Monitoring:** ดูแลระบบ Proximity Probe สำหรับเฝ้าระวังการสั่นสะเทือน (Vibration) และการเคลื่อนที่ตามแนวแกน (Axial Shift) ของโรเตอร์</li>
-                    <li>**Condenser Vacuum Control:** รักษาและควบคุมสุญญากาศในคอนเดนเซอร์ ซึ่งส่งผลโดยตรงต่อประสิทธิภาพ ST</li>
-                    <li>**BOP System Control:** ควบคุมการทำงานของปั๊มน้ำป้อน (Boiler Feed Pump), พัดลมระบายความร้อน (Cooling Tower Fan), และอุปกรณ์ประกอบอื่นๆ</li>
+                    <li>Valve Control: ควบคุมวาล์วควบคุมหลัก (Governor Valve) และวาล์วฉุกเฉิน (Stop Valve) ที่ใช้ในการ Start-up/Shutdown และควบคุมโหลด</li>
+                    <li>Vibration & Rotor Position Monitoring: ดูแลระบบ Proximity Probe สำหรับเฝ้าระวังการสั่นสะเทือน (Vibration) และการเคลื่อนที่ตามแนวแกน (Axial Shift) ของโรเตอร์</li>
+                    <li>Condenser Vacuum Control: รักษาและควบคุมสุญญากาศในคอนเดนเซอร์ ซึ่งส่งผลโดยตรงต่อประสิทธิภาพ ST</li>
+                    <li>BOP System Control: ควบคุมการทำงานของปั๊มน้ำป้อน (Boiler Feed Pump), พัดลมระบายความร้อน (Cooling Tower Fan), และอุปกรณ์ประกอบอื่นๆ</li>
                 </ul>
             </section>
 
@@ -672,16 +551,143 @@
             </section>
         </div>
 
+        <!-- NEW CC Detail: Brayton Cycle (Unchanged) -->
+        <div id="detail-content-cc_brayton_cycle">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">วัฏจักรเบรย์ตัน (Brayton Cycle) - กังหันก๊าซ</h3>
+            <span id="detail-topic-cc_brayton_cycle" class="hidden">Detailed C&I control on the Brayton Cycle and Gas Turbine Operation</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หลักการทำงาน: 4 กระบวนการหลัก</h4>
+                <ul class="list-decimal pl-5 space-y-2 text-gray-600">
+                    <li>Compression (การอัด): คอมเพรสเซอร์ดูดอากาศภายนอกและอัดจนมีความดันสูง (งาน C&I: ควบคุม Inlet Guide Vane - IGV เพื่อควบคุมปริมาณอากาศ)</li>
+                    <li>Combustion (การเผาไหม้): อากาศความดันสูงผสมกับเชื้อเพลิง (Gas/Oil) ในห้องเผาไหม้ (งาน C&I: ควบคุมอัตราส่วนเชื้อเพลิงต่ออากาศ, ตรวจสอบ Flame Detection)</li>
+                    <li>Expansion (การขยายตัว): ก๊าซร้อนความดันสูงขับเคลื่อนใบกังหันก๊าซ (งาน C&I: เฝ้าระวังอุณหภูมิไอเสีย - T9/T5, ตรวจสอบ Vibration)</li>
+                    <li>Exhaust (การคายความร้อน): ก๊าซไอเสียร้อนถูกส่งออกไปยัง HRSG (ความร้อนที่ใช้ในการขับเคลื่อนวัฏจักร Rankine)</li>
+                </ul>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Focus Points in GT</h4>
+                <p class="text-gray-600">จุดวิกฤตของ C&I คือการควบคุมอุณหภูมิและรอบความเร็วของกังหัน: การควบคุมอุณหภูมิไอเสีย (TET Control) ต้องแม่นยำสูงเพื่อรักษาสมรรถนะของใบกังหัน และการป้องกัน Over-Speed ในทุกกรณี</p>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600 mt-2">
+                    <li>Fuel Gas Control Valve: Actuator ที่ควบคุมปริมาณเชื้อเพลิงเข้าสู่ห้องเผาไหม้ (ต้องมีการสอบเทียบ Flow Calibration)</li>
+                    <li>Flame Detector/Monitor: ระบบที่ต้องมั่นใจว่าการจุดระเบิดมีความเสถียรและดับเมื่อจำเป็น</li>
+                    <li>Auxiliary Systems: การควบคุมระบบหล่อลื่น (Lube Oil System) และระบบยกเพลา (Jacking Oil Pump) ในระหว่างการ Start-up/Shutdown</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- NEW CC Detail: Rankine Cycle (Unchanged) -->
+        <div id="detail-content-cc_rankine_cycle">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">วัฏจักรแรงคิน (Rankine Cycle) - กังหันไอน้ำ</h3>
+            <span id="detail-topic-cc_rankine_cycle" class="hidden">Detailed C&I control on the Rankine Cycle, Steam Turbine, and HRSG Operation</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หลักการทำงาน: 4 กระบวนการหลัก</h4>
+                <ul class="list-decimal pl-5 space-y-2 text-gray-600">
+                    <li>Pumping (การอัด): ปั๊มน้ำป้อน (BFP) อัดน้ำป้อนเข้าสู่ HRSG (งาน C&I: ควบคุมความเร็วปั๊ม, ตรวจสอบแรงดัน)</li>
+                    <li>Boiler/Evaporator (การทำไอน้ำ): น้ำถูกเปลี่ยนเป็นไอน้ำแรงดันสูงโดยรับความร้อนจากไอเสีย GT ใน HRSG (งาน C&I: ระบบ 3-Element Drum Level Control - วิกฤตที่สุด)</li>
+                    <li>Expansion (การขยายตัว): ไอน้ำขับกังหันไอน้ำเพื่อผลิตไฟฟ้า (งาน C&I: ควบคุม Governor Valve, ตรวจสอบ Overspeed และ Vibration)</li>
+                    <li>Condensation (การควบแน่น): ไอน้ำที่ใช้แล้วกลายเป็นน้ำกลับไปใช้ใหม่ในวงจร (งาน C&I: ควบคุมสุญญากาศ - Vacuum Control ในคอนเดนเซอร์)</li>
+                </ul>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Focus Points in ST and BOP</h4>
+                <p class="text-gray-600">ระบบควบคุมที่ซับซ้อนที่สุดคือ HRSG Drum Level Control เพื่อป้องกันความเสี่ยงจากระดับน้ำต่ำ (Overheating) หรือระดับน้ำสูง (Water Carryover) ซึ่งเป็นอันตรายต่อกังหันไอน้ำ</p>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600 mt-2">
+                    <li>Drum Level Control: ใช้การวัดค่า 3 ตัวแปร (ระดับน้ำใน Drum, อัตราการไหลออกของไอน้ำ, อัตราการไหลเข้าของน้ำป้อน) เพื่อให้การควบคุมเสถียร</li>
+                    <li>Desuperheater Control: วาล์วฉีดน้ำควบคุมอุณหภูมิไอน้ำ Superheat/Reheat เพื่อให้อยู่ในขีดจำกัดที่ปลอดภัย</li>
+                    <li>Interlocks and Trip: การตั้งค่า Trip Points ที่แม่นยำสำหรับแรงดัน, อุณหภูมิ และการสั่นสะเทือน เพื่อป้องกันความเสียหายของ ST</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- NEW CC Detail: DCS -->
+        <div id="detail-content-cc_dcs">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">DCS (Distributed Control System)</h3>
+            <span id="detail-topic-cc_dcs" class="hidden">Detailed C&I control on Distributed Control System (DCS) for power plant.</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หน้าที่หลักและสถาปัตยกรรม</h4>
+                <p class="text-gray-600">DCS เป็นระบบควบคุมหลักระดับสูงที่รวมศูนย์การควบคุมโรงไฟฟ้าทั้งหมดไว้ที่ Operator Workstation มีสถาปัตยกรรมแบบกระจายศูนย์ (Distributed) ประกอบด้วย Control Server, Controller (Process Station), และ HMI (Human Machine Interface) </p>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">บทบาทของ C&I ใน DCS Maintenance</h4>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                    <li>Hardware Integrity: การบำรุงรักษา Controller Card, Power Supply, และ Communication Network (Fiber Optic/Ethernet)</li>
+                    <li>Software/Logic Management: การ Backup, Version Control, และการปรับปรุงแก้ไข Control Logic และ Graphics Display (HMI)</li>
+                    <li>Fault Diagnosis: การวิเคราะห์สาเหตุหลักของ Alarm และ Trip ที่มาจาก DCS เพื่อแก้ไขที่ระดับ Field Device หรือ Control Card</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- NEW CC Detail: BMS -->
+        <div id="detail-content-cc_bms">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">BMS (Burner Management System)</h3>
+            <span id="detail-topic-cc_bms" class="hidden">Detailed C&I control on Burner Management System (BMS) for safety in Combined Cycle.</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และความสำคัญ</h4>
+                <p class="text-gray-600">BMS เป็นระบบความปลอดภัยเฉพาะที่ใช้ควบคุมลำดับขั้นตอนการจุดระเบิด (Start-up Sequence) และการดับเพลิง (Shutdown/Trip) ของ Gas Turbine และ Burner ใน HRSG เพื่อป้องกันการสะสมของเชื้อเพลิงที่อาจนำไปสู่การระเบิด เป็นส่วนสำคัญของระบบความปลอดภัยเชิงฟังก์ชัน (Functional Safety)</p>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role in BMS Operations</h4>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                    <li>Sequence Logic Test: การทดสอบลำดับการทำงานของ Interlock และ Permissive ต่างๆ ก่อนการจุดระเบิดตามมาตรฐาน NFPA 85</li>
+                    <li>Flame Scanner Maintenance: การบำรุงรักษาและสอบเทียบ Flame Scanner (UV/IR) ให้สามารถแยกแยะเปลวไฟได้อย่างแม่นยำ</li>
+                    <li>Valve Integrity: การตรวจสอบความสมบูรณ์ของการปิด-เปิดของ Block Valve และ Vent Valve ในระบบเชื้อเพลิง (Fuel Train) เพื่อป้องกันการรั่วไหล</li>
+                </ul>
+            </section>
+        </div>
+        
+        <!-- NEW CC Detail: Vibration System -->
+        <div id="detail-content-cc_vibration">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Vibration Monitoring System</h3>
+            <span id="detail-topic-cc_vibration" class="hidden">Detailed C&I control on Vibration Monitoring System for Rotating Equipment.</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และองค์ประกอบ</h4>
+                <p class="text-gray-600">ระบบนี้ใช้สำหรับตรวจวัดแรงสั่นสะเทือนของเพลา (Shaft) และตัวเรือน (Casing) ของเครื่องจักรหมุน (Gas Turbine, Steam Turbine, Generator, Pumps) เพื่อเฝ้าระวังความผิดปกติ เช่น Unbalance, Misalignment, หรือ Bearing Failure</p>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Sensor and System Integrity</h4>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                    <li>Proximity Probe Maintenance: การติดตั้งและ Calibrate Gap Voltage ของ Proximity Probe ที่ใช้ในการวัด Relative Vibration และ Axial Shift (ค่าที่วัดได้ละเอียดมาก)</li>
+                    <li>Accelerometer Maintenance: การดูแลรักษา Accelerometer ที่ใช้ในการวัด Casing Vibration และการทดสอบระบบ Alarm/Trip </li>
+                    <li>Keyphasor & Overspeed: การตรวจสอบความแม่นยำของ Keyphasor (สำหรับวัดรอบอ้างอิง) และระบบ Overspeed Protection</li>
+                </ul>
+            </section>
+        </div>
+        
+        <!-- NEW CC Detail: CEMS -->
+        <div id="detail-content-cc_cems">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">CEMS (Continuous Emission Monitoring System)</h3>
+            <span id="detail-topic-cc_cems" class="hidden">Detailed C&I control on Continuous Emission Monitoring System (CEMS) for regulatory compliance.</span>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และการปฏิบัติตามข้อกำหนด</h4>
+                <p class="text-gray-600">CEMS คือระบบที่ใช้ในการวัดปริมาณสารมลพิษ (เช่น NOx, SO2, CO, Opacity) ที่ปล่อยออกจากปล่องโรงไฟฟ้าอย่างต่อเนื่องแบบ Real-time เพื่อยืนยันว่าการปล่อยมลพิษเป็นไปตามข้อกำหนดทางกฎหมายและมาตรฐานสิ่งแวดล้อมที่กำหนด</p>
+            </section>
+
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role in CEMS Maintenance</h4>
+                <ul class="list-disc pl-5 space-y-1 text-gray-600">
+                    <li>Analyzer Calibration: การสอบเทียบและตรวจสอบความแม่นยำของ Gas Analyzer โดยใช้ Gas Standard (Zero/Span Check) เป็นประจำ</li>
+                    <li>Sampling System Maintenance: การดูแลรักษาระบบเก็บตัวอย่างก๊าซ (Sample Probe, Filter, Sample Line, Cooler) เพื่อป้องกันการอุดตันและความผิดพลาดในการวัด</li>
+                    <li>Data Acquisition and Reporting: การบำรุงรักษา Data Logger และระบบส่งข้อมูลไปยังหน่วยงานกำกับดูแลตามข้อกำหนด</li>
+                </ul>
+            </section>
+        </div>
+
+
     </div>
 
-    <!-- Footer -->
+    <!-- Footer (Unchanged) -->
     <footer class="bg-gray-100 border-t border-gray-200 mt-12">
         <div class="container mx-auto px-4 py-6 text-center text-sm text-gray-500">
             &copy; 2024 C&I Maintenance Team. All rights reserved.
         </div>
     </footer>
 
-    <!-- JavaScript for Modal and Content Switching Functionality & Gemini API Calls -->
+    <!-- JavaScript for Modal and Content Switching Functionality (Unchanged logic, just ensure all listeners are set) -->
     <script>
         const modal = document.getElementById('modal');
         const modalBackdrop = document.getElementById('modal-backdrop');
@@ -689,265 +695,32 @@
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
         
-        // New Gemini Elements
-        const aiQuestionInput = document.getElementById('ai-question-input');
-        const askAiBtn = document.getElementById('ask-ai-btn');
-        const aiResponseContainer = document.getElementById('ai-response-container');
-        const aiLoading = document.getElementById('ai-loading');
-        const aiAnswer = document.getElementById('ai-answer');
-        const aiSources = document.getElementById('ai-sources');
-        
-        const simulationResultContainer = document.getElementById('simulation-result-container');
-        const simulationResult = document.getElementById('simulation-result');
-        const generateScenarioBtn = document.getElementById('generate-scenario-btn');
-        const simulationLoading = document.getElementById('simulation-loading');
-
-        // Global variable to store the current detail's English topic for AI grounding
+        // Global variable to store the current detail's English topic (Optional context)
         let currentDetailTopic = '';
-
-        // --- Helper Function for Gemini API Calls with Exponential Backoff ---
-        async function callGeminiAPI(endpoint, payload, retries = 3, delay = 1000) {
-            const apiUrl = `${apiUrlBase}${endpoint}?key=${apiKey}`;
-            const headers = { 'Content-Type': 'application/json' };
-
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: headers,
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (response.ok) {
-                        return await response.json();
-                    }
-                    
-                    if (response.status === 429 && i < retries - 1) { // Too Many Requests
-                        await new Promise(resolve => setTimeout(resolve, delay));
-                        delay *= 2; // Exponential backoff
-                        continue;
-                    }
-
-                    throw new Error(`API call failed with status: ${response.statusText}`);
-                } catch (error) {
-                    if (i === retries - 1) {
-                        console.error("Gemini API call failed after all retries:", error);
-                        throw error;
-                    }
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    delay *= 2; // Exponential backoff
-                }
-            }
-        }
-        
-        // --- Feature 1: AI Technical Assistant (In Modal) ---
-        async function askAIAssistant() {
-            const userQuestion = aiQuestionInput.value.trim();
-            if (!userQuestion || !currentDetailTopic) return;
-
-            // 1. Set Loading State
-            askAiBtn.disabled = true;
-            aiResponseContainer.classList.remove('hidden');
-            aiLoading.classList.remove('hidden');
-            aiAnswer.innerHTML = '';
-            aiSources.innerHTML = '';
-            aiAnswer.classList.remove('p-3'); 
-
-            const systemPrompt = `You are a concise technical assistant for an electrical power plant's Control & Instrumentation (C&I) team. Your goal is to answer technical questions related to the provided topic based on your knowledge and Google Search results. Keep the answer to a maximum of 4 sentences and cite all sources. The current topic is: ${currentDetailTopic}`;
-            const userQuery = `User question: ${userQuestion}`;
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                tools: [{ "google_search": {} }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-            };
-
-            try {
-                const result = await callGeminiAPI(`${modelName}:generateContent`, payload);
-                
-                const candidate = result.candidates?.[0];
-                let responseText = 'ไม่พบคำตอบที่เหมาะสมในขณะนี้';
-                let sourcesHtml = '';
-
-                if (candidate && candidate.content?.parts?.[0]?.text) {
-                    responseText = candidate.content.parts[0].text;
-                    aiAnswer.classList.add('p-3'); 
-
-                    // Extract grounding sources
-                    const groundingMetadata = candidate.groundingMetadata;
-                    let sources = [];
-                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                        sources = groundingMetadata.groundingAttributions
-                            .map(attribution => ({
-                                uri: attribution.web?.uri,
-                                title: attribution.web?.title,
-                            }))
-                            .filter(source => source.uri && source.title);
-                    }
-                    
-                    if (sources.length > 0) {
-                        sourcesHtml = '<strong class="text-gemini-purple">แหล่งข้อมูล:</strong><ul class="list-disc pl-5 mt-1">';
-                        sources.forEach((s, index) => {
-                            sourcesHtml += `<li><a href="${s.uri}" target="_blank" class="text-blue-500 hover:underline">${s.title}</a></li>`;
-                        });
-                        sourcesHtml += '</ul>';
-                    }
-                }
-                
-                aiAnswer.innerHTML = responseText;
-                aiSources.innerHTML = sourcesHtml;
-
-            } catch (error) {
-                aiAnswer.innerHTML = 'เกิดข้อผิดพลาดในการเรียกใช้ AI Technical Assistant กรุณาลองใหม่อีกครั้ง';
-                console.error("Error in askAIAssistant:", error);
-            } finally {
-                aiLoading.classList.add('hidden');
-                askAiBtn.disabled = false;
-            }
-        }
-        
-        // --- Feature 2: Simulation Scenario Generator (In Simulation Tab) ---
-        
-        // Function to toggle the visibility of the solution
-        function toggleSolution() {
-            const content = document.getElementById('solution-content');
-            const button = document.getElementById('toggle-solution-btn');
-            
-            if (content.classList.contains('active')) {
-                content.classList.remove('active');
-                button.textContent = 'แสดง แนวทางการแก้ไข (สำหรับผู้ฝึกสอน)';
-            } else {
-                content.classList.add('active');
-                button.textContent = 'ซ่อน แนวทางการแก้ไข';
-            }
-        }
-
-        // Function to generate and render the simulation idea
-        async function generateSimulationIdea() {
-            // 1. Set Loading State
-            generateScenarioBtn.disabled = true;
-            simulationLoading.classList.remove('hidden');
-            simulationResult.innerHTML = '<div class="text-center py-4">กำลังสร้างสถานการณ์การฝึกซ้อมที่ซับซ้อน...</div>';
-            simulationResultContainer.classList.add('shadow-xl');
-
-            const systemPrompt = "You are a professional C&I training coordinator. Generate a single, highly realistic, complex C&I maintenance simulation scenario for a combined cycle power plant, suitable for team training. The response MUST be a JSON object with the following fields and must contain rich, detailed content in Thai for each field. Ensure the scenario is realistic for a combined cycle power plant (Gas Turbine, HRSG, Steam Turbine).";
-            const userQuery = "Generate a complex, realistic C&I maintenance simulation scenario for a combined cycle training exercise.";
-            
-            // Define JSON Schema
-            const schema = {
-                type: "OBJECT",
-                properties: {
-                    scenarioTitle: { type: "STRING", description: "หัวข้อสถานการณ์: ชื่อสถานการณ์จำลองที่น่าดึงดูดใจ" },
-                    primaryEvent: { type: "STRING", description: "เหตุการณ์หลัก: ปัญหา C&I หลักที่เกิดขึ้น" },
-                    compoundingEffects: { type: "STRING", description: "ผลกระทบต่อเนื่อง: ปัญหาเสริมที่ทำให้สถานการณ์ซับซ้อนขึ้น" },
-                    teamObjective: { type: "STRING", description: "เป้าหมายของทีม: สิ่งที่ทีมต้องทำเพื่อแก้ไขปัญหาหลักและผลกระทบต่อเนื่อง" },
-                    requiredTools: { type: "STRING", description: "เครื่องมือ C&I ที่จำเป็น: รายการเครื่องมือเฉพาะที่ต้องใช้ในการปฏิบัติงาน" },
-                    solutionKeyActions: { type: "STRING", description: "แนวทางการแก้ไข (สำหรับผู้ฝึกสอน): ลำดับขั้นตอนการแก้ไขที่ถูกต้องและผลลัพธ์ที่คาดหวัง" }
-                },
-                required: ["scenarioTitle", "primaryEvent", "compoundingEffects", "teamObjective", "requiredTools", "solutionKeyActions"],
-                propertyOrdering: ["scenarioTitle", "primaryEvent", "compoundingEffects", "teamObjective", "requiredTools", "solutionKeyActions"]
-            };
-
-            const payload = {
-                contents: [{ parts: [{ text: userQuery }] }],
-                systemInstruction: { parts: [{ text: systemPrompt }] },
-                generationConfig: {
-                    responseMimeType: "application/json",
-                    responseSchema: schema
-                }
-            };
-
-            try {
-                const result = await callGeminiAPI(`${modelName}:generateContent`, payload);
-                
-                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!jsonText) throw new Error("AI returned empty JSON content.");
-
-                const scenarioData = JSON.parse(jsonText);
-                
-                // --- Render the Scenario ---
-                const renderHTML = `
-                    <div class="space-y-4">
-                        <h4 class="text-2xl font-bold text-gemini-purple">${scenarioData.scenarioTitle}</h4>
-                        
-                        <!-- Primary Event & Compounding Effects -->
-                        <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
-                            <p class="font-semibold text-red-700">เหตุการณ์หลัก (Primary Event):</p>
-                            <p class="text-gray-800">${scenarioData.primaryEvent}</p>
-                        </div>
-                        <div class="p-4 bg-orange-50 border border-orange-200 rounded-lg">
-                            <p class="font-semibold text-orange-700">ผลกระทบต่อเนื่อง (Compounding Effects):</p>
-                            <p class="text-gray-800">${scenarioData.compoundingEffects}</p>
-                        </div>
-
-                        <!-- Objective & Tools -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 bg-egat-blue/5 border border-egat-blue/20 rounded-lg">
-                                <p class="font-semibold text-egat-blue">เป้าหมายของทีม (Team Objective):</p>
-                                <p class="text-gray-800">${scenarioData.teamObjective}</p>
-                            </div>
-                            <div class="p-4 bg-egat-blue/5 border border-egat-blue/20 rounded-lg">
-                                <p class="font-semibold text-egat-blue">เครื่องมือ C&I ที่จำเป็น (Required C&I Tools):</p>
-                                <p class="text-gray-800">${scenarioData.requiredTools}</p>
-                            </div>
-                        </div>
-
-                        <!-- Solution/Answer Section (Hidden) -->
-                        <div class="mt-6 pt-4 border-t border-gray-200">
-                            <button 
-                                id="toggle-solution-btn" 
-                                onclick="toggleSolution()"
-                                class="w-full px-4 py-3 bg-solution-green text-white font-bold rounded-lg shadow-md hover:bg-solution-green/90 transition duration-200 flex items-center justify-center"
-                            >
-                                แสดง แนวทางการแก้ไข (สำหรับผู้ฝึกสอน) 
-                            </button>
-                            <div id="solution-content" class="solution-content bg-solution-green/5 border border-solution-green/20 rounded-lg mt-3">
-                                <p class="font-bold text-solution-green mb-2 text-lg border-b border-solution-green/20 pb-2">แนวทางการแก้ไขที่ถูกต้อง:</p>
-                                <p class="text-gray-800">${scenarioData.solutionKeyActions.replace(/\n/g, '<br>')}</p>
-                            </div>
-                        </div>
-
-                    </div>
-                `;
-                simulationResult.innerHTML = renderHTML;
-
-            } catch (error) {
-                simulationResult.innerHTML = `<div class="p-4 bg-red-100 border border-red-400 rounded-lg text-red-700">
-                    <strong>เกิดข้อผิดพลาดในการสร้างสถานการณ์:</strong> ไม่สามารถประมวลผลข้อมูลจาก AI ได้ กรุณาลองใหม่อีกครั้ง<br>
-                    <small>Error: ${error.message}</small>
-                    </div>`;
-                console.error("Error in generateSimulationIdea:", error);
-            } finally {
-                simulationLoading.classList.add('hidden');
-                generateScenarioBtn.disabled = false;
-                simulationResultContainer.classList.remove('shadow-xl');
-                simulationResultContainer.classList.add('shadow-md');
-            }
-        }
 
         // --- UI Functions ---
         
-        // ฟังก์ชันสำหรับการสลับส่วนเนื้อหา
+        /**
+         * Switches the active content section based on the menu click.
+         * @param {string} sectionId - The ID of the section to show.
+         */
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.content-section');
             const navLinks = document.querySelectorAll('.nav-link');
             
-            // ซ่อนทุกส่วนเนื้อหาและลบคลาส active/bold ออกจากเมนูทั้งหมด
             sections.forEach(section => {
                 section.classList.add('hidden');
-                section.style.opacity = '0'; // สำหรับ transition
+                section.style.opacity = '0';
             });
 
             navLinks.forEach(link => {
                 link.classList.remove('font-bold');
             });
             
-            // แสดงส่วนเนื้อหาที่ต้องการและเพิ่มคลาส active/bold ให้เมนูที่ถูกเลือก
             const targetSection = document.getElementById(sectionId);
             const targetLink = document.querySelector(`[data-target="${sectionId}"]`);
             
             if (targetSection) {
-                // แสดงผลและใช้ setTimeout เพื่อให้เกิด transition สวยงาม
                 targetSection.classList.remove('hidden');
                 setTimeout(() => {
                     targetSection.style.opacity = '1';
@@ -958,10 +731,9 @@
                 targetLink.classList.add('font-bold');
             }
             
-            // ส่วนที่เพิ่มเติม: บังคับให้หน้าเว็บเลื่อนขึ้นไปด้านบนสุด (Scroll to Top)
             window.scrollTo({ 
                 top: 0, 
-                behavior: 'smooth' // ใช้ 'smooth' เพื่อให้การเลื่อนดูนุ่มนวล
+                behavior: 'smooth'
             });
         }
 
@@ -974,45 +746,35 @@
             const contentElement = document.getElementById(`detail-content-${detailId}`);
             if (!contentElement) return;
 
-            // Reset AI Assistant UI
-            aiQuestionInput.value = '';
-            askAiBtn.disabled = true;
-            aiResponseContainer.classList.add('hidden');
-            aiLoading.classList.add('hidden');
-            aiAnswer.innerHTML = '';
-            aiSources.innerHTML = '';
-            aiAnswer.classList.remove('p-3');
-            
-            // Set current topic for AI Grounding
+            // Set current topic for context 
             currentDetailTopic = document.getElementById(`detail-topic-${detailId}`)?.textContent || 'C&I Power Plant Maintenance';
             
-            // Listen for input change to enable/disable button
-            aiQuestionInput.oninput = () => {
-                askAiBtn.disabled = aiQuestionInput.value.trim() === '';
-            };
-
-
-            // 1. Set Title and Content
-            // The title is the first h3 element inside the detail content
+            // 1. Set Title
             const title = contentElement.querySelector('h3').textContent;
             modalTitle.textContent = title;
             
-            // Clear existing body content first, then copy children of contentElement, excluding the h3 and span title for clean display.
-            modalBody.innerHTML = '';
+            // 2. Clear existing body content and prepare new content HTML
+            let rawContentHTML = '';
             Array.from(contentElement.children).forEach(child => {
                 const tag = child.tagName.toLowerCase();
+                // Exclude the title (h3) and the hidden topic span
                 if (tag !== 'h3' && tag !== 'span') {
-                    modalBody.appendChild(child.cloneNode(true));
+                    rawContentHTML += child.outerHTML;
                 }
             });
             
-            // 2. Show Modal
+            // 3. Clean the entire content string by removing the '**'
+            const cleanedContentHTML = rawContentHTML.replace(/\*\*/g, ''); 
+            
+            // 4. Inject the cleaned HTML
+            modalBody.innerHTML = cleanedContentHTML;
+            
+            // 5. Show Modal
             modal.classList.remove('hidden');
             modalBackdrop.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // ป้องกันการ scroll ของ body
+            document.body.style.overflow = 'hidden';
 
-            // 3. Apply transition effects
-            // Use a short delay to ensure display: block is processed before transition
+            // 6. Apply transition effects
             setTimeout(() => {
                 modalBackdrop.style.opacity = '1';
                 modalContentBox.classList.remove('scale-95', 'opacity-0');
@@ -1028,23 +790,23 @@
             modalContentBox.classList.remove('scale-100', 'opacity-100');
             modalContentBox.classList.add('scale-95', 'opacity-0');
             
-            // Wait for transition to finish before hiding
             setTimeout(() => {
                 modal.classList.add('hidden');
                 modalBackdrop.classList.add('hidden');
-                document.body.style.overflow = ''; // คืนค่าการ scroll ของ body
+                document.body.style.overflow = '';
             }, 300);
         }
 
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Select all elements with the class 'detail-card' (including the newly added control systems)
             const detailCards = document.querySelectorAll('.detail-card');
             const navLinks = document.querySelectorAll('.nav-link');
             
-            // ตั้งค่าการแสดงผลเริ่มต้น: โหลดส่วน 'overview' เมื่อหน้าเว็บเปิดขึ้น
+            // Initial setup: load 'overview' section
             showSection('overview');
 
-            // 1. Event Listener สำหรับ Detail Cards เพื่อเปิด Modal
+            // 1. Event Listener for Detail Cards to open Modal
             detailCards.forEach(card => {
                 card.addEventListener('click', () => {
                     const detailId = card.dataset.detail;
@@ -1052,10 +814,9 @@
                 });
             });
             
-            // 2. Event Listener สำหรับ Menu Links เพื่อสลับส่วนเนื้อหา
+            // 2. Event Listener for Menu Links to switch sections
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
-                    // ป้องกันการทำงานของ anchor link ตามปกติ
                     e.preventDefault(); 
                     const sectionId = link.getAttribute('data-target');
                     showSection(sectionId);
@@ -1063,10 +824,10 @@
             });
 
 
-            // 3. Event Listener สำหรับ Modal Backdrop เพื่อให้คลิกนอก Modal แล้วปิดได้
+            // 3. Event Listener for Modal Backdrop to close modal on outside click
             modalBackdrop.addEventListener('click', closeModal);
             
-            // 4. ปิด Modal ด้วยปุ่ม Escape
+            // 4. Close Modal on Escape key press
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
