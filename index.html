@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control & Instrumentation (C&I) - EGAT Maintenance</title>
     
+    <!-- โหลด Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- กำหนด Tailwind Config เพื่อเพิ่มสี EGAT Blue และ EGAT Yellow/Gold -->
     <script>
         tailwind.config = {
             theme: {
@@ -14,12 +16,15 @@
                     colors: {
                         'egat-blue': '#004d99',   /* สีน้ำเงินเข้มหลักของ EGAT */
                         'egat-yellow': '#FFD700', /* สีเหลือง/ทอง (Accent) ของ EGAT */
+                        'gemini-purple': '#5A189A', /* สีม่วงสำหรับ Gemini */
+                        'solution-green': '#10b981', /* สีเขียวสำหรับเฉลย */
                     },
                 }
             }
         }
     </script>
 
+    <!-- กำหนด Font Inter และการตั้งค่าพื้นฐาน พร้อมปรับ Minimal Style -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         body {
@@ -49,27 +54,72 @@
         .content-section {
             transition: opacity 0.3s ease-in-out;
         }
+        
+        .loading-animation {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #004d99; /* EGAT Blue */
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .solution-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            padding: 0 1rem; /* Adjust padding to match surrounding container */
+        }
+
+        .solution-content.active {
+            max-height: 1000px; /* Large enough value */
+            padding: 1rem;
+        }
     </style>
 
 </head>
 <body class="antialiased">
+    
+    <!-- API Key and Config placeholders (Required for Canvas environment) -->
+    <script>
+        // These global variables are provided by the canvas environment
+        const apiKey = "";
+        const apiUrlBase = "https://generativelanguage.googleapis.com/v1beta/models/";
+        const modelName = "gemini-2.5-flash-preview-09-2025";
+    </script>
 
+
+    <!-- Header Section -->
     <header class="bg-egat-blue shadow-lg sticky top-0 z-10">
         <div class="container mx-auto px-4 py-4 md:py-5 flex justify-between items-center">
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
                 C&I Maintenance Team
             </h1>
             <nav id="main-nav">
+                <!-- เปลี่ยนชื่อเมนูเป็นภาษาอังกฤษ -->
                 <a href="#overview" data-target="overview" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline font-bold">Overview</a>
                 <a href="#details" data-target="details" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Details</a>
                 <a href="#combined_cycle" data-target="combined_cycle" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Combined Cycle</a>
+                <!-- เมนูใหม่: Simulation -->
+                <a href="#simulation" data-target="simulation" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Simulation</a>
             </nav>
         </div>
     </header>
 
+    <!-- Main Content Section -->
     <main class="container mx-auto px-4 py-10 md:py-16">
         
+        <!-- ========================================================================================= -->
+        <!-- 1. Overview Section -->
+        <!-- ... (Unchanged content for Overview) ... -->
+        <!-- ========================================================================================= -->
         <section id="overview" class="content-section mb-16">
+            <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
                 <div class="text-center">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
@@ -83,23 +133,29 @@
                     </p>
                 </div>
 
+                <!-- Key Mission Points in a Grid (h4 เป็นภาษาอังกฤษ) -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     
                     <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                        <!-- Icon: Check Circle -->
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <h4 class="font-semibold text-lg text-gray-800 mb-1">System Stability</h4>
                         <p class="text-sm text-gray-600">รับประกันความต่อเนื่องในการควบคุมกระบวนการผลิตไฟฟ้า</p>
                     </div>
 
                     <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                        <!-- Icon: Tachometer (for efficiency/speed) -->
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         <h4 class="font-semibold text-lg text-gray-800 mb-1">Maximum Efficiency</h4>
                         <p class="text-sm text-gray-600">การสอบเทียบและบำรุงรักษาเชิงรุกเพื่อลดการสูญเสียพลังงาน</p>
                     </div>
 
                     <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                        <!-- Icon: Shield Check (for Reliability and Safety Assurance) -->
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Shield Shape -->
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            <!-- Checkmark inside -->
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
                         </svg>
                         <h4 class="font-semibold text-lg text-gray-800 mb-1">Reliability & Safety</h4>
@@ -110,7 +166,12 @@
         </section>
 
 
+        <!-- ========================================================================================= -->
+        <!-- 2. Detail Cards Section -->
+        <!-- ... (Unchanged content for Details) ... -->
+        <!-- ========================================================================================= -->
         <section id="details" class="content-section hidden mb-16">
+            <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
                 
                 <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2 text-center">
@@ -120,8 +181,10 @@
                     คลิกที่หัวข้อด้านล่างเพื่อดูรายละเอียดเชิงลึกเกี่ยวกับขอบเขตความรับผิดชอบและหน้าที่หลักของทีม C&I
                 </p>
 
+                <!-- Detail Cards Grid (h3 เป็นภาษาอังกฤษ) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
+                    <!-- Card 1: Introduction -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="intro">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">📝</span>
@@ -130,6 +193,7 @@
                         <p class="text-gray-500 text-sm">ทำความรู้จักกับ C&I และบทบาทสำคัญในองค์กร</p>
                     </div>
 
+                    <!-- Card 2: Core Work -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="core_work">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🛠️</span>
@@ -138,6 +202,7 @@
                         <p class="text-gray-500 text-sm">แยกประเภทงานควบคุมและงานเครื่องมือวัด</p>
                     </div>
 
+                    <!-- Card 3: System Overview -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="system_overview">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">⚙️</span>
@@ -146,6 +211,7 @@
                         <p class="text-gray-500 text-sm">ส่วนประกอบและเทคโนโลยีหลักที่ใช้งาน</p>
                     </div>
 
+                    <!-- Card 4: Maintenance -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="maintenance">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔧</span>
@@ -154,6 +220,7 @@
                         <p class="text-gray-500 text-sm">แนวทางการบำรุงรักษาและการสอบเทียบ</p>
                     </div>
 
+                    <!-- Card 5: Safety & Compliance -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="safety">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🛡️</span>
@@ -162,6 +229,7 @@
                         <p class="text-gray-500 text-sm">มาตรฐานความปลอดภัยและข้อบังคับที่เกี่ยวข้อง</p>
                     </div>
 
+                    <!-- Card 6: Technology & Future -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="future">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">💡</span>
@@ -174,7 +242,12 @@
             </div>
         </section>
         
+        <!-- ========================================================================================= -->
+        <!-- 3. Combined Cycle Section: เพิ่ม Detail Cards สำหรับเนื้อหาเชิงลึก -->
+        <!-- ... (Unchanged content for Combined Cycle) ... -->
+        <!-- ========================================================================================= -->
         <section id="combined_cycle" class="content-section hidden mb-16">
+            <!-- Card Container Standard -->
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
                 
                 <div class="text-center">
@@ -186,6 +259,7 @@
                     </p>
                 </div>
 
+                <!-- Foundation and Cycle Overview (h3/h4 เป็นภาษาอังกฤษ) -->
                 <div class="mb-10 p-6 bg-egat-blue/5 rounded-lg border border-egat-blue/10">
                     <h3 class="text-2xl font-bold text-egat-blue mb-3 text-center">Fundamental Principles and Operating Cycles</h3>
                     <p class="text-gray-700 mb-4 text-center">Combined Cycle คือการรวม **วัฏจักรเบรย์ตัน (Brayton Cycle)** จากกังหันก๊าซ เข้ากับ **วัฏจักรแรงคิน (Rankine Cycle)** จากกังหันไอน้ำ เพื่อนำความร้อนเหลือทิ้งมาใช้ซ้ำ</p>
@@ -212,9 +286,11 @@
                     </div>
                 </div>
 
+                <!-- NEW: C&I Detail Cards for Combined Cycle (h3 เป็นภาษาอังกฤษ) -->
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">In-Depth Details (Click for C&I Role)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     
+                    <!-- Card CC-1: Gas Turbine & Combustion -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_gasturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔥</span>
@@ -223,6 +299,7 @@
                         <p class="text-gray-500 text-sm">การควบคุมอุณหภูมิ, เชื้อเพลิง, และระบบป้องกันอันตราย</p>
                     </div>
 
+                    <!-- Card CC-2: HRSG & Water/Steam -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_hrsg">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">♨️</span>
@@ -231,6 +308,7 @@
                         <p class="text-gray-500 text-sm">การควบคุมแรงดัน, อุณหภูมิไอน้ำ, และระดับน้ำ</p>
                     </div>
 
+                    <!-- Card CC-3: Steam Turbine & BOP -->
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_steamturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">💧</span>
@@ -241,6 +319,7 @@
 
                 </div>
                 
+                <!-- C&I Roles Grid (h3/h4 เป็นภาษาอังกฤษ) -->
                 <div class="mt-12">
                     <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Central Control Systems</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
@@ -266,20 +345,103 @@
             </div>
         </section>
         
+        <!-- ========================================================================================= -->
+        <!-- 4. Simulation Section (New) -->
+        <!-- ========================================================================================= -->
+        <section id="simulation" class="content-section hidden mb-16">
+            <!-- Card Container Standard -->
+            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+                
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
+                        Simulation Scenario Generator ✨
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto border-b border-egat-yellow pb-4 mb-8">
+                        ใช้ AI ในการสร้างสถานการณ์การฝึกซ้อมการซ่อมบำรุง C&I ที่ซับซ้อนและสมจริงสำหรับทีมงานของคุณ!
+                    </p>
+                </div>
+
+                <div class="flex flex-col items-center space-y-4 mb-8">
+                    <button 
+                        id="generate-scenario-btn" 
+                        onclick="generateSimulationIdea()"
+                        class="px-8 py-3 bg-gemini-purple text-white font-bold rounded-full shadow-lg hover:bg-gemini-purple/90 transition duration-300 transform hover:scale-[1.02] active:scale-95 flex items-center justify-center disabled:opacity-50"
+                    >
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zm-5 8a5 5 0 0110 0h-2a3 3 0 10-6 0H5z"></path></svg>
+                        สร้างสถานการณ์จำลอง (Complex Scenario)
+                    </button>
+                    <div id="simulation-loading" class="hidden flex items-center text-egat-blue">
+                        <div class="loading-animation mr-3"></div>
+                        กำลังสร้างสถานการณ์... โปรดรอสักครู่
+                    </div>
+                </div>
+
+                <!-- Result Display Area -->
+                <div id="simulation-result-container" class="mt-8 border border-gray-200 rounded-xl p-6 bg-white shadow-inner min-h-[150px]">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3 border-b pb-2">สถานการณ์การฝึกซ้อมที่สร้างโดย AI:</h3>
+                    <div id="simulation-result" class="text-gray-700 whitespace-pre-wrap">
+                        คลิกปุ่มด้านบนเพื่อสร้างสถานการณ์การซ่อมบำรุง C&I แบบสมจริงสำหรับโรงไฟฟ้าพลังความร้อนร่วม
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
     </main>
 
+    <!-- Modal Structure (Hidden by default) -->
     <div id="modal" class="hidden fixed inset-0 z-40">
+        <!-- Backdrop -->
         <div id="modal-backdrop" class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity duration-300 opacity-0"></div>
 
+        <!-- Modal Content -->
         <div id="modal-content-box" class="fixed inset-0 flex items-center justify-center p-4 transition-transform duration-300 scale-95 opacity-0">
             <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative p-8">
                 
                 <h3 id="modal-title" class="text-3xl font-bold text-egat-blue mb-4 border-b pb-2"></h3>
                 
+                <!-- Main Detail Content -->
                 <div id="modal-body" class="text-gray-700 space-y-4">
-                    </div>
+                    <!-- Detail content will be injected here -->
+                </div>
+                
+                <!-- Divider for AI Section -->
+                <hr class="my-6 border-t border-gray-200">
 
+                <!-- AI Technical Assistant Section (NEW) -->
+                <div class="mt-6 p-4 bg-gemini-purple/5 rounded-xl border border-gemini-purple/10">
+                    <h4 class="text-xl font-semibold text-gemini-purple mb-3 flex items-center">
+                        ✨ AI Technical Assistant (ถามข้อมูลเพิ่มเติม)
+                    </h4>
+                    
+                    <input type="text" id="ai-question-input" placeholder="พิมพ์คำถามทางเทคนิคเพิ่มเติมเกี่ยวกับหัวข้อนี้ (เช่น 'Calibration frequency for flow transmitters?')" 
+                           class="w-full p-2 border border-gray-300 rounded-lg focus:ring-egat-blue focus:border-egat-blue transition duration-150 mb-3">
+                    
+                    <button 
+                        id="ask-ai-btn" 
+                        onclick="askAIAssistant()" 
+                        class="px-4 py-2 bg-egat-blue text-white font-semibold rounded-lg shadow-md hover:bg-egat-blue/90 transition duration-300 disabled:opacity-50"
+                        disabled
+                    >
+                        ค้นหาคำตอบด้วย AI
+                    </button>
+
+                    <!-- AI Response Area -->
+                    <div id="ai-response-container" class="mt-4 hidden">
+                        <div id="ai-loading" class="hidden flex items-center text-gemini-purple">
+                            <div class="loading-animation mr-3"></div>
+                            กำลังค้นหาคำตอบ...
+                        </div>
+                        <div id="ai-answer" class="p-3 bg-white border border-gemini-purple/20 rounded-lg text-gray-700">
+                            <!-- AI response will be injected here -->
+                        </div>
+                        <div id="ai-sources" class="mt-2 text-xs text-gray-500">
+                            <!-- Sources will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Close Button -->
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
                 </button>
@@ -289,11 +451,13 @@
     </div>
 
 
+    <!-- Detail Content Definitions (Hidden) -->
     <div class="hidden">
         
+        <!-- Detail 1: Introduction (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-intro">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Introduction and Organizational Structure</h3>
-            
+            <span id="detail-topic-intro" class="hidden">Organizational Structure and Key Responsibilities of C&I Team in Power Plant</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Background and Evolution</h4>
                 <p class="text-gray-600">งาน C&I เริ่มต้นขึ้นพร้อมกับการพัฒนาโรงไฟฟ้าของ กฟผ. โดยมีวิวัฒนาการจากการควบคุมแบบอะนาล็อกไปสู่ระบบดิจิทัลที่ซับซ้อนในปัจจุบัน</p>
@@ -319,9 +483,10 @@
             </section>
         </div>
 
+        <!-- Detail 2: Core Work (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-core_work">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Core C&I Functions</h3>
-            
+             <span id="detail-topic-core_work" class="hidden">DCS and PLC maintenance in power generation.</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Primary Control Systems (DCS/PLC)</h4>
                 <p class="text-gray-600">การดูแลรักษาและปรับปรุงระบบควบคุมอัตโนมัติ เช่น DCS (Distributed Control System) และ PLC (Programmable Logic Controller) เพื่อควบคุมกระบวนการผลิตไฟฟ้า.</p>
@@ -343,9 +508,10 @@
             </section>
         </div>
 
+        <!-- Detail 3: System Overview (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-system_overview">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Control and Instrumentation Systems</h3>
-            
+             <span id="detail-topic-system_overview" class="hidden">Power Plant Control Systems (DCS/PLC, Sensors, and Safety Systems)</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Primary Control Systems (DCS/PLC)</h4>
                 <p class="text-gray-600">เป็นหัวใจสำคัญในการสั่งการและควบคุมการทำงานของอุปกรณ์ในโรงไฟฟ้า หน้าที่หลักคือการเฝ้าระวังและการตอบสนองต่อการเปลี่ยนแปลงของกระบวนการ.</p>
@@ -362,9 +528,10 @@
             </section>
         </div>
         
+        <!-- Detail 4: Maintenance (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-maintenance">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Maintenance and Repair</h3>
-            
+            <span id="detail-topic-maintenance" class="hidden">Preventive and Corrective Maintenance for C&I systems including calibration standards</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Preventive Maintenance (PM)</h4>
                 <p class="text-gray-600">การดำเนินการตามแผนเพื่อป้องกันความล้มเหลวของอุปกรณ์ เช่น การเปลี่ยนแบตเตอรี่, การทำความสะอาดตู้ควบคุม, และการตรวจสอบสายสัญญาณ.</p>
@@ -386,9 +553,10 @@
             </section>
         </div>
 
+        <!-- Detail 5: Safety & Compliance (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-safety">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Safety and Compliance</h3>
-            
+            <span id="detail-topic-safety" class="hidden">Safety standards, compliance, and risk management for C&I systems (e.g., IEC 61511)</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Standards and Regulations</h4>
                 <p class="text-gray-600">การปฏิบัติตามมาตรฐาน IEC 61511 (Safety Instrumented Systems) และข้อกำหนดอื่นๆ ที่เกี่ยวข้องกับการทำงานในพื้นที่เสี่ยง (Hazardous Areas).</p>
@@ -405,9 +573,10 @@
             </section>
         </div>
 
+        <!-- Detail 6: Technology & Future (h3/h4 เป็นภาษาอังกฤษ) -->
         <div id="detail-content-future">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Technology and Future</h3>
-            
+            <span id="detail-topic-future" class="hidden">Digital Transformation, Cybersecurity, and future trends in C&I maintenance</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Digital Transformation and Industry 4.0</h4>
                 <p class="text-gray-600">การนำเทคโนโลยี IoT, Cloud Computing และ AI มาใช้ในการวิเคราะห์ข้อมูลการทำงานของ C&I เพื่อการบำรุงรักษาเชิงคาดการณ์ (Predictive Maintenance).</p>
@@ -424,9 +593,12 @@
             </section>
         </div>
         
+        <!-- ========================================================================================= -->
+        <!-- CC Detail 1: Gas Turbine & Combustion (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- ========================================================================================= -->
         <div id="detail-content-cc_gasturbine">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Gas Turbine (GT) and Combustion</h3>
-            
+            <span id="detail-topic-cc_gasturbine" class="hidden">Gas Turbine and Combustion control systems in combined cycle power plants</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">GT Principles and Cycle</h4>
                 <p class="text-gray-600">อากาศถูกอัดโดยคอมเพรสเซอร์ (Compressor) ผสมกับเชื้อเพลิงในห้องเผาไหม้ (Combustion Chamber) และก๊าซร้อนที่ได้จะขับเคลื่อนกังหัน (Turbine) เพื่อผลิตไฟฟ้าตามวัฏจักร Brayton การควบคุมอุณหภูมิที่เข้าและออกจากกังหันมีความสำคัญสูงสุดต่ออายุการใช้งาน</p>
@@ -447,9 +619,12 @@
             </section>
         </div>
         
+        <!-- ========================================================================================= -->
+        <!-- CC Detail 2: HRSG & Water/Steam (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- ========================================================================================= -->
         <div id="detail-content-cc_hrsg">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">HRSG (Heat Recovery Steam Generator)</h3>
-            
+            <span id="detail-topic-cc_hrsg" class="hidden">Heat Recovery Steam Generator (HRSG) C&I systems and 3-Element Drum Level Control</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">HRSG Principles and Steam Generation</h4>
                 <p class="text-gray-600">HRSG ใช้ก๊าซไอเสียร้อนจาก GT มาเปลี่ยนน้ำให้เป็นไอน้ำแรงดันสูง, กลาง, และต่ำ เพื่อขับ Steam Turbine โดยไม่ใช้เชื้อเพลิงเพิ่มเติม ทำให้ประสิทธิภาพโดยรวมของโรงไฟฟ้าเพิ่มขึ้นอย่างมาก</p>
@@ -470,9 +645,12 @@
             </section>
         </div>
         
+        <!-- ========================================================================================= -->
+        <!-- CC Detail 3: Steam Turbine & BOP (h3/h4 เป็นภาษาอังกฤษ) -->
+        <!-- ========================================================================================= -->
         <div id="detail-content-cc_steamturbine">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Steam Turbine (ST) and Balance of Plant (BOP)</h3>
-            
+            <span id="detail-topic-cc_steamturbine" class="hidden">Steam Turbine, BOP, and Vibration Monitoring C&I systems in combined cycle power plants</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Turbine Operating Principles</h4>
                 <p class="text-gray-600">ไอน้ำแรงดันสูงจาก HRSG ถูกส่งเข้าขับ ST เพื่อผลิตไฟฟ้ารอบสอง ไอน้ำที่ใช้งานแล้วจะถูกควบแน่นในคอนเดนเซอร์ (Condenser) กลับเป็นน้ำป้อนหม้อไอน้ำ</p>
@@ -496,18 +674,258 @@
 
     </div>
 
+    <!-- Footer -->
     <footer class="bg-gray-100 border-t border-gray-200 mt-12">
         <div class="container mx-auto px-4 py-6 text-center text-sm text-gray-500">
             &copy; 2024 C&I Maintenance Team. All rights reserved.
         </div>
     </footer>
 
+    <!-- JavaScript for Modal and Content Switching Functionality & Gemini API Calls -->
     <script>
         const modal = document.getElementById('modal');
         const modalBackdrop = document.getElementById('modal-backdrop');
         const modalContentBox = document.getElementById('modal-content-box');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
+        
+        // New Gemini Elements
+        const aiQuestionInput = document.getElementById('ai-question-input');
+        const askAiBtn = document.getElementById('ask-ai-btn');
+        const aiResponseContainer = document.getElementById('ai-response-container');
+        const aiLoading = document.getElementById('ai-loading');
+        const aiAnswer = document.getElementById('ai-answer');
+        const aiSources = document.getElementById('ai-sources');
+        
+        const simulationResultContainer = document.getElementById('simulation-result-container');
+        const simulationResult = document.getElementById('simulation-result');
+        const generateScenarioBtn = document.getElementById('generate-scenario-btn');
+        const simulationLoading = document.getElementById('simulation-loading');
+
+        // Global variable to store the current detail's English topic for AI grounding
+        let currentDetailTopic = '';
+
+        // --- Helper Function for Gemini API Calls with Exponential Backoff ---
+        async function callGeminiAPI(endpoint, payload, retries = 3, delay = 1000) {
+            const apiUrl = `${apiUrlBase}${endpoint}?key=${apiKey}`;
+            const headers = { 'Content-Type': 'application/json' };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                    
+                    if (response.status === 429 && i < retries - 1) { // Too Many Requests
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2; // Exponential backoff
+                        continue;
+                    }
+
+                    throw new Error(`API call failed with status: ${response.statusText}`);
+                } catch (error) {
+                    if (i === retries - 1) {
+                        console.error("Gemini API call failed after all retries:", error);
+                        throw error;
+                    }
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; // Exponential backoff
+                }
+            }
+        }
+        
+        // --- Feature 1: AI Technical Assistant (In Modal) ---
+        async function askAIAssistant() {
+            const userQuestion = aiQuestionInput.value.trim();
+            if (!userQuestion || !currentDetailTopic) return;
+
+            // 1. Set Loading State
+            askAiBtn.disabled = true;
+            aiResponseContainer.classList.remove('hidden');
+            aiLoading.classList.remove('hidden');
+            aiAnswer.innerHTML = '';
+            aiSources.innerHTML = '';
+            aiAnswer.classList.remove('p-3'); 
+
+            const systemPrompt = `You are a concise technical assistant for an electrical power plant's Control & Instrumentation (C&I) team. Your goal is to answer technical questions related to the provided topic based on your knowledge and Google Search results. Keep the answer to a maximum of 4 sentences and cite all sources. The current topic is: ${currentDetailTopic}`;
+            const userQuery = `User question: ${userQuestion}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            try {
+                const result = await callGeminiAPI(`${modelName}:generateContent`, payload);
+                
+                const candidate = result.candidates?.[0];
+                let responseText = 'ไม่พบคำตอบที่เหมาะสมในขณะนี้';
+                let sourcesHtml = '';
+
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    responseText = candidate.content.parts[0].text;
+                    aiAnswer.classList.add('p-3'); 
+
+                    // Extract grounding sources
+                    const groundingMetadata = candidate.groundingMetadata;
+                    let sources = [];
+                    if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                        sources = groundingMetadata.groundingAttributions
+                            .map(attribution => ({
+                                uri: attribution.web?.uri,
+                                title: attribution.web?.title,
+                            }))
+                            .filter(source => source.uri && source.title);
+                    }
+                    
+                    if (sources.length > 0) {
+                        sourcesHtml = '<strong class="text-gemini-purple">แหล่งข้อมูล:</strong><ul class="list-disc pl-5 mt-1">';
+                        sources.forEach((s, index) => {
+                            sourcesHtml += `<li><a href="${s.uri}" target="_blank" class="text-blue-500 hover:underline">${s.title}</a></li>`;
+                        });
+                        sourcesHtml += '</ul>';
+                    }
+                }
+                
+                aiAnswer.innerHTML = responseText;
+                aiSources.innerHTML = sourcesHtml;
+
+            } catch (error) {
+                aiAnswer.innerHTML = 'เกิดข้อผิดพลาดในการเรียกใช้ AI Technical Assistant กรุณาลองใหม่อีกครั้ง';
+                console.error("Error in askAIAssistant:", error);
+            } finally {
+                aiLoading.classList.add('hidden');
+                askAiBtn.disabled = false;
+            }
+        }
+        
+        // --- Feature 2: Simulation Scenario Generator (In Simulation Tab) ---
+        
+        // Function to toggle the visibility of the solution
+        function toggleSolution() {
+            const content = document.getElementById('solution-content');
+            const button = document.getElementById('toggle-solution-btn');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                button.textContent = 'แสดง แนวทางการแก้ไข (สำหรับผู้ฝึกสอน)';
+            } else {
+                content.classList.add('active');
+                button.textContent = 'ซ่อน แนวทางการแก้ไข';
+            }
+        }
+
+        // Function to generate and render the simulation idea
+        async function generateSimulationIdea() {
+            // 1. Set Loading State
+            generateScenarioBtn.disabled = true;
+            simulationLoading.classList.remove('hidden');
+            simulationResult.innerHTML = '<div class="text-center py-4">กำลังสร้างสถานการณ์การฝึกซ้อมที่ซับซ้อน...</div>';
+            simulationResultContainer.classList.add('shadow-xl');
+
+            const systemPrompt = "You are a professional C&I training coordinator. Generate a single, highly realistic, complex C&I maintenance simulation scenario for a combined cycle power plant, suitable for team training. The response MUST be a JSON object with the following fields and must contain rich, detailed content in Thai for each field. Ensure the scenario is realistic for a combined cycle power plant (Gas Turbine, HRSG, Steam Turbine).";
+            const userQuery = "Generate a complex, realistic C&I maintenance simulation scenario for a combined cycle training exercise.";
+            
+            // Define JSON Schema
+            const schema = {
+                type: "OBJECT",
+                properties: {
+                    scenarioTitle: { type: "STRING", description: "หัวข้อสถานการณ์: ชื่อสถานการณ์จำลองที่น่าดึงดูดใจ" },
+                    primaryEvent: { type: "STRING", description: "เหตุการณ์หลัก: ปัญหา C&I หลักที่เกิดขึ้น" },
+                    compoundingEffects: { type: "STRING", description: "ผลกระทบต่อเนื่อง: ปัญหาเสริมที่ทำให้สถานการณ์ซับซ้อนขึ้น" },
+                    teamObjective: { type: "STRING", description: "เป้าหมายของทีม: สิ่งที่ทีมต้องทำเพื่อแก้ไขปัญหาหลักและผลกระทบต่อเนื่อง" },
+                    requiredTools: { type: "STRING", description: "เครื่องมือ C&I ที่จำเป็น: รายการเครื่องมือเฉพาะที่ต้องใช้ในการปฏิบัติงาน" },
+                    solutionKeyActions: { type: "STRING", description: "แนวทางการแก้ไข (สำหรับผู้ฝึกสอน): ลำดับขั้นตอนการแก้ไขที่ถูกต้องและผลลัพธ์ที่คาดหวัง" }
+                },
+                required: ["scenarioTitle", "primaryEvent", "compoundingEffects", "teamObjective", "requiredTools", "solutionKeyActions"],
+                propertyOrdering: ["scenarioTitle", "primaryEvent", "compoundingEffects", "teamObjective", "requiredTools", "solutionKeyActions"]
+            };
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: schema
+                }
+            };
+
+            try {
+                const result = await callGeminiAPI(`${modelName}:generateContent`, payload);
+                
+                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!jsonText) throw new Error("AI returned empty JSON content.");
+
+                const scenarioData = JSON.parse(jsonText);
+                
+                // --- Render the Scenario ---
+                const renderHTML = `
+                    <div class="space-y-4">
+                        <h4 class="text-2xl font-bold text-gemini-purple">${scenarioData.scenarioTitle}</h4>
+                        
+                        <!-- Primary Event & Compounding Effects -->
+                        <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <p class="font-semibold text-red-700">เหตุการณ์หลัก (Primary Event):</p>
+                            <p class="text-gray-800">${scenarioData.primaryEvent}</p>
+                        </div>
+                        <div class="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                            <p class="font-semibold text-orange-700">ผลกระทบต่อเนื่อง (Compounding Effects):</p>
+                            <p class="text-gray-800">${scenarioData.compoundingEffects}</p>
+                        </div>
+
+                        <!-- Objective & Tools -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-egat-blue/5 border border-egat-blue/20 rounded-lg">
+                                <p class="font-semibold text-egat-blue">เป้าหมายของทีม (Team Objective):</p>
+                                <p class="text-gray-800">${scenarioData.teamObjective}</p>
+                            </div>
+                            <div class="p-4 bg-egat-blue/5 border border-egat-blue/20 rounded-lg">
+                                <p class="font-semibold text-egat-blue">เครื่องมือ C&I ที่จำเป็น (Required C&I Tools):</p>
+                                <p class="text-gray-800">${scenarioData.requiredTools}</p>
+                            </div>
+                        </div>
+
+                        <!-- Solution/Answer Section (Hidden) -->
+                        <div class="mt-6 pt-4 border-t border-gray-200">
+                            <button 
+                                id="toggle-solution-btn" 
+                                onclick="toggleSolution()"
+                                class="w-full px-4 py-3 bg-solution-green text-white font-bold rounded-lg shadow-md hover:bg-solution-green/90 transition duration-200 flex items-center justify-center"
+                            >
+                                แสดง แนวทางการแก้ไข (สำหรับผู้ฝึกสอน) 
+                            </button>
+                            <div id="solution-content" class="solution-content bg-solution-green/5 border border-solution-green/20 rounded-lg mt-3">
+                                <p class="font-bold text-solution-green mb-2 text-lg border-b border-solution-green/20 pb-2">แนวทางการแก้ไขที่ถูกต้อง:</p>
+                                <p class="text-gray-800">${scenarioData.solutionKeyActions.replace(/\n/g, '<br>')}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+                simulationResult.innerHTML = renderHTML;
+
+            } catch (error) {
+                simulationResult.innerHTML = `<div class="p-4 bg-red-100 border border-red-400 rounded-lg text-red-700">
+                    <strong>เกิดข้อผิดพลาดในการสร้างสถานการณ์:</strong> ไม่สามารถประมวลผลข้อมูลจาก AI ได้ กรุณาลองใหม่อีกครั้ง<br>
+                    <small>Error: ${error.message}</small>
+                    </div>`;
+                console.error("Error in generateSimulationIdea:", error);
+            } finally {
+                simulationLoading.classList.add('hidden');
+                generateScenarioBtn.disabled = false;
+                simulationResultContainer.classList.remove('shadow-xl');
+                simulationResultContainer.classList.add('shadow-md');
+            }
+        }
+
+        // --- UI Functions ---
         
         // ฟังก์ชันสำหรับการสลับส่วนเนื้อหา
         function showSection(sectionId) {
@@ -540,7 +958,7 @@
                 targetLink.classList.add('font-bold');
             }
             
-            // ✅ ส่วนที่เพิ่มเติม: บังคับให้หน้าเว็บเลื่อนขึ้นไปด้านบนสุด (Scroll to Top)
+            // ส่วนที่เพิ่มเติม: บังคับให้หน้าเว็บเลื่อนขึ้นไปด้านบนสุด (Scroll to Top)
             window.scrollTo({ 
                 top: 0, 
                 behavior: 'smooth' // ใช้ 'smooth' เพื่อให้การเลื่อนดูนุ่มนวล
@@ -556,15 +974,34 @@
             const contentElement = document.getElementById(`detail-content-${detailId}`);
             if (!contentElement) return;
 
+            // Reset AI Assistant UI
+            aiQuestionInput.value = '';
+            askAiBtn.disabled = true;
+            aiResponseContainer.classList.add('hidden');
+            aiLoading.classList.add('hidden');
+            aiAnswer.innerHTML = '';
+            aiSources.innerHTML = '';
+            aiAnswer.classList.remove('p-3');
+            
+            // Set current topic for AI Grounding
+            currentDetailTopic = document.getElementById(`detail-topic-${detailId}`)?.textContent || 'C&I Power Plant Maintenance';
+            
+            // Listen for input change to enable/disable button
+            aiQuestionInput.oninput = () => {
+                askAiBtn.disabled = aiQuestionInput.value.trim() === '';
+            };
+
+
             // 1. Set Title and Content
             // The title is the first h3 element inside the detail content
-            // NOTE: The innerHTML copies all children, including the h3, which is then styled by #modal-title CSS
             const title = contentElement.querySelector('h3').textContent;
             modalTitle.textContent = title;
-            // Clear existing body content first, then copy children of contentElement, excluding the h3 title for clean display.
+            
+            // Clear existing body content first, then copy children of contentElement, excluding the h3 and span title for clean display.
             modalBody.innerHTML = '';
             Array.from(contentElement.children).forEach(child => {
-                if (child.tagName.toLowerCase() !== 'h3') {
+                const tag = child.tagName.toLowerCase();
+                if (tag !== 'h3' && tag !== 'span') {
                     modalBody.appendChild(child.cloneNode(true));
                 }
             });
