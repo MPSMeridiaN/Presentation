@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โรงไฟฟ้าพลังความร้อนร่วม (CCPP) - กฟผ.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals & EGAT Green -->
+    <!-- Application Structure Plan: ผมได้ออกแบบ SPA นี้โดยใช้โครงสร้างแบบ Thematic Vertical Scrolling พร้อม Sticky Navigation ด้านข้าง (สำหรับจอเดสก์ท็อป) เพื่อให้ผู้ใช้สามารถเข้าถึงหัวข้อต่างๆ ได้อย่างอิสระ ไม่จำเป็นต้องเรียงตามลำดับ โครงสร้างนี้แบ่งออกเป็น 5 ส่วนหลัก: ภาพรวม, หลักการทำงาน (ส่วนโต้ตอบหลัก), ส่วนประกอบ, ระบบสนับสนุน, และสรุปวิสัยทัศน์ การออกแบบนี้มีเป้าหมายเพื่อเปลี่ยนข้อมูลเชิงเทคนิคที่ซับซ้อนให้เป็นประสบการณ์การเรียนรู้ที่น่าสนใจและเข้าใจง่าย โดยเน้นที่การแสดงภาพกระบวนการทำงานแบบ Interactive ซึ่งเป็นหัวใจของเรื่องนี้ -->
+    <!-- Visualization & Content Choices: 1. ภาพรวม: ใช้การ์ดแสดงข้อมูลสำคัญและ Bar Chart เปรียบเทียบประสิทธิภาพ (Goal: Compare) เพื่อให้เห็นภาพรวมที่ชัดเจนตั้งแต่แรกเห็น ใช้ Chart.js (Canvas) 2. หลักการทำงาน: สร้างแผนภาพกระบวนการทำงานแบบ Interactive ด้วย HTML/CSS/JS (Goal: Organize/Relationships) ให้ผู้ใช้คลิกเพื่อเรียนรู้แต่ละขั้นตอน ซึ่งมีประสิทธิภาพกว่าการอ่านข้อความยาวๆ 3. ส่วนประกอบ & ระบบสนับสนุน: ใช้ UI แบบ Tabs และ Accordion (Goal: Organize) เพื่อจัดระเบียบข้อมูลจำนวนมากให้สะอาดตาและเข้าถึงได้ง่ายเมื่อต้องการ ทั้งหมดนี้ออกแบบมาเพื่อส่งเสริมการสำรวจและทำความเข้าใจด้วยตนเอง -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #F8F9FA;
+            color: #343A40;
+        }
+        .bg-egat-green { background-color: #007355; }
+        .text-egat-green { color: #007355; }
+        .border-egat-green { border-color: #007355; }
+        .accent-egat-green { background-color: #007355; color: white; }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #007355;
+            background-color: #E8F5E9;
+            border-left-color: #007355;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+        }
+        .process-node {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid #DEE2E6;
+        }
+        .process-node.active, .process-node:hover {
+            border-color: #007355;
+            background-color: #E8F5E9;
+            transform: scale(1.05);
+        }
+        .process-arrow {
+            font-size: 2.5rem;
+            color: #ADB5BD;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 40vh;
+            max-height: 450px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div class="flex flex-col md:flex-row">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="w-full md:w-64 bg-white md:min-h-screen p-4 md:sticky md:top-0 shadow-md z-10">
+            <div class="flex items-center space-x-3 mb-6">
+                 <div class="w-12 h-12 bg-egat-green rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h1 class="text-xl font-bold text-egat-green">กฟผ. CCPP</h1>
+            </div>
+            <ul class="space-y-2" id="nav-links">
+                <li><a href="#overview" class="block py-2 px-4 rounded nav-link">ภาพรวม</a></li>
+                <li><a href="#how-it-works" class="block py-2 px-4 rounded nav-link">หลักการทำงาน</a></li>
+                <li><a href="#components" class="block py-2 px-4 rounded nav-link">ส่วนประกอบหลัก</a></li>
+                <li><a href="#bop" class="block py-2 px-4 rounded nav-link">ระบบสนับสนุน (BOP)</a></li>
+                <li><a href="#conclusion" class="block py-2 px-4 rounded nav-link">สรุปและวิสัยทัศน์</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10">
+            <header class="mb-10 text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800">โรงไฟฟ้าพลังความร้อนร่วม (CCPP)</h1>
+                <p class="text-xl text-gray-600 mt-2">เทคโนโลยีเพื่อความมั่นคงและประสิทธิภาพพลังงานสูงสุด</p>
+            </header>
+
+            <!-- Section 1: Overview -->
+            <section id="overview" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-egat-green mb-6">ภาพรวมและจุดเด่น</h2>
+                <p class="mb-8 text-lg text-gray-700">
+                    โรงไฟฟ้าพลังความร้อนร่วม (Combined Cycle Power Plant) เป็นหัวใจสำคัญของระบบผลิตไฟฟ้าของ กฟผ. โดยผสมผสานวัฏจักรการทำงานของกังหันก๊าซและกังหันไอน้ำเข้าด้วยกัน เพื่อนำความร้อนทิ้งกลับมาใช้ผลิตไฟฟ้าซ้ำ ทำให้มีประสิทธิภาพสูง ประหยัดเชื้อเพลิง และเป็นมิตรต่อสิ่งแวดล้อมมากกว่าโรงไฟฟ้าฟอสซิลรูปแบบเดิม
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 mb-10">
+                    <div class="card p-6 text-center">
+                        <h3 class="text-2xl font-bold text-egat-green mb-2">ประสิทธิภาพสูง</h3>
+                        <p>มีประสิทธิภาพเชิงความร้อนโดยรวมสูงกว่า 60% ซึ่งสูงกว่าโรงไฟฟ้าระบบเดิมอย่างมีนัยสำคัญ</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <h3 class="text-2xl font-bold text-egat-green mb-2">ยืดหยุ่นและมั่นคง</h3>
+                        <p>ใช้ก๊าซธรรมชาติเป็นเชื้อเพลิงหลัก มีความยืดหยุ่นในการเดินเครื่องสูง และเป็นโรงไฟฟ้าฐานที่สำคัญของประเทศ</p>
+                    </div>
+                    <div class="card p-6 text-center">
+                        <h3 class="text-2xl font-bold text-egat-green mb-2">เป็นมิตรต่อสิ่งแวดล้อม</h3>
+                        <p>มีการปล่อยก๊าซคาร์บอนไดออกไซด์ (CO₂) ต่อหน่วยไฟฟ้าต่ำ และใช้ทรัพยากรน้ำน้อยลง</p>
+                    </div>
+                </div>
+                <div class="card p-6">
+                     <h3 class="text-2xl font-bold text-center mb-4">เปรียบเทียบประสิทธิภาพเชิงความร้อน</h3>
+                     <p class="text-center text-gray-600 mb-6">โรงไฟฟ้าพลังความร้อนร่วมมีประสิทธิภาพสูงที่สุดในกลุ่มโรงไฟฟ้าฟอสซิล</p>
+                     <div class="chart-container">
+                        <canvas id="efficiencyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: How It Works -->
+            <section id="how-it-works" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-egat-green mb-6">หลักการทำงานแบบ Interactive</h2>
+                 <p class="mb-8 text-lg text-gray-700">
+                    หัวใจของ CCPP คือการทำงานร่วมกันของสองวัฏจักรหลัก: **วัฏจักร Brayton** (ของกังหันก๊าซ) และ **วัฏจักร Rankine** (ของกังหันไอน้ำ) โดยใช้ความร้อนทิ้งจากวัฏจักรแรกเป็นแหล่งพลังงานให้วัฏจักรที่สอง ทำให้ไม่เกิดการสูญเสียพลังงานโดยเปล่าประโยชน์ ลองคลิกที่แต่ละขั้นตอนเพื่อดูคำอธิบาย
+                </p>
+                <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 mb-8">
+                    <div id="node-gt" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
+                        <h4 class="font-bold">1. กังหันก๊าซ (GT)</h4>
+                        <p class="text-sm">Brayton Cycle</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div id="node-hrsg" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
+                        <h4 class="font-bold">2. หม้อไอน้ำ (HRSG)</h4>
+                        <p class="text-sm">Heat Recovery</p>
+                    </div>
+                    <div class="process-arrow">→</div>
+                    <div id="node-st" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
+                        <h4 class="font-bold">3. กังหันไอน้ำ (ST)</h4>
+                        <p class="text-sm">Rankine Cycle</p>
+                    </div>
+                     <div class="process-arrow">→</div>
+                    <div id="node-condenser" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
+                        <h4 class="font-bold">4. ระบบควบแน่น</h4>
+                        <p class="text-sm">Condenser</p>
+                    </div>
+                </div>
+                <div id="process-details" class="card p-6 min-h-[200px] flex items-center justify-center">
+                    <p class="text-gray-500 text-center">คลิกที่ขั้นตอนด้านบนเพื่อดูรายละเอียด</p>
+                </div>
+            </section>
+
+            <!-- Section 3: Core Components -->
+            <section id="components" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-egat-green mb-6">ส่วนประกอบหลักของระบบ</h2>
+                <p class="mb-8 text-lg text-gray-700">
+                    โรงไฟฟ้าพลังความร้อนร่วมประกอบด้วย 3 ส่วนประกอบหลักที่ทำงานประสานกันเป็นระบบเดียว เพื่อให้ได้ประสิทธิภาพการผลิตไฟฟ้าสูงสุด
+                </p>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="w-full md:w-1/3">
+                        <ul id="component-tabs" class="space-y-2">
+                           <li><button data-target="tab-gt" class="w-full text-left p-4 rounded-lg font-semibold component-tab active">1. Gas Turbine (GT)</button></li>
+                           <li><button data-target="tab-hrsg" class="w-full text-left p-4 rounded-lg font-semibold component-tab">2. Heat Recovery Steam Generator (HRSG)</button></li>
+                           <li><button data-target="tab-st" class="w-full text-left p-4 rounded-lg font-semibold component-tab">3. Steam Turbine (ST)</button></li>
+                        </ul>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <div id="tab-gt" class="card p-6 component-content">
+                            <h3 class="text-2xl font-bold text-egat-green mb-3">กังหันก๊าซ (Gas Turbine)</h3>
+                            <p class="font-semibold mb-2">วัฏจักรบน (Topping Cycle)</p>
+                            <p>ทำหน้าที่เผาไหม้เชื้อเพลิง (ก๊าซธรรมชาติ) กับอากาศที่ถูกอัดแรงดันสูง ทำให้เกิดก๊าซร้อนพลังงานสูงไปขับเคลื่อนใบพัดของกังหันและเครื่องกำเนิดไฟฟ้าเพื่อผลิตไฟฟ้าส่วนแรก (คิดเป็นประมาณ 2 ใน 3 ของกำลังผลิตทั้งหมด) และปล่อยไอเสียที่มีอุณหภูมิสูงประมาณ 550-650°C ออกไป</p>
+                        </div>
+                        <div id="tab-hrsg" class="card p-6 component-content hidden">
+                            <h3 class="text-2xl font-bold text-egat-green mb-3">หม้อไอน้ำจากความร้อนทิ้ง (HRSG)</h3>
+                             <p class="font-semibold mb-2">ตัวกลางเชื่อมต่อ (Heat Exchanger)</p>
+                            <p>เป็นอุปกรณ์แลกเปลี่ยนความร้อนที่สำคัญ ทำหน้าที่รับความร้อนจากไอเสียของกังหันก๊าซมาใช้ในการต้มน้ำบริสุทธิ์ให้กลายเป็นไอน้ำแรงดันสูง โดยไม่มีการใช้เชื้อเพลิงเพิ่มเติม เป็นหัวใจของการเพิ่มประสิทธิภาพในระบบ Combined Cycle</p>
+                        </div>
+                        <div id="tab-st" class="card p-6 component-content hidden">
+                             <h3 class="text-2xl font-bold text-egat-green mb-3">กังหันไอน้ำ (Steam Turbine)</h3>
+                            <p class="font-semibold mb-2">วัฏจักรล่าง (Bottoming Cycle)</p>
+                            <p>รับไอน้ำแรงดันสูงที่ผลิตจาก HRSG มาขับเคลื่อนใบพัดของกังหันและเครื่องกำเนิดไฟฟ้าเพื่อผลิตไฟฟ้าส่วนที่สอง (คิดเป็นประมาณ 1 ใน 3 ของกำลังผลิตทั้งหมด) เป็นการเปลี่ยน "พลังงานความร้อนทิ้ง" ให้กลายเป็นพลังงานไฟฟ้าที่ใช้งานได้</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 4: Balance of Plant -->
+            <section id="bop" class="mb-16 scroll-mt-20">
+                <h2 class="text-3xl font-bold text-egat-green mb-6">ระบบสนับสนุนที่สำคัญ (Balance of Plant)</h2>
+                 <p class="mb-8 text-lg text-gray-700">
+                   นอกเหนือจากส่วนประกอบหลักแล้ว โรงไฟฟ้ายังต้องมีระบบสนับสนุน (BOP) อีกหลายส่วนที่ทำงานร่วมกัน เพื่อให้การดำเนินงานเป็นไปอย่างราบรื่น ปลอดภัย และมีเสถียรภาพ
+                </p>
+                <div id="bop-accordion" class="space-y-4">
+                    <div class="card">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
+                            <span>ระบบเชื้อเพลิง (Fuel Supply System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                            <p class="py-4 text-gray-700">จัดการรับก๊าซธรรมชาติจากท่อส่งหลัก ควบคุมแรงดันและอัตราการไหลให้เหมาะสมกับความต้องการของกังหันก๊าซ พร้อมทั้งมีระบบกรองและตรวจสอบคุณภาพเพื่อความปลอดภัยสูงสุด</p>
+                        </div>
+                    </div>
+                     <div class="card">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
+                            <span>ระบบน้ำและไอน้ำ (Water & Steam System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                            <p class="py-4 text-gray-700">ประกอบด้วยระบบควบแน่น (Condenser) ที่ใช้หล่อเย็นไอน้ำให้กลับเป็นน้ำ, หอหล่อเย็น (Cooling Tower) สำหรับระบายความร้อน, และระบบบำบัดน้ำ (Water Treatment) เพื่อผลิตน้ำบริสุทธิ์ป้อนเข้าสู่ HRSG ป้องกันการเกิดตะกรัน</p>
+                        </div>
+                    </div>
+                     <div class="card">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
+                            <span>ระบบควบคุม (Control System - DCS/PLC)</span>
+                             <span class="accordion-icon transition-transform transform">+</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                            <p class="py-4 text-gray-700">ใช้ระบบควบคุมแบบกระจายศูนย์ (DCS) เป็นสมองกลหลักในการประสานงานการทำงานของอุปกรณ์ทุกส่วนให้เป็นไปอย่างอัตโนมัติ มีเสถียรภาพ และปลอดภัย พร้อมระบบ SCADA สำหรับเฝ้าระวังและเก็บข้อมูลการทำงานแบบเรียลไทม์</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
+                            <span>ระบบไฟฟ้า (Electrical System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
+                        </button>
+                        <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
+                            <p class="py-4 text-gray-700">ประกอบด้วยหม้อแปลงไฟฟ้า (Transformers), ลานไกไฟฟ้า (Switchyard) และอุปกรณ์ป้องกันทางไฟฟ้า เพื่อปรับแรงดันและส่งจ่ายพลังงานไฟฟ้าที่ผลิตได้ทั้งหมดเข้าสู่ระบบส่งของประเทศอย่างปลอดภัย</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 5: Conclusion -->
+            <section id="conclusion" class="scroll-mt-20">
+                <h2 class="text-3xl font-bold text-egat-green mb-6">สรุปและวิสัยทัศน์ของ กฟผ.</h2>
+                <div class="card p-8 bg-egat-green text-white">
+                    <p class="text-xl italic mb-6">"โรงไฟฟ้าพลังความร้อนร่วมคือตัวอย่างของเทคโนโลยีที่ผสานพลังงานฟอสซิลเข้ากับประสิทธิภาพทางความร้อนสูงสุด เพื่อความมั่นคงทางพลังงานและสิ่งแวดล้อมที่ดีขึ้น"</p>
+                    <p class="mb-4">โรงไฟฟ้า CCPP จะยังคงเป็นรากฐานที่สำคัญของระบบไฟฟ้าไทย ด้วยความสามารถในการเดินเครื่องที่เชื่อถือได้และประสิทธิภาพที่สูง การใช้เทคโนโลยีนี้ไม่เพียงช่วยลดการใช้เชื้อเพลิงและลดผลกระทบต่อสิ่งแวดล้อม แต่ยังเป็นส่วนสำคัญในการสร้างสมดุลให้กับระบบไฟฟ้าเมื่อมีการนำพลังงานหมุนเวียนเข้ามาใช้มากขึ้น เพื่อสร้างความยั่งยืนด้านพลังงานให้กับประเทศต่อไป</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Chart.js: Efficiency Comparison Chart ---
+    const ctx = document.getElementById('efficiencyChart').getContext('2d');
+    const efficiencyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['โรงไฟฟ้าพลังความร้อนร่วม (CCPP)', 'โรงไฟฟ้าถ่านหิน (Coal)', 'โรงไฟฟ้ากังหันก๊าซ (Simple Cycle)'],
+            datasets: [{
+                label: 'ประสิทธิภาพเชิงความร้อน (%)',
+                data: [62, 45, 40],
+                backgroundColor: [
+                    '#007355',
+                    '#6C757D',
+                    '#CED4DA'
+                ],
+                borderColor: [
+                    '#005942',
+                    '#495057',
+                    '#ADB5BD'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            indexAxis: 'y',
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `ประสิทธิภาพ: ${context.raw}%`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'ประสิทธิภาพ (%)'
+                    }
+                }
+            }
+        }
+    });
+
+    // --- Interactive Process Flow ---
+    const processNodes = document.querySelectorAll('.process-node');
+    const detailsPanel = document.getElementById('process-details');
+    const processDetails = {
+        'node-gt': {
+            title: '1. กังหันก๊าซ (Gas Turbine)',
+            text: 'เชื้อเพลิง (ก๊าซธรรมชาติ) ถูกเผาไหม้ในห้องเผาไหม้ สร้างก๊าซร้อนแรงดันสูงไปขับเคลื่อนกังหันและเครื่องกำเนิดไฟฟ้า ผลิตไฟฟ้าได้ประมาณ 2/3 ของทั้งหมด พร้อมปล่อยไอเสียอุณหภูมิสูงออกมา'
+        },
+        'node-hrsg': {
+            title: '2. หม้อไอน้ำจากความร้อนทิ้ง (HRSG)',
+            text: 'ไอเสียร้อนจากกังหันก๊าซจะไหลผ่าน HRSG เพื่อถ่ายเทความร้อนให้น้ำ ทำให้น้ำเดือดกลายเป็นไอน้ำแรงดันสูง โดยไม่มีการเผาไหม้เชื้อเพลิงเพิ่มเติม'
+        },
+        'node-st': {
+            title: '3. กังหันไอน้ำ (Steam Turbine)',
+            text: 'ไอน้ำแรงดันสูงจาก HRSG ถูกส่งไปขับเคลื่อนใบพัดของกังหันไอน้ำและเครื่องกำเนิดไฟฟ้าตัวที่สอง ผลิตไฟฟ้าเพิ่มอีกประมาณ 1/3 ของทั้งหมด'
+        },
+        'node-condenser': {
+            title: '4. ระบบควบแน่น (Condenser)',
+            text: 'ไอน้ำที่ผ่านกังหันไอน้ำแล้ว จะถูกทำให้เย็นลงและควบแน่นกลับเป็นน้ำใน Condenser จากนั้นน้ำจะถูกส่งกลับไปที่ HRSG เพื่อเริ่มต้นวัฏจักรไอน้ำใหม่อีกครั้ง'
+        }
+    };
+
+    processNodes.forEach(node => {
+        node.addEventListener('click', () => {
+            processNodes.forEach(n => n.classList.remove('active'));
+            node.classList.add('active');
+            const detailKey = node.id;
+            detailsPanel.innerHTML = `
+                <div class="text-center p-4">
+                    <h3 class="text-xl font-bold text-egat-green mb-2">${processDetails[detailKey].title}</h3>
+                    <p class="text-gray-700">${processDetails[detailKey].text}</p>
+                </div>
+            `;
+        });
+    });
+
+    // --- Core Components Tabs ---
+    const tabs = document.querySelectorAll('.component-tab');
+    const tabContents = document.querySelectorAll('.component-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active', 'accent-egat-green'));
+            tab.classList.add('active', 'accent-egat-green');
+            
+            const targetId = tab.dataset.target;
+            tabContents.forEach(content => {
+                if (content.id === targetId) {
+                    content.classList.remove('hidden');
+                } else {
+                    content.classList.add('hidden');
+                }
+            });
+        });
+    });
+    // Set initial active tab style
+    document.querySelector('.component-tab.active').classList.add('accent-egat-green');
+
+
+    // --- BOP Accordion ---
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                // Close other open accordions
+                document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.accordion-icon').forEach(i => i.textContent = '+');
+                
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = '-';
+            }
+        });
+    });
+    
+    // --- Active Nav Link on Scroll ---
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('#nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === entry.target.id) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, { rootMargin: '-30% 0px -70% 0px' });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+});
+</script>
+
+</body>
+</html>
