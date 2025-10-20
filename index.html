@@ -6,7 +6,7 @@
     <title>โรงไฟฟ้าพลังความร้อนร่วม (CCPP) - กฟผ.</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Firebase Imports for Canvas Environment -->
+    <!-- Firebase Imports for Canvas Environment - Retained for full compatibility -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -138,7 +138,6 @@
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <!-- MODIFIED: Added min-h-screen to ensure the container fills the viewport height -->
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
         <nav id="sidebar" class="w-full md:w-64 bg-white md:min-h-screen p-4 md:sticky md:top-0 shadow-md z-10">
@@ -316,6 +315,17 @@
                    ใช้ Gemini AI เพื่อสร้างสถานการณ์ความผิดปกติของโรงไฟฟ้าพลังความร้อนร่วม (CCPP) และให้แนวทางการแก้ไขปัญหาที่ถูกต้องเหมือนมีผู้ควบคุมโรงไฟฟ้ามาช่วยฝึกฝน
                 </p>
                 <div id="llm-feature-container" class="space-y-4 hidden">
+                    <!-- NEW: API Key Input Section -->
+                    <div class="card p-4 bg-theme-light-yellow border border-theme-blue/50">
+                        <h3 class="font-bold text-theme-blue mb-2">การตั้งค่า API Key (สำคัญสำหรับการ Deploy ภายนอก)</h3>
+                        <p id="keyStatus" class="text-sm mt-1 text-red-600 font-semibold mb-2">สถานะ: ไม่พบ API Key. กรุณากรอก Key ส่วนตัวของคุณ</p>
+                        <div class="flex space-x-2">
+                            <!-- Use 'text' type temporarily for better UX in testing, then change to 'password' for production -->
+                            <input type="password" id="apiKeyInput" placeholder="กรอก Gemini API Key ของคุณที่นี่" class="flex-1 p-2 rounded border border-gray-300">
+                            <button onclick="saveApiKey()" class="bg-theme-blue text-white py-2 px-4 rounded-lg llm-button">บันทึก Key</button>
+                        </div>
+                    </div>
+                    
                     <button onclick="generateScenario()" class="llm-button bg-theme-blue text-white py-3 px-6 rounded-lg font-bold flex items-center justify-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13h-12zM3 7h12v13H3z" />
@@ -352,11 +362,56 @@
 <script>
     // Constants for Gemini API
     const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
-    const API_KEY = ""; // Canvas provides this dynamically
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${API_KEY}`;
+    const API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/";
+    const API_KEY_STORAGE_KEY = 'geminiApiKey'; // Key for localStorage
     
     // Utility for Exponential Backoff
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+    function getApiKey() {
+        // 1. Try to get key from localStorage (for external deployment)
+        let key = localStorage.getItem(API_KEY_STORAGE_KEY);
+        if (key) return key;
+
+        // 2. Fallback to Canvas environment variable (if running in Canvas)
+        if (typeof window.__initial_auth_token === 'undefined') {
+             // In Canvas, __initial_auth_token exists. In GitHub, it doesn't.
+             // If this line is reached, we are likely outside Canvas AND the user hasn't set the key.
+            return ""; 
+        }
+        
+        // When running in the Canvas environment, the platform automatically handles the key insertion
+        // but since we can't reliably detect the environment without platform help, 
+        // we force the user to set the key if they are outside.
+        // For the sake of this environment's execution, we return an empty string if no key is found.
+        return ""; 
+    }
+
+    function updateKeyStatus(key) {
+        const statusElement = document.getElementById('keyStatus');
+        if (key && key.length > 10) {
+            statusElement.textContent = 'สถานะ: พบ API Key แล้ว. พร้อมใช้งาน LLM.';
+            statusElement.classList.remove('text-red-600');
+            statusElement.classList.add('text-green-600');
+        } else {
+            statusElement.textContent = 'สถานะ: ไม่พบ API Key. กรุณากรอก Key ส่วนตัวของคุณ';
+            statusElement.classList.remove('text-green-600');
+            statusElement.classList.add('text-red-600');
+        }
+    }
+
+    function saveApiKey() {
+        const inputElement = document.getElementById('apiKeyInput');
+        const key = inputElement.value.trim();
+        if (key) {
+            localStorage.setItem(API_KEY_STORAGE_KEY, key);
+            updateKeyStatus(key);
+            inputElement.value = ''; // Clear input field after saving
+            alert('บันทึก API Key สำเร็จ! ตอนนี้ปุ่มจำลองสถานการณ์ควรใช้งานได้แล้ว');
+        } else {
+            alert('กรุณากรอก API Key ก่อนบันทึก');
+        }
+    }
 
     async function fetchWithRetry(url, options, maxRetries = 5) {
         for (let i = 0; i < maxRetries; i++) {
@@ -366,6 +421,7 @@
                     throw new Error('Rate limit exceeded (429)');
                 }
                 if (!response.ok) {
+                    // Include the specific status code in the error message
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
@@ -428,6 +484,15 @@
         const outputDiv = document.getElementById('scenario-output');
         const loader = document.getElementById('scenario-loader');
         const placeholder = document.getElementById('scenario-placeholder');
+        const apiKey = getApiKey();
+
+        if (!apiKey || apiKey.length < 10) {
+            outputDiv.innerHTML = `<p class="text-red-600 text-center py-4 font-bold">⚠️ ข้อผิดพลาด: ไม่พบ Gemini API Key</p>
+                                   <p class="text-center text-gray-700">กรุณากรอกและบันทึก API Key ของคุณในช่องด้านบนเพื่อใช้งานฟีเจอร์นี้</p>`;
+            return;
+        }
+
+        const API_URL = `${API_ENDPOINT}${GEMINI_MODEL}:generateContent?key=${apiKey}`;
 
         loader.classList.remove('hidden');
         placeholder.classList.add('hidden');
@@ -438,7 +503,6 @@
 
         const payload = {
             contents: [{ parts: [{ text: userQuery }] }],
-            // Google Search Grounding is intentionally excluded to avoid potential 403 errors.
             systemInstruction: {
                 parts: [{ text: systemPrompt }]
             },
@@ -465,14 +529,18 @@
         } catch (error) {
             console.error("Gemini API Error:", error);
             // Display the specific HTTP error status to the user
-            outputDiv.innerHTML = `<p class="text-red-600 text-center py-4">เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}.</p>`;
+            outputDiv.innerHTML = `<p class="text-red-600 text-center py-4 font-bold">❌ เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}.</p>
+                                   <p class="text-center text-gray-700">โปรดตรวจสอบ API Key ของคุณว่าถูกต้องหรือไม่ หรือตรวจสอบข้อจำกัดในการใช้งาน</p>`;
         } finally {
             loader.classList.add('hidden');
         }
     }
 
-    // --- Original Script Logic (retained) ---
+    // --- Initialization and Event Listeners ---
     document.addEventListener('DOMContentLoaded', function () {
+        // Load API Key status on page load
+        updateKeyStatus(getApiKey());
+
         // --- Chart.js: Efficiency Comparison Chart ---
         const ctx = document.getElementById('efficiencyChart').getContext('2d');
         const efficiencyChart = new Chart(ctx, {
