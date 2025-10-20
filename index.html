@@ -49,35 +49,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Define the new Color Palette */
-        :root {
-            --color-primary: #1E40AF; /* Dark Blue */
-            --color-secondary: #FBBF24; /* Amber/Light Yellow */
-            --color-light-bg: #F0F9FF; /* Light Blue Background */
-            --color-hover-bg: #E0F2F7; /* Lighter Blue for hover */
-        }
-
         body {
             font-family: 'Sarabun', sans-serif;
-            background-color: var(--color-light-bg);
+            background-color: #F8F9FA;
             color: #343A40;
         }
-        .bg-primary { background-color: var(--color-primary); }
-        .text-primary { color: var(--color-primary); }
-        .border-primary { border-color: var(--color-primary); }
-        .accent-primary { background-color: var(--color-primary); color: white; }
-        .text-secondary { color: var(--color-secondary); }
-        .bg-secondary { background-color: var(--color-secondary); }
+
+        /* --- NEW THEME COLORS: BLUE (#0056B3) and LIGHT YELLOW (#FFF3CD) --- */
+        .bg-theme-blue { background-color: #0056B3; }
+        .text-theme-blue { color: #0056B3; }
+        .border-theme-blue { border-color: #0056B3; }
+        .accent-theme-blue { background-color: #0056B3; color: white; }
+        .bg-theme-light-yellow { background-color: #FFF3CD; }
 
         .nav-link {
             transition: all 0.3s ease;
             border-left: 3px solid transparent;
         }
+        /* Use Theme Blue for active text/border, and Light Yellow for active background */
         .nav-link.active, .nav-link:hover {
-            color: var(--color-primary);
-            background-color: var(--color-hover-bg);
-            border-left-color: var(--color-primary);
-            font-weight: 500;
+            color: #0056B3; /* Theme Blue */
+            background-color: #FFF3CD; /* Theme Light Yellow */
+            border-left-color: #0056B3; /* Theme Blue */
         }
         .card {
             background-color: white;
@@ -86,33 +79,32 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .card:hover {
-            transform: translateY(-3px); /* ลดการยกตัวลงเล็กน้อย */
-            box-shadow: 0 8px 12px -3px rgb(0 0 0 / 0.1), 0 3px 5px -2px rgb(0 0 0 / 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
         }
-        
-        /* CARD สำหรับส่วนสรุป (บังคับสีข้อความและพื้นหลังตามธีมใหม่) */
+        /* NEW: Conclusion card uses Theme Blue background */
         .conclusion-card {
-            background-color: var(--color-primary); 
-            color: var(--color-secondary) !important; /* บังคับให้เป็นสีเหลืองอ่อน */
+            background-color: #0056B3; /* Theme Blue */
+            color: white !important; 
             border-radius: 0.75rem;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             padding: 2rem; 
         }
-        /* *************************************************************** */
 
         .process-node {
             transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid #DEE2E6;
         }
+        /* Use Theme Blue for active border, and Light Yellow for active background */
         .process-node.active, .process-node:hover {
-            border-color: var(--color-primary);
-            background-color: var(--color-hover-bg);
-            transform: scale(1.03);
+            border-color: #0056B3; /* Theme Blue */
+            background-color: #FFF3CD; /* Theme Light Yellow */
+            transform: scale(1.05);
         }
         .process-arrow {
             font-size: 2.5rem;
-            color: #9CA3AF;
+            color: #ADB5BD;
         }
         .chart-container {
             position: relative;
@@ -133,7 +125,7 @@
         }
         .loader {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid var(--color-primary);
+            border-top: 4px solid #0056B3; /* Theme Blue */
             border-radius: 50%;
             width: 30px;
             height: 30px;
@@ -149,15 +141,14 @@
 
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar Navigation -->
-        <nav id="sidebar" class="w-full md:w-64 bg-white md:min-h-screen p-4 md:sticky md:top-0 shadow-lg z-10">
+        <nav id="sidebar" class="w-full md:w-64 bg-white md:min-h-screen p-4 md:sticky md:top-0 shadow-md z-10">
             <div class="flex items-center space-x-3 mb-6">
-                 <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                    <!-- Icon in Secondary Color -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <div class="w-12 h-12 bg-theme-blue rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                 </div>
-                <h1 class="text-xl font-bold text-primary">กฟผ. CCPP</h1>
+                <h1 class="text-xl font-bold text-theme-blue">กฟผ. CCPP</h1>
             </div>
             <ul class="space-y-2" id="nav-links">
                 <li><a href="#overview" class="block py-2 px-4 rounded nav-link">ภาพรวม</a></li>
@@ -173,31 +164,31 @@
         <main class="flex-1 p-6 md:p-10">
             <header class="mb-10 text-center md:text-left">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-800">โรงไฟฟ้าพลังความร้อนร่วม (CCPP)</h1>
-                <p class="text-xl text-primary mt-2">เทคโนโลยีเพื่อความมั่นคงและประสิทธิภาพพลังงานสูงสุด</p>
+                <p class="text-xl text-gray-600 mt-2">เทคโนโลยีเพื่อความมั่นคงและประสิทธิภาพพลังงานสูงสุด</p>
             </header>
 
             <!-- Section 1: Overview -->
             <section id="overview" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">ภาพรวมและจุดเด่น</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">ภาพรวมและจุดเด่น</h2>
                 <p class="mb-8 text-lg text-gray-700">
                     โรงไฟฟ้าพลังความร้อนร่วม (Combined Cycle Power Plant) เป็นหัวใจสำคัญของระบบผลิตไฟฟ้าของ กฟผ. โดยผสมผสานวัฏจักรการทำงานของกังหันก๊าซและกังหันไอน้ำเข้าด้วยกัน เพื่อนำความร้อนทิ้งกลับมาใช้ผลิตไฟฟ้าซ้ำ ทำให้มีประสิทธิภาพสูง ประหยัดเชื้อเพลิง และเป็นมิตรต่อสิ่งแวดล้อมมากกว่าโรงไฟฟ้าฟอสซิลรูปแบบเดิม
                 </p>
                 <div class="grid md:grid-cols-3 gap-6 mb-10">
                     <div class="card p-6 text-center">
-                        <h3 class="text-2xl font-bold text-primary mb-2">ประสิทธิภาพสูง</h3>
+                        <h3 class="text-2xl font-bold text-theme-blue mb-2">ประสิทธิภาพสูง</h3>
                         <p>มีประสิทธิภาพเชิงความร้อนโดยรวมสูงกว่า 60% ซึ่งสูงกว่าโรงไฟฟ้าระบบเดี่ยวที่ 40%</p>
                     </div>
                     <div class="card p-6 text-center">
-                        <h3 class="text-2xl font-bold text-primary mb-2">ยืดหยุ่นและมั่นคง</h3>
+                        <h3 class="text-2xl font-bold text-theme-blue mb-2">ยืดหยุ่นและมั่นคง</h3>
                         <p>ใช้ก๊าซธรรมชาติเป็นเชื้อเพลิงหลัก มีความยืดหยุ่นในการเดินเครื่องสูง และเป็นโรงไฟฟ้าฐานที่สำคัญของประเทศ</p>
                     </div>
                     <div class="card p-6 text-center">
-                        <h3 class="text-2xl font-bold text-primary mb-2">เป็นมิตรต่อสิ่งแวดล้อม</h3>
+                        <h3 class="text-2xl font-bold text-theme-blue mb-2">เป็นมิตรต่อสิ่งแวดล้อม</h3>
                         <p>มีการปล่อยก๊าซคาร์บอนไดออกไซด์ (CO₂) ต่อหน่วยไฟฟ้าต่ำ และใช้ทรัพยากรน้ำน้อยลง</p>
                     </div>
                 </div>
                 <div class="card p-6">
-                     <h3 class="text-2xl font-bold text-center mb-4 text-primary">เปรียบเทียบประสิทธิภาพเชิงความร้อน</h3>
+                     <h3 class="text-2xl font-bold text-center mb-4">เปรียบเทียบประสิทธิภาพเชิงความร้อน</h3>
                      <p class="text-center text-gray-600 mb-6">โรงไฟฟ้าพลังความร้อนร่วมมีประสิทธิภาพสูงที่สุดในกลุ่มโรงไฟฟ้าฟอสซิล</p>
                      <div class="chart-container">
                         <canvas id="efficiencyChart"></canvas>
@@ -207,28 +198,29 @@
 
             <!-- Section 2: How It Works -->
             <section id="how-it-works" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">หลักการทำงานแบบ Interactive</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">หลักการทำงานแบบ Interactive</h2>
                  <p class="mb-8 text-lg text-gray-700">
                     หัวใจของ CCPP คือการทำงานร่วมกันของสองวัฏจักรหลัก: **วัฏจักร Brayton** (ของกังหันก๊าซ) และ **วัฏจักร Rankine** (ของกังหันไอน้ำ) โดยใช้ความร้อนทิ้งจากวัฏจักรแรกเป็นแหล่งพลังงานให้วัฏจักรที่สอง ทำให้ไม่เกิดการสูญเสียพลังงานโดยเปล่าประโยชน์ ลองคลิกที่แต่ละขั้นตอนเพื่อดูคำอธิบาย
                 </p>
+                <!-- Process nodes use custom CSS for active/hover states -->
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 mb-8">
                     <div id="node-gt" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
-                        <h4 class="font-bold text-primary">1. กังหันก๊าซ (GT)</h4>
+                        <h4 class="font-bold">1. กังหันก๊าซ (GT)</h4>
                         <p class="text-sm">Brayton Cycle</p>
                     </div>
                     <div class="process-arrow">→</div>
                     <div id="node-hrsg" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
-                        <h4 class="font-bold text-primary">2. หม้อไอน้ำ (HRSG)</h4>
+                        <h4 class="font-bold">2. หม้อไอน้ำ (HRSG)</h4>
                         <p class="text-sm">Heat Recovery</p>
                     </div>
                     <div class="process-arrow">→</div>
                     <div id="node-st" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
-                        <h4 class="font-bold text-primary">3. กังหันไอน้ำ (ST)</h4>
+                        <h4 class="font-bold">3. กังหันไอน้ำ (ST)</h4>
                         <p class="text-sm">Rankine Cycle</p>
                     </div>
                      <div class="process-arrow">→</div>
                     <div id="node-condenser" class="process-node p-4 w-full md:w-48 text-center rounded-lg">
-                        <h4 class="font-bold text-primary">4. ระบบควบแน่น</h4>
+                        <h4 class="font-bold">4. ระบบควบแน่น</h4>
                         <p class="text-sm">Condenser</p>
                     </div>
                 </div>
@@ -239,32 +231,32 @@
 
             <!-- Section 3: Core Components -->
             <section id="components" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">ส่วนประกอบหลักของระบบ</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">ส่วนประกอบหลักของระบบ</h2>
                 <p class="mb-8 text-lg text-gray-700">
                     โรงไฟฟ้าพลังความร้อนร่วมประกอบด้วย 3 ส่วนประกอบหลักที่ทำงานประสานกันเป็นระบบเดียว เพื่อให้ได้ประสิทธิภาพการผลิตไฟฟ้าสูงสุด
                 </p>
                 <div class="flex flex-col md:flex-row gap-8">
                     <div class="w-full md:w-1/3">
                         <ul id="component-tabs" class="space-y-2">
-                           <li><button data-target="tab-gt" class="w-full text-left p-4 rounded-lg font-semibold component-tab active">1. Gas Turbine (GT)</button></li>
+                           <li><button data-target="tab-gt" class="w-full text-left p-4 rounded-lg font-semibold component-tab active accent-theme-blue">1. Gas Turbine (GT)</button></li>
                            <li><button data-target="tab-hrsg" class="w-full text-left p-4 rounded-lg font-semibold component-tab">2. Heat Recovery Steam Generator (HRSG)</button></li>
                            <li><button data-target="tab-st" class="w-full text-left p-4 rounded-lg font-semibold component-tab">3. Steam Turbine (ST)</button></li>
                         </ul>
                     </div>
                     <div class="w-full md:w-2/3">
                         <div id="tab-gt" class="card p-6 component-content">
-                            <h3 class="text-2xl font-bold text-primary mb-3">กังหันก๊าซ (Gas Turbine)</h3>
-                            <p class="font-semibold text-secondary mb-2">วัฏจักรบน (Topping Cycle)</p>
+                            <h3 class="text-2xl font-bold text-theme-blue mb-3">กังหันก๊าซ (Gas Turbine)</h3>
+                            <p class="font-semibold mb-2">วัฏจักรบน (Topping Cycle)</p>
                             <p>ทำหน้าที่เผาไหม้เชื้อเพลิง (ก๊าซธรรมชาติ) กับอากาศที่ถูกอัดแรงดันสูง ทำให้เกิดก๊าซร้อนพลังงานสูงไปขับเคลื่อนใบพัดของกังหันและเครื่องกำเนิดไฟฟ้าเพื่อผลิตไฟฟ้าส่วนแรก (คิดเป็นประมาณ 2 ใน 3 ของกำลังผลิตทั้งหมด) และปล่อยไอเสียที่มีอุณหภูมิสูงประมาณ 550-650°C ออกไป</p>
                         </div>
                         <div id="tab-hrsg" class="card p-6 component-content hidden">
-                            <h3 class="text-2xl font-bold text-primary mb-3">หม้อไอน้ำจากความร้อนทิ้ง (HRSG)</h3>
-                             <p class="font-semibold text-secondary mb-2">ตัวกลางเชื่อมต่อ (Heat Exchanger)</p>
+                            <h3 class="text-2xl font-bold text-theme-blue mb-3">หม้อไอน้ำจากความร้อนทิ้ง (HRSG)</h3>
+                             <p class="font-semibold mb-2">ตัวกลางเชื่อมต่อ (Heat Exchanger)</p>
                             <p>เป็นอุปกรณ์แลกเปลี่ยนความร้อนที่สำคัญ ทำหน้าที่รับความร้อนจากไอเสียของกังหันก๊าซมาใช้ในการต้มน้ำบริสุทธิ์ให้กลายเป็นไอน้ำแรงดันสูง โดยไม่มีการใช้เชื้อเพลิงเพิ่มเติม เป็นหัวใจของการเพิ่มประสิทธิภาพในระบบ Combined Cycle</p>
                         </div>
                         <div id="tab-st" class="card p-6 component-content hidden">
-                             <h3 class="text-2xl font-bold text-primary mb-3">กังหันไอน้ำ (Steam Turbine)</h3>
-                            <p class="font-semibold text-secondary mb-2">วัฏจักรล่าง (Bottoming Cycle)</p>
+                             <h3 class="text-2xl font-bold text-theme-blue mb-3">กังหันไอน้ำ (Steam Turbine)</h3>
+                            <p class="font-semibold mb-2">วัฏจักรล่าง (Bottoming Cycle)</p>
                             <p>รับไอน้ำแรงดันสูงที่ผลิตจาก HRSG มาขับเคลื่อนใบพัดของกังหันไอน้ำและเครื่องกำเนิดไฟฟ้าตัวที่สอง ผลิตไฟฟ้าเพิ่มอีกประมาณ 1 ใน 3 ของทั้งหมด) เป็นการเปลี่ยน "พลังงานความร้อนทิ้ง" ให้กลายเป็นพลังงานไฟฟ้าที่ใช้งานได้</p>
                         </div>
                     </div>
@@ -273,15 +265,15 @@
             
             <!-- Section 4: Balance of Plant -->
             <section id="bop" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">ระบบสนับสนุนที่สำคัญ (Balance of Plant)</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">ระบบสนับสนุนที่สำคัญ (Balance of Plant)</h2>
                  <p class="mb-8 text-lg text-gray-700">
                    นอกเหนือจากส่วนประกอบหลักแล้ว โรงไฟฟ้ายังต้องมีระบบสนับสนุน (BOP) อีกหลายส่วนที่ทำงานร่วมกัน เพื่อให้การดำเนินงานเป็นไปอย่างราบรื่น ปลอดภัย และมีเสถียรภาพ
                 </p>
                 <div id="bop-accordion" class="space-y-4">
                     <div class="card">
                         <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
-                            <span class="text-primary">ระบบเชื้อเพลิง (Fuel Supply System)</span>
-                            <span class="accordion-icon transition-transform transform text-primary">+</span>
+                            <span>ระบบเชื้อเพลิง (Fuel Supply System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
                         </button>
                         <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
                             <p class="py-4 text-gray-700">จัดการรับก๊าซธรรมชาติจากท่อส่งหลัก ควบคุมแรงดันและอัตราการไหลให้เหมาะสมกับความต้องการของกังหันก๊าซ พร้อมทั้งมีระบบกรองและตรวจสอบคุณภาพเพื่อความปลอดภัยสูงสุด</p>
@@ -289,8 +281,8 @@
                     </div>
                      <div class="card">
                         <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
-                            <span class="text-primary">ระบบน้ำและไอน้ำ (Water & Steam System)</span>
-                            <span class="accordion-icon transition-transform transform text-primary">+</span>
+                            <span>ระบบน้ำและไอน้ำ (Water & Steam System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
                         </button>
                         <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
                             <p class="py-4 text-gray-700">ประกอบด้วยระบบควบแน่น (Condenser) ที่ใช้หล่อเย็นไอน้ำให้กลับเป็นน้ำ, หอหล่อเย็น (Cooling Tower) สำหรับระบายความร้อน, และระบบบำบัดน้ำ (Water Treatment) เพื่อผลิตน้ำบริสุทธิ์ป้อนเข้าสู่ HRSG ป้องกันการเกิดตะกรัน</p>
@@ -298,8 +290,8 @@
                     </div>
                      <div class="card">
                         <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
-                            <span class="text-primary">ระบบควบคุม (Control System - DCS/PLC)</span>
-                             <span class="accordion-icon transition-transform transform text-primary">+</span>
+                            <span>ระบบควบคุม (Control System - DCS/PLC)</span>
+                             <span class="accordion-icon transition-transform transform">+</span>
                         </button>
                         <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
                             <p class="py-4 text-gray-700">ใช้ระบบควบคุมแบบกระจายศูนย์ (DCS) เป็นสมองกลหลักในการประสานงานการทำงานของอุปกรณ์ทุกส่วนให้เป็นไปอย่างอัตโนมัติ มีเสถียรภาพ และปลอดภัย พร้อมระบบ SCADA สำหรับเฝ้าระวังและเก็บข้อมูลการทำงานแบบเรียลไทม์</p>
@@ -307,8 +299,8 @@
                     </div>
                     <div class="card">
                         <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl">
-                            <span class="text-primary">ระบบไฟฟ้า (Electrical System)</span>
-                            <span class="accordion-icon transition-transform transform text-primary">+</span>
+                            <span>ระบบไฟฟ้า (Electrical System)</span>
+                            <span class="accordion-icon transition-transform transform">+</span>
                         </button>
                         <div class="accordion-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out px-5">
                             <p class="py-4 text-gray-700">ประกอบด้วยหม้อแปลงไฟฟ้า (Transformers), ลานไกไฟฟ้า (Switchyard) และอุปกรณ์ป้องกันทางไฟฟ้า เพื่อปรับแรงดันและส่งจ่ายพลังงานไฟฟ้าที่ผลิตได้ทั้งหมดเข้าสู่ระบบส่งของประเทศอย่างปลอดภัย</p>
@@ -319,12 +311,12 @@
             
             <!-- Section 5: LLM Scenario Generator -->
             <section id="scenario-generator" class="mb-16 scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">จำลองสถานการณ์ปฏิบัติการโรงไฟฟ้า ✨</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">จำลองสถานการณ์ปฏิบัติการโรงไฟฟ้า ✨</h2>
                  <p class="mb-8 text-lg text-gray-700">
                    ใช้ Gemini AI เพื่อสร้างสถานการณ์ความผิดปกติของโรงไฟฟ้าพลังความร้อนร่วม (CCPP) และให้แนวทางการแก้ไขปัญหาที่ถูกต้องเหมือนมีผู้ควบคุมโรงไฟฟ้ามาช่วยฝึกฝน
                 </p>
                 <div id="llm-feature-container" class="space-y-4 hidden">
-                    <button onclick="generateScenario()" class="llm-button bg-primary text-secondary py-3 px-6 rounded-lg font-bold flex items-center justify-center space-x-2">
+                    <button onclick="generateScenario()" class="llm-button bg-theme-blue text-white py-3 px-6 rounded-lg font-bold flex items-center justify-center space-x-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13h-12zM3 7h12v13H3z" />
                         </svg>
@@ -334,7 +326,7 @@
                     <div id="scenario-output" class="card p-6 min-h-[150px] relative">
                         <div id="scenario-loader" class="absolute inset-0 bg-white/70 flex items-center justify-center hidden">
                             <div class="loader"></div>
-                            <span class="ml-4 text-primary font-semibold">กำลังสร้างสถานการณ์...</span>
+                            <span class="ml-4 text-theme-blue font-semibold">กำลังสร้างสถานการณ์...</span>
                         </div>
                         <p id="scenario-placeholder" class="text-gray-500 text-center py-10">กดปุ่ม "สร้างสถานการณ์ใหม่" เพื่อเริ่มต้นการฝึกซ้อม</p>
                     </div>
@@ -343,7 +335,7 @@
 
             <!-- Section 6: Conclusion (ปรับปรุงใหม่เพื่อความชัดเจน) -->
             <section id="conclusion" class="scroll-mt-20">
-                <h2 class="text-3xl font-bold text-primary mb-6">สรุปและวิสัยทัศน์ของ กฟผ.</h2>
+                <h2 class="text-3xl font-bold text-theme-blue mb-6">สรุปและวิสัยทัศน์ของ กฟผ.</h2>
                 <!-- ใช้ conclusion-card class ที่ถูกบังคับสีข้อความด้วย CSS -->
                 <div class="conclusion-card space-y-6">
                     <p class="text-2xl font-bold">
@@ -387,6 +379,50 @@
         }
     }
 
+    /**
+     * Converts a simple markdown text (headers, lists, paragraphs) into styled HTML.
+     */
+    function formatMarkdownToHtml(markdown) {
+        const lines = markdown.split(/\r?\n/);
+        let html = '';
+        let inList = false;
+        let currentParagraph = [];
+
+        const flushParagraph = () => {
+            if (currentParagraph.length > 0) {
+                html += `<p class="text-gray-700 mb-2">${currentParagraph.join(' ').trim()}</p>`;
+                currentParagraph = [];
+            }
+        };
+
+        for (const line of lines) {
+            const trimmedLine = line.trim();
+
+            if (trimmedLine.startsWith('###')) {
+                flushParagraph();
+                if (inList) { html += '</ul>'; inList = false; }
+                const title = trimmedLine.substring(3).trim();
+                // NOTE: Changed text-egat-green to text-theme-blue for scenario headings
+                html += `<h3 class="text-xl font-bold text-theme-blue mt-4 mb-2">${title}</h3>`;
+            } else if (trimmedLine.startsWith('*')) {
+                flushParagraph();
+                if (!inList) { html += '<ul class="list-disc ml-6 space-y-1">'; inList = true; }
+                const listItem = trimmedLine.substring(1).trim();
+                html += `<li class="text-gray-700">${listItem}</li>`;
+            } else if (trimmedLine === '') {
+                flushParagraph();
+                if (inList) { html += '</ul>'; inList = false; }
+            } else {
+                if (inList) { html += '</ul>'; inList = false; }
+                currentParagraph.push(trimmedLine);
+            }
+        }
+        flushParagraph();
+        if (inList) { html += '</ul>'; inList = false; }
+
+        return html;
+    }
+
     // Function to generate a CCPP scenario using Gemini
     async function generateScenario() {
         const outputDiv = document.getElementById('scenario-output');
@@ -397,13 +433,12 @@
         placeholder.classList.add('hidden');
         outputDiv.innerHTML = ''; // Clear previous content
 
-        const systemPrompt = "You are a senior Combined Cycle Power Plant (CCPP) control room operator and safety expert. Your task is to generate a single, realistic operational fault scenario related to CCPP or its BOP systems (Gas Turbine, HRSG, Steam Turbine, DCS, Fuel Supply). The response must be structured clearly into 3 main sections: 1) สถานการณ์ (Scenario), 2) การดำเนินการของ Operator (Operator Action), and 3) คำอธิบายทางเทคนิค (Technical Explanation). Respond ONLY in Thai. Format the response using markdown headings for each section. Use specific technical terms in Thai.";
+        const systemPrompt = "You are a senior Combined Cycle Power Plant (CCPP) control room operator and safety expert. Your task is to generate a single, realistic operational fault scenario related to CCPP or its BOP systems (Gas Turbine, HRSG, Steam Turbine, DCS, Fuel Supply). The response must be structured clearly into 3 main sections: 1) สถานการณ์ (Scenario), 2) การดำเนินการของ Operator (Operator Action), and 3) คำอธิบายทางเทคนิค (Technical Explanation). Respond ONLY in Thai. Format the response using markdown headings (###) for each section. Use specific technical terms in Thai.";
         const userQuery = "Generate a new CCPP operational scenario.";
 
         const payload = {
             contents: [{ parts: [{ text: userQuery }] }],
-            // Enable Google Search grounding for accurate, up-to-date, and realistic scenarios
-            tools: [{ "google_search": {} }],
+            // Google Search Grounding is intentionally excluded to avoid potential 403 errors.
             systemInstruction: {
                 parts: [{ text: systemPrompt }]
             },
@@ -429,44 +464,16 @@
             
         } catch (error) {
             console.error("Gemini API Error:", error);
+            // Display the specific HTTP error status to the user
             outputDiv.innerHTML = `<p class="text-red-600 text-center py-4">เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message}.</p>`;
         } finally {
             loader.classList.add('hidden');
         }
     }
 
-    // Simple markdown to HTML conversion for the scenario text
-    function formatMarkdownToHtml(markdown) {
-        // Use text-primary for headings (dark blue)
-        let html = markdown.replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold text-primary mt-4 mb-2">$1</h3>');
-        html = html.replace(/^## (.*$)/gim, '<h2 class="text-lg font-semibold text-gray-800 mt-3 mb-2">$1</h2>');
-        html = html.replace(/^\* (.*$)/gim, '<li class="ml-6 list-disc text-gray-700">$1</li>');
-        html = html.replace(/(\r\n|\n\r|\r|\n)/g, '<br>'); // Basic line breaks
-        html = html.replace(/<br>\* /g, ' * '); // Fix for list formatting after br
-        
-        // Remove trailing <br> tags at the end of lists/lines
-        html = html.replace(/<br>$/g, '');
-        // Wrap raw text lines in <p> tags if not already within a tag
-        html = html.split('<br>').map(line => {
-            if (line.trim() === '' || line.startsWith('<h') || line.startsWith('<l')) {
-                return line;
-            }
-            // Check if the line is not already inside a structure (like a list item)
-            if (!line.trim().startsWith('<') && !line.trim().endsWith('>')) {
-                return `<p class="text-gray-700">${line.trim()}</p>`;
-            }
-            return line;
-        }).join('');
-
-        return html;
-    }
-
     // --- Original Script Logic (retained) ---
     document.addEventListener('DOMContentLoaded', function () {
         // --- Chart.js: Efficiency Comparison Chart ---
-        const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
-        const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-secondary').trim();
-
         const ctx = document.getElementById('efficiencyChart').getContext('2d');
         const efficiencyChart = new Chart(ctx, {
             type: 'bar',
@@ -476,12 +483,12 @@
                     label: 'ประสิทธิภาพเชิงความร้อน (%)',
                     data: [62, 45, 40],
                     backgroundColor: [
-                        primaryColor, /* Dark Blue */
+                        '#0056B3', // Theme Blue
                         '#6C757D',
                         '#CED4DA'
                     ],
                     borderColor: [
-                        primaryColor,
+                        '#004080', // Darker Blue for border
                         '#495057',
                         '#ADB5BD'
                     ],
@@ -545,7 +552,7 @@
                 const detailKey = node.id;
                 detailsPanel.innerHTML = `
                     <div class="text-center p-4">
-                        <h3 class="text-xl font-bold text-primary mb-2">${processDetails[detailKey].title}</h3>
+                        <h3 class="text-xl font-bold text-theme-blue mb-2">${processDetails[detailKey].title}</h3>
                         <p class="text-gray-700">${processDetails[detailKey].text}</p>
                     </div>
                 `;
@@ -557,8 +564,9 @@
         const tabContents = document.querySelectorAll('.component-content');
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active', 'accent-primary'));
-                tab.classList.add('active', 'accent-primary');
+                // Ensure correct theme class is used here
+                tabs.forEach(t => t.classList.remove('active', 'accent-theme-blue'));
+                tab.classList.add('active', 'accent-theme-blue');
                 
                 const targetId = tab.dataset.target;
                 tabContents.forEach(content => {
@@ -570,8 +578,8 @@
                 });
             });
         });
-        // Set initial active tab style
-        document.querySelector('.component-tab.active')?.classList.add('accent-primary');
+        // Set initial active tab style (using the new theme class)
+        document.querySelector('.component-tab.active')?.classList.add('accent-theme-blue');
 
 
         // --- BOP Accordion ---
