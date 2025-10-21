@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script>
+        // Use EGAT colors for better branding uniformity
         tailwind.config = {
             theme: {
                 extend: {
@@ -21,14 +22,12 @@
     </script>
 
     <style>
-        /* * IMPROVEMENT: เปลี่ยน font เป็น Sarabun เพื่อรองรับภาษาไทยอย่างสวยงามและเป็นทางการ 
-        * Inter ถูกใช้เป็น Fallback สำหรับตัวอักษร Latin/Code
-        */
+        /* Sarabun Font Import for Thai language support and formal tone */
         @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;300;400;500;600;700&family=Inter:wght@100..900&display=swap');
         
         body {
             font-family: 'Sarabun', 'Inter', sans-serif; 
-            background-color: #ffffff; /* ปรับเป็นสีขาวทั้งหมดเพื่อให้พื้นหลังสม่ำเสมอ */
+            background-color: #ffffff;
         }
 
         /* Custom scrollbar style for better aesthetics */
@@ -41,23 +40,17 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #aab4c3; /* Slightly darker thumb for contrast */
+            background: #aab4c3;
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: #7d899b;
         }
-
+        
+        /* Apply all transitions and default states via CSS for consistency */
         .content-section {
             transition: opacity 0.3s ease-in-out;
-        }
-        
-        /* Custom style for the dropdown to ensure it's visible on hover */
-        .dropdown:hover .dropdown-menu {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .dropdown-menu {
@@ -65,23 +58,38 @@
             opacity: 0;
             transform: translateY(-10px);
             transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-            min-width: 250px; /* Ensure sufficient width for text */
+            min-width: 250px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Active navigation link style (for JS control) */
         .nav-active-link {
-            color: #FFD700 !important; /* Forces yellow on active link */
+            color: var(--egat-yellow, #FFD700) !important; 
             text-decoration: underline;
             text-decoration-thickness: 3px;
             text-underline-offset: 4px;
+        }
+        
+        /* Modal Transitions: Use CSS classes that JS can toggle */
+        .modal-backdrop-transition {
+            transition: opacity 0.3s ease-out;
+        }
+
+        .modal-content-transition {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
     </style>
 
 </head>
 <body class="antialiased">
     
-    <header class="bg-egat-blue shadow-lg sticky top-0 z-10">
-        <div class="container mx-auto px-4 py-4 md:py-5 flex justify-between items-center">
+    <header class="bg-egat-blue shadow-xl sticky top-0 z-20">
+        <div class="container mx-auto px-4 py-5 md:py-6 flex justify-between items-center">
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
                 C&I Maintenance Team
             </h1>
@@ -96,7 +104,7 @@
                         On the Job Training
                         <svg class="w-4 h-4 ml-1 transform transition duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </a>
-                    <div class="dropdown-menu absolute top-full right-0 w-64 bg-egat-blue shadow-xl rounded-md overflow-hidden z-20 border border-egat-yellow/50">
+                    <div class="dropdown-menu absolute top-full right-0 w-64 bg-egat-blue shadow-xl rounded-md overflow-hidden z-30 border border-egat-yellow/50">
                         
                         <a href="#combined_cycle" data-target="combined_cycle" data-parent-target="training" class="nav-link nav-dropdown-link block px-4 py-3 text-white text-sm hover:bg-egat-blue/70 hover:text-egat-yellow transition duration-200">
                             Combined Cycle Power Plant
@@ -113,10 +121,10 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-10 md:py-16">
+    <main class="container mx-auto px-4 py-10 md:py-14">
         
-        <section id="overview" class="content-section mb-16">
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+        <section id="overview" class="content-section mb-16 opacity-100">
+            <div class="max-w-5xl mx-auto p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
                 <div class="text-center">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
                         Control & Instrumentation (C&I)
@@ -131,19 +139,19 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                     
-                    <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                    <div class="p-6 rounded-lg bg-egat-blue/5 border border-egat-blue/20 shadow-md">
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         <h4 class="font-semibold text-lg text-gray-800 mb-1">System Stability</h4>
                         <p class="text-sm text-gray-600">รับประกันความต่อเนื่องในการควบคุมกระบวนการผลิตไฟฟ้า</p>
                     </div>
 
-                    <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                    <div class="p-6 rounded-lg bg-egat-blue/5 border border-egat-blue/20 shadow-md">
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         <h4 class="font-semibold text-lg text-gray-800 mb-1">Maximum Efficiency</h4>
                         <p class="text-sm text-gray-600">การสอบเทียบและบำรุงรักษาเชิงรุกเพื่อลดการสูญเสียพลังงาน</p>
                     </div>
 
-                    <div class="p-4 rounded-lg bg-egat-blue/5 border border-egat-blue/20">
+                    <div class="p-6 rounded-lg bg-egat-blue/5 border border-egat-blue/20 shadow-md">
                         <svg class="w-8 h-8 mx-auto text-egat-blue mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4" />
@@ -156,8 +164,8 @@
         </section>
 
 
-        <section id="details" class="content-section hidden mb-16">
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+        <section id="details" class="content-section hidden mb-16 opacity-0">
+            <div class="max-w-5xl mx-auto p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
                 
                 <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2 text-center">
                     Work Details
@@ -167,8 +175,8 @@
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="intro">
+                    <!-- Uniformity: Used bg-gray-50, p-6, and hover:shadow-lg, hover:ring-2 for consistent card design -->
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="intro">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">📝</span>
                         </div>
@@ -176,7 +184,7 @@
                         <p class="text-gray-500 text-sm">ทำความรู้จักกับ C&I และบทบาทสำคัญในองค์กร</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="core_work">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="core_work">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🛠️</span>
                         </div>
@@ -184,7 +192,7 @@
                         <p class="text-gray-500 text-sm">แยกประเภทงานควบคุมและงานเครื่องมือวัด</p>
                     </div>
                     
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="system_overview">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="system_overview">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">⚙️</span>
                         </div>
@@ -192,7 +200,7 @@
                         <p class="text-gray-500 text-sm">ส่วนประกอบและเทคโนโลยีหลักที่ใช้งาน</p>
                     </div>
                     
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="maintenance">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="maintenance">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔧</span>
                         </div>
@@ -200,7 +208,7 @@
                         <p class="text-gray-500 text-sm">แนวทางการบำรุงรักษาและการสอบเทียบ</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="safety">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="safety">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🛡️</span>
                         </div>
@@ -208,7 +216,7 @@
                         <p class="text-gray-500 text-sm">มาตรฐานความปลอดภัยและข้อบังคับที่เกี่ยวข้อง</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="future">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="future">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">💡</span>
                         </div>
@@ -220,8 +228,8 @@
             </div>
         </section>
         
-        <section id="training" class="content-section hidden mb-16">
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+        <section id="training" class="content-section hidden mb-16 opacity-0">
+            <div class="max-w-5xl mx-auto p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
                 <div class="text-center">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
                         On the Job Training Resources
@@ -236,8 +244,8 @@
             </div>
         </section>
 
-        <section id="combined_cycle" class="content-section hidden mb-16">
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+        <section id="combined_cycle" class="content-section hidden mb-16 opacity-0">
+            <div class="max-w-5xl mx-auto p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
                 
                 <div class="text-center">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2 text-center">
@@ -248,7 +256,7 @@
                     </p>
                 </div>
 
-                <div class="mb-10 p-6 bg-egat-blue/5 rounded-lg border border-egat-blue/10">
+                <div class="mb-10 p-6 bg-egat-blue/5 rounded-lg border border-egat-blue/10 shadow-md">
                     <h3 class="text-2xl font-bold text-egat-blue mb-3 text-center">Fundamental Principles and Operating Cycles</h3>
                     <p class="text-gray-700 mb-4 text-center">Combined Cycle คือการรวม วัฏจักรเบรย์ตัน (Brayton Cycle) จากกังหันก๊าซ เข้ากับ วัฏจักรแรงคิน (Rankine Cycle) จากกังหันไอน้ำ เพื่อนำความร้อนเหลือทิ้งมาใช้ซ้ำ</p>
                     
@@ -273,8 +281,8 @@
 
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">In-Depth Details (Click for C&I Role)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_gasturbine">
+                    <!-- Uniformity: Consistent card padding and hover effects -->
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_gasturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔥</span>
                         </div>
@@ -282,7 +290,7 @@
                         <p class="text-gray-500 text-sm">การควบคุมอุณหภูมิ, เชื้อเพลิง, และระบบป้องกันอันตราย</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_hrsg">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_hrsg">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">♨️</span>
                         </div>
@@ -290,7 +298,7 @@
                         <p class="text-gray-500 text-sm">การควบคุมแรงดัน, อุณหภูมิไอน้ำ, และระดับน้ำ</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_steamturbine">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_steamturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">💧</span>
                         </div>
@@ -334,8 +342,8 @@
             </div>
         </section>
 
-        <section id="solar_power" class="content-section hidden mb-16">
-            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+        <section id="solar_power" class="content-section hidden mb-16 opacity-0">
+            <div class="max-w-5xl mx-auto p-8 rounded-xl shadow-2xl bg-white border border-gray-200">
                 <div class="text-center">
                     <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2"> 
                         Solar Power Plant
@@ -345,7 +353,7 @@
                     </p>
                 </div>
 
-                <div class="mb-10 p-6 bg-egat-yellow/5 rounded-lg border border-egat-yellow/10">
+                <div class="mb-10 p-6 bg-egat-yellow/5 rounded-lg border border-egat-yellow/10 shadow-md">
                     <h3 class="text-2xl font-bold text-egat-blue mb-3 text-center">Fundamental Process and Energy Conversion</h3>
                     <p class="text-gray-700 mb-4 text-center">การผลิตไฟฟ้าพลังงานแสงอาทิตย์ (Solar PV) เกี่ยวข้องกับการแปลงแสงอาทิตย์เป็นไฟฟ้าโดยตรง ตามด้วยการปรับสภาพและประสานเข้ากับระบบโครงข่ายไฟฟ้า</p>
                     
@@ -370,8 +378,8 @@
 
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Key C&I Components (Click for Details)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_inverters">
+                    <!-- Uniformity: Consistent card padding and hover effects -->
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_inverters">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">⚡</span>
                         </div>
@@ -379,7 +387,7 @@
                         <p class="text-gray-500 text-sm">การควบคุมการแปลงพลังงานและการติดตามจุดกำลังไฟฟ้าสูงสุด</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_weather">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_weather">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">☁️</span>
                         </div>
@@ -387,7 +395,7 @@
                         <p class="text-gray-500 text-sm">การวัดค่าความเข้มแสง อุณหภูมิ และความเร็วลม</p>
                     </div>
 
-                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_protection">
+                    <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_protection">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🛡️</span>
                         </div>
@@ -432,11 +440,12 @@
 
 
     </main>
-
+    
+    <!-- Optimized Modal Structure for cleaner transition control -->
     <div id="modal" class="hidden fixed inset-0 z-40">
-        <div id="modal-backdrop" class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity duration-300 opacity-0"></div>
+        <div id="modal-backdrop" class="fixed inset-0 bg-gray-900 modal-backdrop-transition opacity-0"></div>
 
-        <div id="modal-content-box" class="fixed inset-0 flex items-center justify-center p-4 transition-transform duration-300 scale-95 opacity-0">
+        <div id="modal-content-box" class="fixed inset-0 flex items-center justify-center p-4 modal-content-transition scale-95 opacity-0">
             <div class="modal-content bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative p-8">
                 
                 <h3 id="modal-title" class="text-3xl font-bold text-egat-blue mb-4 border-b pb-2"></h3>
@@ -454,7 +463,7 @@
 
 
     <div class="hidden">
-        
+        <!-- DETAIL CONTENT (Kept intact, removed duplicate style in JS) -->
         <div id="detail-content-intro">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Introduction and Organizational Structure</h3>
             <span id="detail-topic-intro" class="hidden">Organizational Structure and Key Responsibilities of C&I Team in Power Plant</span>
@@ -512,7 +521,7 @@
              <span id="detail-topic-system_overview" class="hidden">Power Plant Control Systems (DCS/PLC, Sensors, and Safety Systems)</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Primary Control Systems (DCS/PLC)</h4>
-                <p class="text-gray-600">เป็นหัวใจสำคัญในการสั่งการและควบคุมการทำงานของอุปกรณ์ในโรงไฟฟ้า หน้าที่หลักคือการเฝ้าระวังและการตอบสนองต่อการเปลี่ยนแปลงของกระบวนการ.</p>
+                <p class="text-gray-600">เป็นหัวใจสำคัญในการสั่งการและควบคุมการทำงานของอุปกรณ์ในโรงไฟฟ้า โดยมีสถาปัตยกรรมแบบกระจายศูนย์ (Distributed Architecture).</p>
             </section>
 
             <section class="mb-6">
@@ -591,11 +600,9 @@
         <div id="detail-content-cc_brayton_cycle">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Brayton Cycle (Gas Turbine)</h3>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Combustion Control</h4>
                 <p class="text-gray-600">ควบคุมอัตราส่วนเชื้อเพลิงต่ออากาศ (Air/Fuel Ratio) และการทำงานของวาล์วเชื้อเพลิงเพื่อให้การเผาไหม้สมบูรณ์และลดมลพิษ (NOx).</p>
             </section>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Vibration and Temperature Monitoring</h4>
                 <p class="text-gray-600">เฝ้าระวังอุณหภูมิก๊าซไอเสีย (Exhaust Gas Temperature - EGT) และการสั่นสะเทือนของกังหันเพื่อป้องกันความเสียหาย.</p>
             </section>
         </div>
@@ -603,11 +610,9 @@
         <div id="detail-content-cc_rankine_cycle">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Rankine Cycle (Steam Turbine)</h3>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">HRSG Control</h4>
                 <p class="text-gray-600">ควบคุมระดับน้ำในหม้อไอน้ำ (Drum Level Control), อุณหภูมิไอน้ำ (Superheater Temperature Control), และแรงดันไอน้ำ.</p>
             </section>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Turbine Protection</h4>
                 <p class="text-gray-600">ดูแลระบบป้องกันการเร่งความเร็วเกิน (Overspeed Protection), ระบบวาล์วไอน้ำเข้า (Stop & Governor Valves), และระบบแบริ่ง.</p>
             </section>
         </div>
@@ -783,19 +788,41 @@
         const modalContentBox = document.getElementById('modal-content-box');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
-        // *** ADDED: Reference to the inner content box element (class="modal-content") ***
         const modalContent = document.querySelector('.modal-content'); 
 
         // General Sections and Links
         const contentSections = document.querySelectorAll('.content-section');
         const navLinks = document.querySelectorAll('.nav-link');
         const detailCards = document.querySelectorAll('.detail-card');
-        const dropdownLinks = document.querySelectorAll('.nav-dropdown-link');
+        
+        /**
+         * Helper function to calculate the width of the scrollbar.
+         * Used to prevent layout shift when modal is open and body scrolling is disabled.
+         */
+        function getScrollbarWidth() {
+            // Create a temporary element to measure
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.overflow = 'scroll'; // Show scrollbar
+            outer.style.msOverflowStyle = 'scrollbar'; // IE
+            document.body.appendChild(outer);
+
+            const inner = document.createElement('div');
+            outer.appendChild(inner);
+
+            // Calculate width by subtracting the inner width from the outer width
+            const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+
+            // Remove the temporary element
+            outer.parentNode.removeChild(outer);
+
+            return scrollbarWidth;
+        }
 
         // Function to show the content section
         function showSection(sectionId) {
             contentSections.forEach(section => {
-                // Fade out/hide non-active sections
+                // Initial hide/fade out
                 if (section.id !== sectionId) {
                     section.classList.add('hidden');
                     section.style.opacity = '0';
@@ -806,9 +833,10 @@
             const activeSection = document.getElementById(sectionId);
             if (activeSection) {
                 activeSection.classList.remove('hidden');
+                // Use setTimeout for transition to work after removing 'hidden'
                 setTimeout(() => {
                     activeSection.style.opacity = '1';
-                }, 10); // Small delay for transition to work
+                }, 10); 
             }
 
 	        window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -844,6 +872,7 @@
             const titleElement = tempDiv.querySelector('h3');
             const topicElement = tempDiv.querySelector('span[id^="detail-topic-"]');
             
+            // Set modal title
             modalTitle.textContent = titleElement ? titleElement.textContent : 'Detail Information';
             
             // Remove the title and topic span from the body content before inserting
@@ -854,21 +883,42 @@
             
             // Show modal and apply transition classes
             modal.classList.remove('hidden');
+            
+            // NEW FIX: Add padding to body to prevent layout shift from scrollbar disappearing
+            // Only apply this fix if the body currently has a scrollbar
+            const scrollbarWidth = getScrollbarWidth();
+            const hasScrollbar = document.body.scrollHeight > window.innerHeight;
+            
+            if (hasScrollbar && scrollbarWidth > 0) {
+                 document.body.style.paddingRight = `${scrollbarWidth}px`;
+            }
+
+            // NEW FIX: Hide the scrollbar without setting overflow: hidden on the body
+            // We use fixed positioning on the body for the main scrollbar to be ignored, 
+            // and the modal will handle its own scrolling (which is already set via max-h-[90vh] overflow-y-auto)
+            document.body.style.overflow = 'hidden'; 
+
             setTimeout(() => {
+                modalBackdrop.classList.remove('bg-opacity-75'); // Removed from HTML, now set via JS
                 modalBackdrop.style.opacity = '0.75';
-                modalContentBox.style.transform = 'scale(1)';
-                modalContentBox.style.opacity = '1';
+                modalContentBox.classList.remove('scale-95', 'opacity-0');
+                modalContentBox.classList.add('scale-100', 'opacity-100');
             }, 10);
         }
 
         // Function to close the detail modal
         function closeModal() {
             modalBackdrop.style.opacity = '0';
-            modalContentBox.style.transform = 'scale(0.95)';
-            modalContentBox.style.opacity = '0';
+            modalContentBox.classList.remove('scale-100', 'opacity-100');
+            modalContentBox.classList.add('scale-95', 'opacity-0');
             
+            // Revert changes after transition is complete
             setTimeout(() => {
                 modal.classList.add('hidden');
+
+                // NEW FIX: Restore body styles to re-enable scrolling and remove padding
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = ''; 
             }, 300); // Wait for the transition to finish
         }
 
@@ -900,23 +950,25 @@
                     
                     // Close dropdown menu after clicking an item
                     if (link.classList.contains('nav-dropdown-link')) {
-                         link.closest('.dropdown').querySelector('.dropdown-menu').style.display = 'none'; // Immediate hide
+                         // Use .group-hover to control the dropdown state, no immediate hiding is needed for good UX
+                         // However, to force hide *after* a click, we can set display to none.
+                         link.closest('.dropdown').querySelector('.dropdown-menu').style.display = 'none';
                     }
                 });
             });
 
 
-            // 3. Event Listener for Modal Backdrop to close modal on outside click
+            // 3. Event Listener for Modal Backdrop/Outside click to close modal
             modalBackdrop.addEventListener('click', closeModal);
 		
-                        modalContentBox.addEventListener('click', (e) => {
-                    	if (e.target === modalContentBox) {
-                		closeModal();
-    	       	}
+            modalContentBox.addEventListener('click', (e) => {
+                // Close if click is directly on the modal content box (outside the inner content)
+            	if (e.target === modalContentBox) {
+            		closeModal();
+       	        }
 	        });
             
-            // 4. *** FIX: Stop click propagation inside the modal content (FIXED) ***
-            // ป้องกันไม่ให้การคลิกภายในเนื้อหา Modal ส่งผลไปถึง Backdrop
+            // 4. Stop click propagation inside the modal content
             if (modalContent) {
                 modalContent.addEventListener('click', (e) => {
                     e.stopPropagation(); 
@@ -930,16 +982,18 @@
                 }
             });
 
-            // 6. Re-add hover behavior for dropdown (in case of dynamic changes)
+            // 6. Manage Dropdown display state on hover
             document.querySelectorAll('.dropdown').forEach(dropdown => {
+                const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+                // Use mouseenter/mouseleave to ensure display: block is set, overriding the initial CSS 'display: none'
                 dropdown.addEventListener('mouseenter', () => {
-                    dropdown.querySelector('.dropdown-menu').style.display = 'block';
+                    dropdownMenu.style.display = 'block';
                 });
                 dropdown.addEventListener('mouseleave', () => {
-                    // Use a short delay for smooth closing transition controlled by CSS
+                    // Use a short delay before hiding
                     setTimeout(() => {
                         if (!dropdown.matches(':hover')) {
-                            dropdown.querySelector('.dropdown-menu').style.display = 'none';
+                            dropdownMenu.style.display = 'none';
                         }
                     }, 500); 
                 });
