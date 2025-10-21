@@ -21,13 +21,17 @@
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        /* * IMPROVEMENT: เปลี่ยน font เป็น Sarabun เพื่อรองรับภาษาไทยอย่างสวยงามและเป็นทางการ 
+        * Inter ถูกใช้เป็น Fallback สำหรับตัวอักษร Latin/Code
+        */
+        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@100;300;400;500;600;700&family=Inter:wght@100..900&display=swap');
+        
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f9fb;
+            font-family: 'Sarabun', 'Inter', sans-serif; 
+            background-color: #ffffff; /* ปรับเป็นสีขาวทั้งหมดเพื่อให้พื้นหลังสม่ำเสมอ */
         }
 
-        /* Custom scrollbar style */
+        /* Custom scrollbar style for better aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -37,16 +41,39 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #ccc;
+            background: #aab4c3; /* Slightly darker thumb for contrast */
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: #999;
+            background: #7d899b;
         }
 
         .content-section {
             transition: opacity 0.3s ease-in-out;
+        }
+        
+        /* Custom style for the dropdown to ensure it's visible on hover */
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu {
+            display: none; 
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            min-width: 250px; /* Ensure sufficient width for text */
+        }
+
+        /* Active navigation link style (for JS control) */
+        .nav-active-link {
+            color: #FFD700 !important; /* Forces yellow on active link */
+            text-decoration: underline;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 4px;
         }
     </style>
 
@@ -58,11 +85,31 @@
             <h1 class="text-2xl md:text-3xl font-bold text-white tracking-tight">
                 C&I Maintenance Team
             </h1>
-            <nav id="main-nav">
-                <a href="#overview" data-target="overview" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline font-bold">Overview</a>
+            
+            <nav id="main-nav" class="flex items-center">
+                <a href="#overview" data-target="overview" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline nav-active-link font-bold">Overview</a>
+                
                 <a href="#details" data-target="details" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Details</a>
-                <a href="#combined_cycle" data-target="combined_cycle" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base ml-4 hover:underline">Combined Cycle</a>
+                
+                <div class="relative ml-4 dropdown group">
+                    <a href="#" data-target="training" class="nav-link text-white hover:text-egat-yellow transition duration-300 text-sm md:text-base hover:underline flex items-center">
+                        On the Job Training
+                        <svg class="w-4 h-4 ml-1 transform transition duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </a>
+                    <div class="dropdown-menu absolute top-full right-0 w-64 bg-egat-blue shadow-xl rounded-md overflow-hidden z-20 border border-egat-yellow/50">
+                        
+                        <a href="#combined_cycle" data-target="combined_cycle" data-parent-target="training" class="nav-link nav-dropdown-link block px-4 py-3 text-white text-sm hover:bg-egat-blue/70 hover:text-egat-yellow transition duration-200">
+                            Combined Cycle Power Plant
+                        </a>
+                        
+                        <a href="#solar_power" data-target="solar_power" data-parent-target="training" class="nav-link nav-dropdown-link block px-4 py-3 text-white text-sm hover:bg-egat-blue/70 hover:text-egat-yellow transition duration-200">
+                            Solar Power Plant
+                        </a>
+                        
+                    </div>
+                </div>
             </nav>
+            
         </div>
     </header>
 
@@ -136,7 +183,7 @@
                         <h3 class="text-xl font-semibold text-egat-blue mb-1">Core C&I Functions</h3>
                         <p class="text-gray-500 text-sm">แยกประเภทงานควบคุมและงานเครื่องมือวัด</p>
                     </div>
-
+                    
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="system_overview">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">⚙️</span>
@@ -144,7 +191,7 @@
                         <h3 class="text-xl font-semibold text-egat-blue mb-1">Control & Instrumentation Systems</h3>
                         <p class="text-gray-500 text-sm">ส่วนประกอบและเทคโนโลยีหลักที่ใช้งาน</p>
                     </div>
-
+                    
                     <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="maintenance">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔧</span>
@@ -172,7 +219,22 @@
                 </div>
             </div>
         </section>
-
+        
+        <section id="training" class="content-section hidden mb-16">
+            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2">
+                        On the Job Training Resources
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto border-b border-egat-yellow pb-4 mb-8 text-center">
+                        นี่คือแหล่งรวมความรู้และเอกสารสำหรับการฝึกอบรมในตำแหน่งงาน C&I
+                    </p>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto">
+                        โปรดเลือกหัวข้อย่อยด้านบน (Combined Cycle Power Plant หรือ Solar Power Plant) เพื่อดูรายละเอียด
+                    </p>
+                </div>
+            </div>
+        </section>
 
         <section id="combined_cycle" class="content-section hidden mb-16">
             <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
@@ -272,6 +334,102 @@
             </div>
         </section>
 
+        <section id="solar_power" class="content-section hidden mb-16">
+            <div class="max-w-5xl mx-auto p-6 rounded-xl shadow-lg bg-white border border-gray-200">
+                <div class="text-center">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-egat-blue mb-2"> 
+                        Solar Power Plant
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-4xl mx-auto border-b border-egat-yellow pb-4 mb-8 text-center">
+                        หน้าที่ของ C&I ในการผลิตและการเชื่อมต่อพลังงานแสงอาทิตย์เข้ากับระบบโครงข่ายไฟฟ้า
+                    </p>
+                </div>
+
+                <div class="mb-10 p-6 bg-egat-yellow/5 rounded-lg border border-egat-yellow/10">
+                    <h3 class="text-2xl font-bold text-egat-blue mb-3 text-center">Fundamental Process and Energy Conversion</h3>
+                    <p class="text-gray-700 mb-4 text-center">การผลิตไฟฟ้าพลังงานแสงอาทิตย์ (Solar PV) เกี่ยวข้องกับการแปลงแสงอาทิตย์เป็นไฟฟ้าโดยตรง ตามด้วยการปรับสภาพและประสานเข้ากับระบบโครงข่ายไฟฟ้า</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <div class="detail-card bg-white p-6 rounded-lg shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="sp_dc_generation">
+                            <h4 class="font-semibold text-xl text-gray-800 mb-2 flex items-center">
+                                <span class="text-egat-blue text-2xl mr-2 font-extrabold">1.</span> DC Generation (PV Array)
+                            </h4>
+                            <p class="text-sm text-gray-600 mb-2">แผงโซลาร์เซลล์จะรับโฟตอนและสร้างกำลังไฟฟ้ากระแสตรง (DC)</p>
+                            <p class="text-sm text-egat-blue font-medium">คลิกเพื่อดูบทบาท C&I ในชุดแผงเซลล์แสงอาทิตย์...</p>
+                        </div>
+
+                        <div class="detail-card bg-white p-6 rounded-lg shadow-lg border border-gray-100 cursor-pointer hover:shadow-xl transition duration-300 hover:ring-2 hover:ring-egat-yellow" data-detail="sp_ac_conversion">
+                            <h4 class="font-semibold text-xl text-gray-800 mb-2 flex items-center">
+                                <span class="text-egat-blue text-2xl mr-2 font-extrabold">2.</span> AC Conversion (Inverter)
+                            </h4>
+                            <p class="text-sm text-gray-600 mb-2">กำลังไฟฟ้ากระแสตรง (DC) จะถูกแปลงเป็นไฟฟ้ากระแสสลับ (AC) และซิงโครไนซ์เข้ากับระบบโครงข่ายไฟฟ้า</p>
+                            <p class="text-sm text-egat-blue font-medium">คลิกเพื่อดูบทบาท C&I ในอินเวอร์เตอร์...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Key C&I Components (Click for Details)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_inverters">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-4xl text-egat-blue">⚡</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-egat-blue mb-1">Inverter and MPPT Control</h3>
+                        <p class="text-gray-500 text-sm">การควบคุมการแปลงพลังงานและการติดตามจุดกำลังไฟฟ้าสูงสุด</p>
+                    </div>
+
+                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_weather">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-4xl text-egat-blue">☁️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-egat-blue mb-1">Weather Monitoring Station</h3>
+                        <p class="text-gray-500 text-sm">การวัดค่าความเข้มแสง อุณหภูมิ และความเร็วลม</p>
+                    </div>
+
+                    <div class="detail-card bg-gray-50 p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_protection">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-4xl text-egat-blue">🛡️</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-egat-blue mb-1">Safety and Grid Protection</h3>
+                        <p class="text-gray-500 text-sm">ระบบป้องกันการลัดวงจรและการต่อเข้าระบบโครงข่าย</p>
+                    </div>
+
+                </div>
+                
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Control and Monitoring Systems</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-center">
+                        
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-blue" data-detail="sp_scada">
+                            <span class="text-3xl text-egat-blue block mb-1">🖥️</span>
+                            <h4 class="font-semibold text-lg text-gray-800">SCADA/PPC (Plant Controller)</h4>
+                            <p class="text-sm text-gray-600">ควบคุมกำลังไฟฟ้าส่งออกและบริหารจัดการโรงไฟฟ้า</p>
+                        </div>
+                        
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-blue" data-detail="sp_tracker">
+                            <span class="text-3xl text-egat-blue block mb-1">⚙️</span>
+                            <h4 class="font-semibold text-lg text-gray-800">Tracking System C&I</h4>
+                            <p class="text-sm text-gray-600">การควบคุมมอเตอร์และเซ็นเซอร์ติดตามดวงอาทิตย์</p>
+                        </div>
+                        
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-blue" data-detail="sp_dccomps">
+                            <span class="text-3xl text-egat-blue block mb-1">🔌</span>
+                            <h4 class="font-semibold text-lg text-gray-800">DC Component Monitoring</h4>
+                            <p class="text-sm text-gray-600">การวัดกระแส/แรงดัน DC และการตรวจสอบ String/Array</p>
+                        </div>
+                        
+                        <div class="detail-card p-4 rounded-lg bg-gray-50 border border-egat-blue/20 cursor-pointer hover:shadow-md transition duration-300 hover:ring-2 hover:ring-egat-blue" data-detail="sp_ir_temp">
+                            <span class="text-3xl text-egat-blue block mb-1">🌡️</span>
+                            <h4 class="font-semibold text-lg text-gray-800">IR Temperature Sensing</h4>
+                            <p class="text-sm text-gray-600">การเฝ้าระวังความร้อนสูงในจุดเชื่อมต่อและแผง</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
     </main>
 
@@ -284,7 +442,7 @@
                 <h3 id="modal-title" class="text-3xl font-bold text-egat-blue mb-4 border-b pb-2"></h3>
                 
                 <div id="modal-body" class="text-gray-700 space-y-4">
-                    </div>
+                </div>
                 
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -302,7 +460,7 @@
             <span id="detail-topic-intro" class="hidden">Organizational Structure and Key Responsibilities of C&I Team in Power Plant</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Background and Evolution</h4>
-                <p class="text-gray-600">งาน C&I เริ่มต้นขึ้นพร้อมกับการพัฒนาโรงไฟฟ้าของ กฟผ. โดยมีวิวัฒนาการจากการควบคุมแบบอะนาล็อกไปสู่ระบบดิจิทัลที่ซับซ้อนในปัจจุบัน</p>
+                <p class="text-gray-600">งาน C&I เริ่มต้นขึ้นพร้อมกับการพัฒนาโรงไฟฟ้าของ กฟผ. โดยมีวิวัฒนาการจากการควบคุมแบบอะนาล็อกไปสู่ระบบดิจิทัลที่ซับซ้อนในปัจจุบัน.</p>
             </section>
 
             <section class="mb-6">
@@ -385,7 +543,7 @@
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Calibration and Standards</h4>
                 <p class="text-gray-600">การสอบเทียบเครื่องมือวัดตามมาตรฐานสากล (เช่น ISO/IEC 17025) และการเก็บบันทึกประวัติการสอบเทียบอย่างเป็นระบบ.</p>
             </section>
-            
+
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Spares and Tool Management</h4>
                 <p class="text-gray-600">การสำรองอะไหล่สำคัญ (Critical Spares) อย่างเหมาะสม และการดูแลรักษาเครื่องมือสอบเทียบและเครื่องมือเฉพาะทางให้อยู่ในสภาพพร้อมใช้งาน.</p>
@@ -410,7 +568,7 @@
                 <p class="text-gray-600">การประเมินความเสี่ยงและวางแผนบรรเทาความเสี่ยงที่เกี่ยวข้องกับการทำงานผิดพลาดของระบบควบคุมซึ่งอาจส่งผลกระทบต่อการผลิตและความปลอดภัย.</p>
             </section>
         </div>
-
+        
         <div id="detail-content-future">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Technology and Future</h3>
             <span id="detail-topic-future" class="hidden">Digital Transformation, Cybersecurity, and future trends in C&I maintenance</span>
@@ -429,380 +587,290 @@
                 <p class="text-gray-600">การเปลี่ยนไปใช้เครื่องมือวัดไร้สาย (Wireless Instrumentation) และการบูรณาการระบบควบคุมจากผู้ผลิตที่หลากหลาย (Vendor Neutral Systems).</p>
             </section>
         </div>
+
+        <div id="detail-content-cc_brayton_cycle">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Brayton Cycle (Gas Turbine)</h3>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Combustion Control</h4>
+                <p class="text-gray-600">ควบคุมอัตราส่วนเชื้อเพลิงต่ออากาศ (Air/Fuel Ratio) และการทำงานของวาล์วเชื้อเพลิงเพื่อให้การเผาไหม้สมบูรณ์และลดมลพิษ (NOx).</p>
+            </section>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Vibration and Temperature Monitoring</h4>
+                <p class="text-gray-600">เฝ้าระวังอุณหภูมิก๊าซไอเสีย (Exhaust Gas Temperature - EGT) และการสั่นสะเทือนของกังหันเพื่อป้องกันความเสียหาย.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-cc_rankine_cycle">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Rankine Cycle (Steam Turbine)</h3>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">HRSG Control</h4>
+                <p class="text-gray-600">ควบคุมระดับน้ำในหม้อไอน้ำ (Drum Level Control), อุณหภูมิไอน้ำ (Superheater Temperature Control), และแรงดันไอน้ำ.</p>
+            </section>
+            <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Turbine Protection</h4>
+                <p class="text-gray-600">ดูแลระบบป้องกันการเร่งความเร็วเกิน (Overspeed Protection), ระบบวาล์วไอน้ำเข้า (Stop & Governor Valves), และระบบแบริ่ง.</p>
+            </section>
+        </div>
         
         <div id="detail-content-cc_gasturbine">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Gas Turbine (GT) and Combustion</h3>
             <span id="detail-topic-cc_gasturbine" class="hidden">Gas Turbine and Combustion control systems in combined cycle power plants.</span>
             <section class="mb-6">
                 <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">GT Principles and Cycle</h4>
-                <p class="text-gray-600">อากาศถูกอัดโดยคอมเพรสเซอร์ (Compressor) ผสมกับเชื้อเพลิงในห้องเผาไหม้ (Combustion Chamber) และก๊าซร้อนที่ได้จะขับเคลื่อนกังหัน (Turbine) เพื่อผลิตไฟฟ้าตามวัฏจักร Brayton การควบคุมอุณหภูมิที่เข้าและออกจากกังหันมีความสำคัญสูงสุดต่ออายุการใช้งาน</p>
+                <p class="text-gray-600">อากาศถูกอัดโดยคอมเพรสเซอร์ (Compressor) ผสมกับเชื้อเพลิงในห้องเผาไหม้ (Combustion Chamber) และก๊าซร้อนที่ได้จะขับเคลื่อนกังหัน (Turbine) เพื่อผลิตไฟฟ้าตามวัฏจักร Brayton การควบคุมอุณหภูมิที่เข้าสู่กังหันเป็นสิ่งสำคัญที่สุด.</p>
             </section>
-
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Control and Protection</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Turbine Control System (TCS): ควบคุมความเร็ว, โหลด (Load), และอุณหภูมิไอเสีย (Exhaust Temperature) อย่างต่อเนื่อง</li>
-                    <li>Protection System: รับผิดชอบระบบป้องกันอันตรายจากการสั่นสะเทือน (Vibration), ความเร็วเกิน (Overspeed), และอุณหภูมิสูงเกิน</li>
-                    <li>Flame Monitoring: ติดตั้งและสอบเทียบ UV/IR Detector เพื่อตรวจสอบความเสถียรของการเผาไหม้ (Flame Stability)</li>
-                </ul>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Challenges</h4>
-                <p class="text-gray-600">การสอบเทียบเทอร์โมคัปเปิล (Thermocouple) ที่วัดอุณหภูมิในห้องเผาไหม้ที่มีความแม่นยำสูง และการปรับแต่งระบบควบคุมเชื้อเพลิงเพื่อลดการปล่อย NOx/CO ภายใต้การเปลี่ยนแปลงโหลด</p>
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Functions</h4>
+                <p class="text-gray-600">ติดตั้งและบำรุงรักษา: Flame Detectors, Thermocouples/RTDs, Pressure Transmitters, Flow Meters สำหรับเชื้อเพลิง, และระบบป้องกันไฟไหม้.</p>
             </section>
         </div>
-        
+
         <div id="detail-content-cc_hrsg">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">HRSG (Heat Recovery Steam Generator)</h3>
-            <span id="detail-topic-cc_hrsg" class="hidden">Heat Recovery Steam Generator (HRSG) C&I systems and 3-Element Drum Level Control</span>
+            <span id="detail-topic-cc_hrsg" class="hidden">Control and Instrumentation for Heat Recovery Steam Generator (HRSG).</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">HRSG Principles and Steam Generation</h4>
-                <p class="text-gray-600">HRSG ใช้ก๊าซไอเสียร้อนจาก GT มาเปลี่ยนน้ำให้เป็นไอน้ำแรงดันสูง, กลาง, และต่ำ เพื่อขับ Steam Turbine โดยไม่ใช้เชื้อเพลิงเพิ่มเติม ทำให้ประสิทธิภาพโดยรวมของโรงไฟฟ้าเพิ่มขึ้นอย่างมาก</p>
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Process Overview</h4>
+                <p class="text-gray-600">HRSG ทำหน้าที่นำความร้อนทิ้งจากไอเสีย GT มาผลิตไอน้ำ แรงดันสูง กลาง และต่ำ เพื่อขับเคลื่อนกังหันไอน้ำ.</p>
             </section>
-
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Level and Temperature Control</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Drum Level Control: รับผิดชอบระบบควบคุมระดับน้ำในหม้อไอน้ำ (Drum) แบบ 3-Element Control ซึ่งมีความสำคัญต่อความปลอดภัยสูงสุด</li>
-                    <li>Temperature Control: ควบคุมอุณหภูมิไอน้ำออก (Superheat/Reheat Temperature) โดยใช้ Desuperheater (Spray Water Control) เพื่อป้องกันความเสียหายต่อ ST</li>
-                    <li>Pressure Control: ควบคุมแรงดันไอน้ำในแต่ละระดับ (HP, IP, LP) และป้องกันแรงดันเกิน</li>
-                </ul>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Challenges</h4>
-                <p class="text-gray-600">ความผันผวนของระดับน้ำใน Drum ระหว่างการ Start-up/Shutdown (Shrinkage/Swell) และการสอบเทียบเครื่องมือวัดอัตราการไหล (Flow meters) รวมถึงการบำรุงรักษา Actuator วาล์วที่ทำงานภายใต้อุณหภูมิสูง</p>
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Functions</h4>
+                <p class="text-gray-600">การควบคุม: Feedwater Control (ควบคุมระดับน้ำในดรัม), Attemperator/Desuperheater Control (ควบคุมอุณหภูมิไอน้ำออก), และติดตั้ง Safety Valves.</p>
             </section>
         </div>
         
         <div id="detail-content-cc_steamturbine">
-            <h3 class="text-2xl font-bold text-egat-blue mb-4">Steam Turbine (ST) and Balance of Plant (BOP)</h3>
-            <span id="detail-topic-cc_steamturbine" class="hidden">Steam Turbine, BOP, and Vibration Monitoring C&I systems in combined cycle power plants</span>
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Steam Turbine (ST) and BOP</h3>
+            <span id="detail-topic-cc_steamturbine" class="hidden">Steam Turbine and Balance of Plant control systems in combined cycle power plants.</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Turbine Operating Principles</h4>
-                <p class="text-gray-600">ไอน้ำแรงดันสูงจาก HRSG ถูกส่งเข้าขับ ST เพื่อผลิตไฟฟ้ารอบสอง ไอน้ำที่ใช้งานแล้วจะถูกควบแน่นในคอนเดนเซอร์ (Condenser) กลับเป็นน้ำป้อนหม้อไอน้ำ</p>
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Turbine Control</h4>
+                <p class="text-gray-600">ระบบควบคุมความเร็ว (Governor) และระบบป้องกันอันตรายจากการเร่งความเร็วเกิน (Overspeed Trip System) ซึ่งเป็นงาน C&I ที่มีความสำคัญสูงสุด.</p>
             </section>
-
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Monitoring and Protection</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Valve Control: ควบคุมวาล์วควบคุมหลัก (Governor Valve) และวาล์วฉุกเฉิน (Stop Valve) ที่ใช้ในการ Start-up/Shutdown และควบคุมโหลด</li>
-                    <li>Vibration & Rotor Position Monitoring: ดูแลระบบ Proximity Probe สำหรับเฝ้าระวังการสั่นสะเทือน (Vibration) และการเคลื่อนที่ตามแนวแกน (Axial Shift) ของโรเตอร์</li>
-                    <li>Condenser Vacuum Control: รักษาและควบคุมสุญญากาศในคอนเดนเซอร์ ซึ่งส่งผลโดยตรงต่อประสิทธิภาพ ST</li>
-                    <li>BOP System Control: ควบคุมการทำงานของปั๊มน้ำป้อน (Boiler Feed Pump), พัดลมระบายความร้อน (Cooling Tower Fan), และอุปกรณ์ประกอบอื่นๆ</li>
-                </ul>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Challenges</h4>
-                <p class="text-gray-600">การติดตั้งและการสอบเทียบ Proximity Probe และ Accelerometer ที่มีความละเอียดอ่อนสูง การดูแลระบบสุญญากาศที่ต้องการความแม่นยำของเครื่องมือวัดแรงดันสัมบูรณ์ (Absolute Pressure) และความซับซ้อนของวงจรน้ำ/ไอน้ำ</p>
-            </section>
-        </div>
-
-        <div id="detail-content-cc_brayton_cycle">
-            <h3 class="text-2xl font-bold text-egat-blue mb-4">วัฏจักรเบรย์ตัน (Brayton Cycle) - กังหันก๊าซ</h3>
-            <span id="detail-topic-cc_brayton_cycle" class="hidden">Detailed C&I control on the Brayton Cycle and Gas Turbine Operation</span>
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หลักการทำงาน: 4 กระบวนการหลัก</h4>
-                <ul class="list-decimal pl-5 space-y-2 text-gray-600">
-                    <li>Compression (การอัด): คอมเพรสเซอร์ดูดอากาศภายนอกและอัดจนมีความดันสูง (งาน C&I: ควบคุม Inlet Guide Vane - IGV เพื่อควบคุมปริมาณอากาศ)</li>
-                    <li>Combustion (การเผาไหม้): อากาศความดันสูงผสมกับเชื้อเพลิง (Gas/Oil) ในห้องเผาไหม้ (งาน C&I: ควบคุมอัตราส่วนเชื้อเพลิงต่ออากาศ, ตรวจสอบ Flame Detection)</li>
-                    <li>Expansion (การขยายตัว): ก๊าซร้อนความดันสูงขับเคลื่อนใบกังหันก๊าซ (งาน C&I: เฝ้าระวังอุณหภูมิไอเสีย - T9/T5, ตรวจสอบ Vibration)</li>
-                    <li>Exhaust (การคายความร้อน): ก๊าซไอเสียร้อนถูกส่งออกไปยัง HRSG (ความร้อนที่ใช้ในการขับเคลื่อนวัฏจักร Rankine)</li>
-                </ul>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Focus Points in GT</h4>
-                <p class="text-gray-600">จุดวิกฤตของ C&I คือการควบคุมอุณหภูมิและรอบความเร็วของกังหัน: การควบคุมอุณหภูมิไอเสีย (TET Control) ต้องแม่นยำสูงเพื่อรักษาสมรรถนะของใบกังหัน และการป้องกัน Over-Speed ในทุกกรณี</p>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 mt-2">
-                    <li>Fuel Gas Control Valve: Actuator ที่ควบคุมปริมาณเชื้อเพลิงเข้าสู่ห้องเผาไหม้ (ต้องมีการสอบเทียบ Flow Calibration)</li>
-                    <li>Flame Detector/Monitor: ระบบที่ต้องมั่นใจว่าการจุดระเบิดมีความเสถียรและดับเมื่อจำเป็น</li>
-                    <li>Auxiliary Systems: การควบคุมระบบหล่อลื่น (Lube Oil System) และระบบยกเพลา (Jacking Oil Pump) ในระหว่างการ Start-up/Shutdown</li>
-                </ul>
-            </section>
-        </div>
-
-        <div id="detail-content-cc_rankine_cycle">
-            <h3 class="text-2xl font-bold text-egat-blue mb-4">วัฏจักรแรงคิน (Rankine Cycle) - กังหันไอน้ำ</h3>
-            <span id="detail-topic-cc_rankine_cycle" class="hidden">Detailed C&I control on the Rankine Cycle, Steam Turbine, and HRSG Operation</span>
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หลักการทำงาน: 4 กระบวนการหลัก</h4>
-                <ul class="list-decimal pl-5 space-y-2 text-gray-600">
-                    <li>Pumping (การอัด): ปั๊มน้ำป้อน (BFP) อัดน้ำป้อนเข้าสู่ HRSG (งาน C&I: ควบคุมความเร็วปั๊ม, ตรวจสอบแรงดัน)</li>
-                    <li>Boiler/Evaporator (การทำไอน้ำ): น้ำถูกเปลี่ยนเป็นไอน้ำแรงดันสูงโดยรับความร้อนจากไอเสีย GT ใน HRSG (งาน C&I: ระบบ 3-Element Drum Level Control - วิกฤตที่สุด)</li>
-                    <li>Expansion (การขยายตัว): ไอน้ำขับกังหันไอน้ำเพื่อผลิตไฟฟ้า (งาน C&I: ควบคุม Governor Valve, ตรวจสอบ Overspeed และ Vibration)</li>
-                    <li>Condensation (การควบแน่น): ไอน้ำที่ใช้แล้วกลายเป็นน้ำกลับไปใช้ใหม่ในวงจร (งาน C&I: ควบคุมสุญญากาศ - Vacuum Control ในคอนเดนเซอร์)</li>
-                </ul>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Focus Points in ST and BOP</h4>
-                <p class="text-gray-600">ระบบควบคุมที่ซับซ้อนที่สุดคือ HRSG Drum Level Control เพื่อป้องกันความเสี่ยงจากระดับน้ำต่ำ (Overheating) หรือระดับน้ำสูง (Water Carryover) ซึ่งเป็นอันตรายต่อกังหันไอน้ำ</p>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600 mt-2">
-                    <li>Drum Level Control: ใช้การวัดค่า 3 ตัวแปร (ระดับน้ำใน Drum, อัตราการไหลออกของไอน้ำ, อัตราการไหลเข้าของน้ำป้อน) เพื่อให้การควบคุมเสถียร</li>
-                    <li>Desuperheater Control: วาล์วฉีดน้ำควบคุมอุณหภูมิไอน้ำ Superheat/Reheat เพื่อให้อยู่ในขีดจำกัดที่ปลอดภัย</li>
-                    <li>Interlocks and Trip: การตั้งค่า Trip Points ที่แม่นยำสำหรับแรงดัน, อุณหภูมิ และการสั่นสะเทือน เพื่อป้องกันความเสียหายของ ST</li>
-                </ul>
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">BOP (Balance of Plant)</h4>
+                <p class="text-gray-600">ควบคุมและเฝ้าระวังส่วนประกอบเสริม เช่น Condenser (วัดสูญญากาศและระดับน้ำ), Cooling Water Pumps, และ Demineralizer Plant.</p>
             </section>
         </div>
 
         <div id="detail-content-cc_dcs">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">DCS (Distributed Control System)</h3>
-            <span id="detail-topic-cc_dcs" class="hidden">Detailed C&I control on Distributed Control System (DCS) for power plant.</span>
+            <span id="detail-topic-cc_dcs" class="hidden">DCS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">หน้าที่หลักและสถาปัตยกรรม</h4>
-                <p class="text-gray-600">DCS เป็นระบบควบคุมหลักระดับสูงที่รวมศูนย์การควบคุมโรงไฟฟ้าทั้งหมดไว้ที่ Operator Workstation มีสถาปัตยกรรมแบบกระจายศูนย์ (Distributed) ประกอบด้วย Control Server, Controller (Process Station), และ HMI (Human Machine Interface) </p>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">บทบาทของ C&I ใน DCS Maintenance</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Hardware Integrity: การบำรุงรักษา Controller Card, Power Supply, และ Communication Network (Fiber Optic/Ethernet)</li>
-                    <li>Software/Logic Management: การ Backup, Version Control, และการปรับปรุงแก้ไข Control Logic และ Graphics Display (HMI)</li>
-                    <li>Fault Diagnosis: การวิเคราะห์สาเหตุหลักของ Alarm และ Trip ที่มาจาก DCS เพื่อแก้ไขที่ระดับ Field Device หรือ Control Card</li>
-                </ul>
+                <p class="text-gray-600">เป็นระบบควบคุมหลักที่ใช้ในการสั่งการ, ประมวลผล, และแสดงผลการทำงานทั้งหมดของโรงไฟฟ้า โดยมีสถาปัตยกรรมแบบกระจายศูนย์ (Distributed Architecture).</p>
             </section>
         </div>
 
         <div id="detail-content-cc_bms">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">BMS (Burner Management System)</h3>
-            <span id="detail-topic-cc_bms" class="hidden">Detailed C&I control on Burner Management System (BMS) for safety in Combined Cycle.</span>
+            <span id="detail-topic-cc_bms" class="hidden">BMS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และความสำคัญ</h4>
-                <p class="text-gray-600">BMS เป็นระบบความปลอดภัยเฉพาะที่ใช้ควบคุมลำดับขั้นตอนการจุดระเบิด (Start-up Sequence) และการดับเพลิง (Shutdown/Trip) ของ Gas Turbine และ Burner ใน HRSG เพื่อป้องกันการสะสมของเชื้อเพลิงที่อาจนำไปสู่การระเบิด เป็นส่วนสำคัญของระบบความปลอดภัยเชิงฟังก์ชัน (Functional Safety)</p>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role in BMS Operations</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Sequence Logic Test: การทดสอบลำดับการทำงานของ Interlock และ Permissive ต่างๆ ก่อนการจุดระเบิดตามมาตรฐาน NFPA 85</li>
-                    <li>Flame Scanner Maintenance: การบำรุงรักษาและสอบเทียบ Flame Scanner (UV/IR) ให้สามารถแยกแยะเปลวไฟได้อย่างแม่นยำ</li>
-                    <li>Valve Integrity: การตรวจสอบความสมบูรณ์ของการปิด-เปิดของ Block Valve และ Vent Valve ในระบบเชื้อเพลิง (Fuel Train) เพื่อป้องกันการรั่วไหล</li>
-                </ul>
+                <p class="text-gray-600">ระบบความปลอดภัยที่รับผิดชอบในการจุดระเบิดและการดับฉุกเฉินของเตาเผา (Combustor) ใน GT หรือ Burner ใน Auxiliary Boiler ป้องกันการเกิดระเบิด.</p>
             </section>
         </div>
-        
+
         <div id="detail-content-cc_vibration">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Vibration Monitoring System</h3>
-            <span id="detail-topic-cc_vibration" class="hidden">Detailed C&I control on Vibration Monitoring System for Rotating Equipment.</span>
+            <span id="detail-topic-cc_vibration" class="hidden">Vibration Monitoring System in Combined Cycle Power Plant.</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และองค์ประกอบ</h4>
-                <p class="text-gray-600">ระบบนี้ใช้สำหรับตรวจวัดแรงสั่นสะเทือนของเพลา (Shaft) และตัวเรือน (Casing) ของเครื่องจักรหมุน (Gas Turbine, Steam Turbine, Generator, Pumps) เพื่อเฝ้าระวังความผิดปกติ เช่น Unbalance, Misalignment, หรือ Bearing Failure</p>
+                <p class="text-gray-600">ติดตั้ง Probes และ Sensors เพื่อตรวจวัดการสั่นสะเทือนของแบริ่งและเพลาในกังหัน GT และ ST เพื่อประเมินสภาพเครื่องจักรแบบ Real-time.</p>
             </section>
+        </div>
 
+        <div id="detail-content-cc_cems">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">CEMS (Continuous Emission Monitoring)</h3>
+            <span id="detail-topic-cc_cems" class="hidden">CEMS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role: Sensor and System Integrity</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Proximity Probe Maintenance: การติดตั้งและ Calibrate Gap Voltage ของ Proximity Probe ที่ใช้ในการวัด Relative Vibration และ Axial Shift (ค่าที่วัดได้ละเอียดมาก)</li>
-                    <li>Accelerometer Maintenance: การดูแลรักษา Accelerometer ที่ใช้ในการวัด Casing Vibration และการทดสอบระบบ Alarm/Trip </li>
-                    <li>Keyphasor & Overspeed: การตรวจสอบความแม่นยำของ Keyphasor (สำหรับวัดรอบอ้างอิง) และระบบ Overspeed Protection</li>
-                </ul>
+                <p class="text-gray-600">ระบบวิเคราะห์ทางเคมีที่ติดตั้งที่ปล่องระบาย เพื่อวัดปริมาณมลพิษ (เช่น NOx, CO, SO2) อย่างต่อเนื่อง เพื่อให้เป็นไปตามข้อกำหนดด้านสิ่งแวดล้อม.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_dc_generation">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in DC Generation (PV Array)</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">การวัดกระแสและแรงดันไฟฟ้ากระแสตรง (DC) ในระดับ String และ Array เพื่อการตรวจสอบประสิทธิภาพ (Performance Monitoring) และการตรวจจับความผิดปกติ เช่น Hot Spots.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_ac_conversion">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in AC Conversion (Inverter)</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">การควบคุม Inverter ให้แปลง DC เป็น AC ด้วยคุณภาพสูงสุด การควบคุมกำลังไฟฟ้าส่งออก (Active/Reactive Power) และการซิงโครไนซ์กับระบบโครงข่าย.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_inverters">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Inverter and MPPT Control</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">MPPT (Maximum Power Point Tracking) คือฟังก์ชันการควบคุมที่ทำให้แผงโซลาร์เซลล์ผลิตกำลังไฟฟ้าได้สูงสุดภายใต้สภาพแสงที่เปลี่ยนแปลง ซึ่งเป็นบทบาทสำคัญของ Inverter.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_weather">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Weather Monitoring Station</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">ติดตั้ง Pyranometer (วัดความเข้มแสง), Thermocouples (วัดอุณหภูมิแผง/อากาศ), และ Anemometer (วัดความเร็วลม) เพื่อนำข้อมูลมาคำนวณ Performance Ratio.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_protection">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Safety and Grid Protection</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">ระบบป้องกันสำคัญ เช่น Ground Fault Detection, Anti-Islanding Protection (ป้องกันการจ่ายไฟเข้าโครงข่ายเมื่อโครงข่ายล้มเหลว), และ Surge Protection Devices.</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_scada">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">SCADA/PPC (Plant Controller)</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">ระบบ SCADA ใช้ในการควบคุมและเฝ้าระวังโรงไฟฟ้าทั้งหมด ส่วน PPC (Power Plant Controller) ใช้ในการควบคุมกำลังไฟฟ้าส่งออกตามคำสั่งของผู้ควบคุมระบบโครงข่าย (System Operator).</p>
             </section>
         </div>
         
-        <div id="detail-content-cc_cems">
-            <h3 class="text-2xl font-bold text-egat-blue mb-4">CEMS (Continuous Emission Monitoring System)</h3>
-            <span id="detail-topic-cc_cems" class="hidden">Detailed C&I control on Continuous Emission Monitoring System (CEMS) for regulatory compliance.</span>
+        <div id="detail-content-sp_tracker">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">Tracking System C&I</h3>
             <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">จุดประสงค์และการปฏิบัติตามข้อกำหนด</h4>
-                <p class="text-gray-600">CEMS คือระบบที่ใช้ในการวัดปริมาณสารมลพิษ (เช่น NOx, SO2, CO, Opacity) ที่ปล่อยออกจากปล่องโรงไฟฟ้าอย่างต่อเนื่องแบบ Real-time เพื่อยืนยันว่าการปล่อยมลพิษเป็นไปตามข้อกำหนดทางกฎหมายและมาตรฐานสิ่งแวดล้อมที่กำหนด</p>
-            </section>
-
-            <section class="mb-6">
-                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">C&I Role in CEMS Maintenance</h4>
-                <ul class="list-disc pl-5 space-y-1 text-gray-600">
-                    <li>Analyzer Calibration: การสอบเทียบและตรวจสอบความแม่นยำของ Gas Analyzer โดยใช้ Gas Standard (Zero/Span Check) เป็นประจำ</li>
-                    <li>Sampling System Maintenance: การดูแลรักษาระบบเก็บตัวอย่างก๊าซ (Sample Probe, Filter, Sample Line, Cooler) เพื่อป้องกันการอุดตันและความผิดพลาดในการวัด</li>
-                    <li>Data Acquisition and Reporting: การบำรุงรักษา Data Logger และระบบส่งข้อมูลไปยังหน่วยงานกำกับดูแลตามข้อกำหนด</li>
-                </ul>
+                <p class="text-gray-600">ในกรณีที่โรงไฟฟ้าใช้ระบบติดตามดวงอาทิตย์ (Tracker) งาน C&I คือการดูแลมอเตอร์, Limit Switches, และระบบควบคุมเพื่อให้แผงเซลล์หันเข้าหาดวงอาทิตย์อย่างแม่นยำ.</p>
             </section>
         </div>
 
+        <div id="detail-content-sp_dccomps">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">DC Component Monitoring</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">การวัดและบันทึกข้อมูล DC ในแต่ละ String และ Combiner Box เพื่อวิเคราะห์หา String ที่มีประสิทธิภาพต่ำกว่าปกติ (String Mismatch).</p>
+            </section>
+        </div>
+
+        <div id="detail-content-sp_ir_temp">
+            <h3 class="text-2xl font-bold text-egat-blue mb-4">IR Temperature Sensing</h3>
+            <section class="mb-6">
+                <p class="text-gray-600">การใช้กล้องถ่ายภาพความร้อน (Infrared Camera) หรือเซ็นเซอร์วัดอุณหภูมิแบบไม่สัมผัสเพื่อตรวจจับความผิดปกติที่เกิดจากความร้อนสูง (เช่น Hot Spots) บนแผงเซลล์หรือจุดเชื่อมต่อ.</p>
+            </section>
+        </div>
 
     </div>
 
-    <footer class="bg-gray-100 border-t border-gray-200 mt-12">
-        <div class="container mx-auto px-4 py-6 text-center text-sm text-gray-500">
-            &copy; 2024 C&I Maintenance Team. All rights reserved.
-        </div>
-    </footer>
-
     <script>
+        // Data for modal content (Uses the hidden divs)
+        const modalData = {
+            'intro': document.getElementById('detail-content-intro').innerHTML,
+            'core_work': document.getElementById('detail-content-core_work').innerHTML,
+            'system_overview': document.getElementById('detail-content-system_overview').innerHTML,
+            'maintenance': document.getElementById('detail-content-maintenance').innerHTML,
+            'safety': document.getElementById('detail-content-safety').innerHTML,
+            'future': document.getElementById('detail-content-future').innerHTML,
+            'cc_brayton_cycle': document.getElementById('detail-content-cc_brayton_cycle').innerHTML,
+            'cc_rankine_cycle': document.getElementById('detail-content-cc_rankine_cycle').innerHTML,
+            'cc_gasturbine': document.getElementById('detail-content-cc_gasturbine').innerHTML,
+            'cc_hrsg': document.getElementById('detail-content-cc_hrsg').innerHTML,
+            'cc_steamturbine': document.getElementById('detail-content-cc_steamturbine').innerHTML,
+            'cc_dcs': document.getElementById('detail-content-cc_dcs').innerHTML,
+            'cc_bms': document.getElementById('detail-content-cc_bms').innerHTML,
+            'cc_vibration': document.getElementById('detail-content-cc_vibration').innerHTML,
+            'cc_cems': document.getElementById('detail-content-cc_cems').innerHTML,
+            'sp_dc_generation': document.getElementById('detail-content-sp_dc_generation').innerHTML,
+            'sp_ac_conversion': document.getElementById('detail-content-sp_ac_conversion').innerHTML,
+            'sp_inverters': document.getElementById('detail-content-sp_inverters').innerHTML,
+            'sp_weather': document.getElementById('detail-content-sp_weather').innerHTML,
+            'sp_protection': document.getElementById('detail-content-sp_protection').innerHTML,
+            'sp_scada': document.getElementById('detail-content-sp_scada').innerHTML,
+            'sp_tracker': document.getElementById('detail-content-sp_tracker').innerHTML,
+            'sp_dccomps': document.getElementById('detail-content-sp_dccomps').innerHTML,
+            'sp_ir_temp': document.getElementById('detail-content-sp_ir_temp').innerHTML,
+        };
+
+        // Modal Elements
         const modal = document.getElementById('modal');
         const modalBackdrop = document.getElementById('modal-backdrop');
         const modalContentBox = document.getElementById('modal-content-box');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
-        
-        // --- UI Functions ---
-        
-        /**
-         * Switches the active content section based on the menu click.
-         */
+
+        // General Sections and Links
+        const contentSections = document.querySelectorAll('.content-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const detailCards = document.querySelectorAll('.detail-card');
+        const dropdownLinks = document.querySelectorAll('.nav-dropdown-link');
+
+        // Function to show the content section
         function showSection(sectionId) {
-            const sections = document.querySelectorAll('.content-section');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            sections.forEach(section => {
-                section.classList.add('hidden');
-                section.style.opacity = '0';
-            });
-
-            navLinks.forEach(link => {
-                // Remove 'font-bold' from all links
-                link.classList.remove('font-bold');
-            });
-            
-            const targetSection = document.getElementById(sectionId);
-            const targetLink = document.querySelector(`[data-target="${sectionId}"]`);
-            
-            if (targetSection) {
-                targetSection.classList.remove('hidden');
-                setTimeout(() => {
-                    targetSection.style.opacity = '1';
-                }, 10);
-            }
-
-            if (targetLink) {
-                // Add 'font-bold' to the active link
-                targetLink.classList.add('font-bold');
-            }
-            
-            window.scrollTo({ 
-                top: 0, 
-                behavior: 'smooth'
-            });
-        }
-
-        /**
-         * Opens the modal with content corresponding to the detailId,
-         * transforming the <section> blocks into an Accordion structure.
-         */
-        function openModal(detailId) {
-            const contentElement = document.getElementById(`detail-content-${detailId}`);
-            if (!contentElement) return;
-
-            // 1. Set Title (h3 content)
-            const title = contentElement.querySelector('h3').textContent;
-            modalTitle.textContent = title;
-            
-            // 2. Build the Accordion HTML from <section> elements
-            let accordionHTML = '';
-            const sections = contentElement.querySelectorAll('section'); // Target all <section> elements
-            
-            sections.forEach((section, index) => {
-                const headerElement = section.querySelector('h4');
-                
-                // Collect all content inside the section *excluding* the h4 header and span
-                const bodyHTML = Array.from(section.children)
-                                    .filter(child => child.tagName.toLowerCase() !== 'h4' && child.tagName.toLowerCase() !== 'span')
-                                    .map(child => child.outerHTML)
-                                    .join('');
-                                    
-                if (headerElement) {
-                    const headerText = headerElement.textContent;
-                    
-                    // Start of Accordion Item (default: first item is open, others are closed)
-                    const isFirst = index === 0;
-                    const bodyClasses = isFirst ? '' : 'hidden';
-                    const arrowClasses = isFirst ? 'rotate-180' : '';
-
-                    accordionHTML += `
-                        <div class="border border-gray-200 rounded-xl overflow-hidden mb-4 shadow-sm">
-                            <button class="accordion-header w-full flex justify-between items-center p-5 text-left font-semibold text-xl bg-egat-blue/5 hover:bg-egat-blue/10 transition duration-300 focus:outline-none text-egat-blue" data-accordion-index="${index}">
-                                ${headerText}
-                                <svg class="w-5 h-5 text-egat-blue transform transition-transform duration-300 ${arrowClasses}" data-arrow-index="${index}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="accordion-body ${bodyClasses} p-5 pt-0 transition-all duration-300 ease-in-out" data-body-index="${index}">
-                                <div class="pt-4 border-t border-gray-100 space-y-4 text-gray-600">
-                                    ${bodyHTML}
-                                </div>
-                            </div>
-                        </div>
-                    `;
+            contentSections.forEach(section => {
+                // Fade out/hide non-active sections
+                if (section.id !== sectionId) {
+                    section.classList.add('hidden');
+                    section.style.opacity = '0';
                 }
             });
-            
-            // 3. Inject the Accordion HTML
-            modalBody.innerHTML = `<div id="accordion-container" class="mt-6">${accordionHTML}</div>`;
-            
-            // 4. Attach Accordion Event Listeners
-            // Use a timeout to ensure the HTML is fully rendered before attaching listeners
-            setTimeout(() => {
-                attachAccordionListeners(detailId);
-            }, 50);
 
-            // 5. Show Modal
-            modal.classList.remove('hidden');
-            modalBackdrop.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+            // Fade in/show active section
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+                activeSection.classList.remove('hidden');
+                setTimeout(() => {
+                    activeSection.style.opacity = '1';
+                }, 10); // Small delay for transition to work
+            }
+            
+            // Update active link style
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active-link', 'font-bold');
+            });
 
-            // 6. Apply transition effects
-            setTimeout(() => {
-                modalBackdrop.style.opacity = '1';
-                modalContentBox.classList.remove('scale-95', 'opacity-0');
-                modalContentBox.classList.add('scale-100', 'opacity-100');
-            }, 50);
+            // Set active style for the main link or the parent link
+            let activeLink = document.querySelector(`.nav-link[data-target="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('nav-active-link', 'font-bold');
+            } else {
+                // Check if it's a dropdown item (like combined_cycle) and set the parent ('training') as active
+                const parentLink = document.querySelector(`.nav-dropdown-link[data-target="${sectionId}"]`);
+                const parentId = parentLink?.getAttribute('data-parent-target');
+                if (parentId) {
+                    activeLink = document.querySelector(`.nav-link[data-target="${parentId}"]`);
+                    activeLink?.classList.add('nav-active-link', 'font-bold');
+                }
+            }
         }
 
-        /**
-         * Closes the modal and resets visibility/transitions.
-         */
+        // Function to open the detail modal
+        function openModal(detailId) {
+            const content = modalData[detailId];
+            if (!content) return;
+
+            // Extract the title (h3) and topic (span) from the content
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            const titleElement = tempDiv.querySelector('h3');
+            const topicElement = tempDiv.querySelector('span[id^="detail-topic-"]');
+            
+            modalTitle.textContent = titleElement ? titleElement.textContent : 'Detail Information';
+            
+            // Remove the title and topic span from the body content before inserting
+            if (titleElement) titleElement.remove();
+            if (topicElement) topicElement.remove();
+            
+            modalBody.innerHTML = tempDiv.innerHTML;
+            
+            // Show modal and apply transition classes
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalBackdrop.style.opacity = '0.75';
+                modalContentBox.style.transform = 'scale(1)';
+                modalContentBox.style.opacity = '1';
+            }, 10);
+        }
+
+        // Function to close the detail modal
         function closeModal() {
             modalBackdrop.style.opacity = '0';
-            modalContentBox.classList.remove('scale-100', 'opacity-100');
-            modalContentBox.classList.add('scale-95', 'opacity-0');
+            modalContentBox.style.transform = 'scale(0.95)';
+            modalContentBox.style.opacity = '0';
             
             setTimeout(() => {
                 modal.classList.add('hidden');
-                modalBackdrop.classList.add('hidden');
-                document.body.style.overflow = '';
-                // Clear body content after closing to be safe
-                modalBody.innerHTML = '';
-            }, 300);
-        }
-        
-        /**
-         * Logic for Accordion functionality (Toggle open/close).
-         */
-        function attachAccordionListeners() {
-            const headers = document.querySelectorAll('.accordion-header');
-            
-            headers.forEach(header => {
-                header.addEventListener('click', () => {
-                    const index = header.dataset.accordionIndex;
-                    const body = document.querySelector(`.accordion-body[data-body-index="${index}"]`);
-                    const arrow = document.querySelector(`[data-arrow-index="${index}"]`);
-                    
-                    // Toggle the current item
-                    const isHidden = body.classList.contains('hidden');
-                    
-                    // Close all others
-                    document.querySelectorAll('.accordion-body').forEach(b => {
-                        b.classList.add('hidden');
-                    });
-                    document.querySelectorAll('[data-arrow-index]').forEach(a => {
-                        a.classList.remove('rotate-180');
-                    });
-                    
-                    if (isHidden) {
-                        // Open the current item
-                        body.classList.remove('hidden');
-                        arrow.classList.add('rotate-180');
-                    } 
-                });
-            });
+            }, 300); // Wait for the transition to finish
         }
 
-
+        // Initialize on DOMContentLoaded
         document.addEventListener('DOMContentLoaded', () => {
-            // Select all elements with the class 'detail-card' 
-            const detailCards = document.querySelectorAll('.detail-card');
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            // Initial setup: load 'overview' section
+            // Set 'Overview' as default active section
             showSection('overview');
 
             // 1. Event Listener for Detail Cards to open Modal
@@ -813,12 +881,23 @@
                 });
             });
             
-            // 2. Event Listener for Menu Links to switch sections
+            // 2. Event Listener for Menu Links (including Dropdown Links) to switch sections
             navLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
+                    // Prevent default for main links that only serve as dropdown headers (href="#")
+                    if (link.getAttribute('href') === '#') {
+                        e.preventDefault(); 
+                        return;
+                    }
+                    
                     e.preventDefault(); 
                     const sectionId = link.getAttribute('data-target');
                     showSection(sectionId);
+                    
+                    // Close dropdown menu after clicking an item
+                    if (link.classList.contains('nav-dropdown-link')) {
+                         link.closest('.dropdown').querySelector('.dropdown-menu').style.display = 'none'; // Immediate hide
+                    }
                 });
             });
 
@@ -831,6 +910,21 @@
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
                 }
+            });
+
+            // 5. Re-add hover behavior for dropdown (in case of dynamic changes)
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.addEventListener('mouseenter', () => {
+                    dropdown.querySelector('.dropdown-menu').style.display = 'block';
+                });
+                dropdown.addEventListener('mouseleave', () => {
+                    // Use a short delay for smooth closing transition controlled by CSS
+                    setTimeout(() => {
+                        if (!dropdown.matches(':hover')) {
+                            dropdown.querySelector('.dropdown-menu').style.display = 'none';
+                        }
+                    }, 500); 
+                });
             });
         });
     </script>
