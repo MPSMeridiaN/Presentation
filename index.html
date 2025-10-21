@@ -175,7 +175,6 @@
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Uniformity: Used bg-gray-50, p-6, and hover:shadow-lg, hover:ring-2 for consistent card design -->
                     <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="intro">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">📝</span>
@@ -281,7 +280,6 @@
 
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">In-Depth Details (Click for C&I Role)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Uniformity: Consistent card padding and hover effects -->
                     <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="cc_gasturbine">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">🔥</span>
@@ -378,7 +376,6 @@
 
                 <h3 class="text-2xl font-bold text-egat-blue mb-4 text-center border-b border-gray-200 pb-2">Key C&I Components (Click for Details)</h3>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Uniformity: Consistent card padding and hover effects -->
                     <div class="detail-card bg-gray-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer hover:ring-2 hover:ring-egat-blue" data-detail="sp_inverters">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-4xl text-egat-blue">⚡</span>
@@ -441,7 +438,6 @@
 
     </main>
     
-    <!-- Optimized Modal Structure for cleaner transition control -->
     <div id="modal" class="hidden fixed inset-0 z-40">
         <div id="modal-backdrop" class="fixed inset-0 bg-gray-900 modal-backdrop-transition opacity-0"></div>
 
@@ -451,7 +447,7 @@
                 <h3 id="modal-title" class="text-3xl font-bold text-egat-blue mb-4 border-b pb-2"></h3>
                 
                 <div id="modal-body" class="text-gray-700 space-y-4">
-                </div>
+                    </div>
                 
                 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
@@ -463,7 +459,6 @@
 
 
     <div class="hidden">
-        <!-- DETAIL CONTENT (Kept intact, removed duplicate style in JS) -->
         <div id="detail-content-intro">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Introduction and Organizational Structure</h3>
             <span id="detail-topic-intro" class="hidden">Organizational Structure and Key Responsibilities of C&I Team in Power Plant</span>
@@ -600,9 +595,11 @@
         <div id="detail-content-cc_brayton_cycle">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Brayton Cycle (Gas Turbine)</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Fuel-Air Ratio Control</h4>
                 <p class="text-gray-600">ควบคุมอัตราส่วนเชื้อเพลิงต่ออากาศ (Air/Fuel Ratio) และการทำงานของวาล์วเชื้อเพลิงเพื่อให้การเผาไหม้สมบูรณ์และลดมลพิษ (NOx)</p>
             </section>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Temperature and Vibration Monitoring</h4>
                 <p class="text-gray-600">เฝ้าระวังอุณหภูมิก๊าซไอเสีย (Exhaust Gas Temperature - EGT) และการสั่นสะเทือนของกังหันเพื่อป้องกันความเสียหาย</p>
             </section>
         </div>
@@ -610,9 +607,11 @@
         <div id="detail-content-cc_rankine_cycle">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in Rankine Cycle (Steam Turbine)</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Steam Parameters Control</h4>
                 <p class="text-gray-600">ควบคุมระดับน้ำในหม้อไอน้ำ (Drum Level Control), อุณหภูมิไอน้ำ (Superheater Temperature Control), และแรงดันไอน้ำ</p>
             </section>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Protection and Governor Systems</h4>
                 <p class="text-gray-600">ดูแลระบบป้องกันการเร่งความเร็วเกิน (Overspeed Protection), ระบบวาล์วไอน้ำเข้า (Stop & Governor Valves), และระบบแบริ่ง</p>
             </section>
         </div>
@@ -660,6 +659,7 @@
             <h3 class="text-2xl font-bold text-egat-blue mb-4">DCS (Distributed Control System)</h3>
             <span id="detail-topic-cc_dcs" class="hidden">DCS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Key Function</h4>
                 <p class="text-gray-600">เป็นระบบควบคุมหลักที่ใช้ในการสั่งการ, ประมวลผล, และแสดงผลการทำงานทั้งหมดของโรงไฟฟ้า โดยมีสถาปัตยกรรมแบบกระจายศูนย์ (Distributed Architecture)</p>
             </section>
         </div>
@@ -668,6 +668,7 @@
             <h3 class="text-2xl font-bold text-egat-blue mb-4">BMS (Burner Management System)</h3>
             <span id="detail-topic-cc_bms" class="hidden">BMS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Key Function</h4>
                 <p class="text-gray-600">ระบบความปลอดภัยที่รับผิดชอบในการจุดระเบิดและการดับฉุกเฉินของเตาเผา (Combustor) ใน GT หรือ Burner ใน Auxiliary Boiler ป้องกันการเกิดระเบิด</p>
             </section>
         </div>
@@ -676,6 +677,7 @@
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Vibration Monitoring System</h3>
             <span id="detail-topic-cc_vibration" class="hidden">Vibration Monitoring System in Combined Cycle Power Plant</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Key Function</h4>
                 <p class="text-gray-600">ติดตั้ง Probes และ Sensors เพื่อตรวจวัดการสั่นสะเทือนของแบริ่งและเพลาในกังหัน GT และ ST เพื่อประเมินสภาพเครื่องจักรแบบ Real-time</p>
             </section>
         </div>
@@ -684,6 +686,7 @@
             <h3 class="text-2xl font-bold text-egat-blue mb-4">CEMS (Continuous Emission Monitoring)</h3>
             <span id="detail-topic-cc_cems" class="hidden">CEMS in Combined Cycle Power Plant.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Key Function</h4>
                 <p class="text-gray-600">ระบบวิเคราะห์ทางเคมีที่ติดตั้งที่ปล่องระบาย เพื่อวัดปริมาณมลพิษ (เช่น NOx, CO, SO2) อย่างต่อเนื่อง เพื่อให้เป็นไปตามข้อกำหนดด้านสิ่งแวดล้อม</p>
             </section>
         </div>
@@ -691,6 +694,7 @@
         <div id="detail-content-sp_dc_generation">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in DC Generation (PV Array)</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Monitoring and Performance Check</h4>
                 <p class="text-gray-600">การวัดกระแสและแรงดันไฟฟ้ากระแสตรง (DC) ในระดับ String และ Array เพื่อการตรวจสอบประสิทธิภาพ (Performance Monitoring) และการตรวจจับความผิดปกติ เช่น Hot Spots</p>
             </section>
         </div>
@@ -698,6 +702,7 @@
         <div id="detail-content-sp_ac_conversion">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">C&I Role in AC Conversion (Inverter)</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Inverter Control and Grid Synchronization</h4>
                 <p class="text-gray-600">การควบคุม Inverter ให้แปลง DC เป็น AC ด้วยคุณภาพสูงสุด การควบคุมกำลังไฟฟ้าส่งออก (Active/Reactive Power) และการซิงโครไนซ์กับระบบโครงข่าย</p>
             </section>
         </div>
@@ -705,6 +710,7 @@
         <div id="detail-content-sp_inverters">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Inverter and MPPT Control</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">MPPT Principle</h4>
                 <p class="text-gray-600">MPPT (Maximum Power Point Tracking) คือฟังก์ชันการควบคุมที่ทำให้แผงโซลาร์เซลล์ผลิตกำลังไฟฟ้าได้สูงสุดภายใต้สภาพแสงที่เปลี่ยนแปลง ซึ่งเป็นบทบาทสำคัญของ Inverter</p>
             </section>
         </div>
@@ -712,6 +718,7 @@
         <div id="detail-content-sp_weather">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Weather Monitoring Station</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Sensors and Measurements</h4>
                 <p class="text-gray-600">ติดตั้ง Pyranometer (วัดความเข้มแสง), Thermocouples (วัดอุณหภูมิแผง/อากาศ), และ Anemometer (วัดความเร็วลม) เพื่อนำข้อมูลมาคำนวณ Performance Ratio</p>
             </section>
         </div>
@@ -719,34 +726,43 @@
         <div id="detail-content-sp_protection">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Safety and Grid Protection</h3>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Key Protection Systems</h4>
                 <p class="text-gray-600">ระบบป้องกันสำคัญ เช่น Ground Fault Detection, Anti-Islanding Protection (ป้องกันการจ่ายไฟเข้าโครงข่ายเมื่อโครงข่ายล้มเหลว), และ Surge Protection Devices</p>
             </section>
         </div>
 
         <div id="detail-content-sp_scada">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">SCADA/PPC (Plant Controller)</h3>
+            <span id="detail-topic-sp_scada" class="hidden">SCADA/PPC in Solar Power Plant.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Control Function</h4>
                 <p class="text-gray-600">ระบบ SCADA ใช้ในการควบคุมและเฝ้าระวังโรงไฟฟ้าทั้งหมด ส่วน PPC (Power Plant Controller) ใช้ในการควบคุมกำลังไฟฟ้าส่งออกตามคำสั่งของผู้ควบคุมระบบโครงข่าย (System Operator)</p>
             </section>
         </div>
         
         <div id="detail-content-sp_tracker">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">Tracking System C&I</h3>
+            <span id="detail-topic-sp_tracker" class="hidden">C&I for Solar Tracking System.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Control and Maintenance</h4>
                 <p class="text-gray-600">ในกรณีที่โรงไฟฟ้าใช้ระบบติดตามดวงอาทิตย์ (Tracker) งาน C&I คือการดูแลมอเตอร์, Limit Switches, และระบบควบคุมเพื่อให้แผงเซลล์หันเข้าหาดวงอาทิตย์อย่างแม่นยำ</p>
             </section>
         </div>
 
         <div id="detail-content-sp_dccomps">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">DC Component Monitoring</h3>
+            <span id="detail-topic-sp_dccomps" class="hidden">DC component monitoring in solar power plants.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Monitoring Technique</h4>
                 <p class="text-gray-600">การวัดและบันทึกข้อมูล DC ในแต่ละ String และ Combiner Box เพื่อวิเคราะห์หา String ที่มีประสิทธิภาพต่ำกว่าปกติ (String Mismatch)</p>
             </section>
         </div>
 
         <div id="detail-content-sp_ir_temp">
             <h3 class="text-2xl font-bold text-egat-blue mb-4">IR Temperature Sensing</h3>
+            <span id="detail-topic-sp_ir_temp" class="hidden">IR Temperature Sensing for PV arrays.</span>
             <section class="mb-6">
+                <h4 class="text-lg font-semibold text-gray-700 mt-4 mb-2">Monitoring Technique</h4>
                 <p class="text-gray-600">การใช้กล้องถ่ายภาพความร้อน (Infrared Camera) หรือเซ็นเซอร์วัดอุณหภูมิแบบไม่สัมผัสเพื่อตรวจจับความผิดปกติที่เกิดจากความร้อนสูง (เช่น Hot Spots) บนแผงเซลล์หรือจุดเชื่อมต่อ</p>
             </section>
         </div>
@@ -819,6 +835,49 @@
             return scrollbarWidth;
         }
 
+        // Function to convert the flat section HTML into an accordion structure
+        function createAccordionHTML(flatHTML) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = flatHTML;
+
+            // Extract the main title and optional topic span
+            const mainTitleElement = tempDiv.querySelector('h3');
+            const topicElement = tempDiv.querySelector('span[id^="detail-topic-"]');
+            
+            // Get all sections which will be accordion items
+            const sections = tempDiv.querySelectorAll('section');
+            let accordionHTML = '';
+
+            sections.forEach((section, index) => {
+                const header = section.querySelector('h4');
+                const contentBody = section.innerHTML.replace(header.outerHTML, ''); // Get content without H4
+                
+                // Set the first item to be open by default
+                const isOpen = index === 0;
+                const headerClasses = isOpen ? 'text-egat-blue' : 'text-gray-700';
+                const iconClasses = isOpen ? 'rotate-180 text-egat-blue' : 'text-gray-500';
+
+                accordionHTML += `
+                    <div class="accordion-item border-b border-gray-200 last:border-b-0">
+                        <button class="accordion-header w-full flex justify-between items-center py-4 text-left ${headerClasses} hover:text-egat-blue transition duration-200 focus:outline-none">
+                            <h4 class="text-lg font-semibold mt-0 mb-0">${header.textContent}</h4>
+                            <svg class="w-5 h-5 accordion-icon transform transition duration-300 ${iconClasses}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden transition-all duration-300 ease-in-out" style="max-height: ${isOpen ? '500px' : '0'};">
+                            <div class="py-2 pb-4 text-gray-600 space-y-3">
+                                ${contentBody}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            return {
+                title: mainTitleElement ? mainTitleElement.textContent : 'Detail Information',
+                content: accordionHTML
+            };
+        }
+
         // Function to show the content section
         function showSection(sectionId) {
             contentSections.forEach(section => {
@@ -861,31 +920,77 @@
             }
         }
 
+        // Accordion Logic
+        function setupAccordion(accordionContainer) {
+            const accordionHeaders = accordionContainer.querySelectorAll('.accordion-header');
+
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const item = header.closest('.accordion-item');
+                    const content = item.querySelector('.accordion-content');
+                    const icon = header.querySelector('.accordion-icon');
+                    
+                    const isOpening = content.style.maxHeight === '0px';
+
+                    // Close all other items (enforce single open)
+                    accordionHeaders.forEach(otherHeader => {
+                        const otherItem = otherHeader.closest('.accordion-item');
+                        const otherContent = otherItem.querySelector('.accordion-content');
+                        const otherIcon = otherHeader.querySelector('.accordion-icon');
+                        
+                        if (otherItem !== item) {
+                            otherContent.style.maxHeight = '0px';
+                            otherIcon.classList.remove('rotate-180', 'text-egat-blue');
+                            otherIcon.classList.add('text-gray-500');
+                            otherHeader.classList.remove('text-egat-blue');
+                            otherHeader.classList.add('text-gray-700');
+                        }
+                    });
+
+                    // Toggle the clicked item
+                    if (isOpening) {
+                        // Open
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.add('rotate-180', 'text-egat-blue');
+                        icon.classList.remove('text-gray-500');
+                        header.classList.add('text-egat-blue');
+                        header.classList.remove('text-gray-700');
+
+                    } else {
+                        // Close
+                        content.style.maxHeight = '0px';
+                        icon.classList.remove('rotate-180', 'text-egat-blue');
+                        icon.classList.add('text-gray-500');
+                        header.classList.remove('text-egat-blue');
+                        header.classList.add('text-gray-700');
+                    }
+                });
+
+                // Set a temporary max-height to ensure the transition works on open (for the first element)
+                const content = header.closest('.accordion-item').querySelector('.accordion-content');
+                if (content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        }
+
+
         // Function to open the detail modal
         function openModal(detailId) {
             const content = modalData[detailId];
             if (!content) return;
 
-            // Extract the title (h3) and topic (span) from the content
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = content;
-            const titleElement = tempDiv.querySelector('h3');
-            const topicElement = tempDiv.querySelector('span[id^="detail-topic-"]');
+            // 1. Convert flat content to accordion HTML
+            const accordion = createAccordionHTML(content);
+
+            // 2. Populate modal
+            modalTitle.textContent = accordion.title;
+            modalBody.innerHTML = accordion.content;
             
-            // Set modal title
-            modalTitle.textContent = titleElement ? titleElement.textContent : 'Detail Information';
-            
-            // Remove the title and topic span from the body content before inserting
-            if (titleElement) titleElement.remove();
-            if (topicElement) topicElement.remove();
-            
-            modalBody.innerHTML = tempDiv.innerHTML;
-            
-            // Show modal and apply transition classes
+            // 3. Show modal and apply transition classes
             modal.classList.remove('hidden');
             
             // NEW FIX: Add padding to body to prevent layout shift from scrollbar disappearing
-            // Only apply this fix if the body currently has a scrollbar
             const scrollbarWidth = getScrollbarWidth();
             const hasScrollbar = document.body.scrollHeight > window.innerHeight;
             
@@ -893,16 +998,15 @@
                  document.body.style.paddingRight = `${scrollbarWidth}px`;
             }
 
-            // NEW FIX: Hide the scrollbar without setting overflow: hidden on the body
-            // We use fixed positioning on the body for the main scrollbar to be ignored, 
-            // and the modal will handle its own scrolling (which is already set via max-h-[90vh] overflow-y-auto)
             document.body.style.overflow = 'hidden'; 
 
             setTimeout(() => {
-                modalBackdrop.classList.remove('bg-opacity-75'); // Removed from HTML, now set via JS
                 modalBackdrop.style.opacity = '0.75';
                 modalContentBox.classList.remove('scale-95', 'opacity-0');
                 modalContentBox.classList.add('scale-100', 'opacity-100');
+                
+                // 4. Setup accordion functionality AFTER content is inserted and transitions start
+                setupAccordion(modalBody);
             }, 10);
         }
 
@@ -1003,4 +1107,3 @@
 
 </body>
 </html>
-
