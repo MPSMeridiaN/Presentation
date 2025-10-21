@@ -783,6 +783,8 @@
         const modalContentBox = document.getElementById('modal-content-box');
         const modalTitle = document.getElementById('modal-title');
         const modalBody = document.getElementById('modal-body');
+        // *** ADDED: Reference to the inner content box element (class="modal-content") ***
+        const modalContent = document.querySelector('.modal-content'); 
 
         // General Sections and Links
         const contentSections = document.querySelectorAll('.content-section');
@@ -808,7 +810,9 @@
                     activeSection.style.opacity = '1';
                 }, 10); // Small delay for transition to work
             }
-            
+
+	        window.scrollTo({ top: 0, behavior: 'smooth' });
+
             // Update active link style
             navLinks.forEach(link => {
                 link.classList.remove('nav-active-link', 'font-bold');
@@ -904,15 +908,29 @@
 
             // 3. Event Listener for Modal Backdrop to close modal on outside click
             modalBackdrop.addEventListener('click', closeModal);
+		
+                        modalContentBox.addEventListener('click', (e) => {
+                    	if (e.target === modalContentBox) {
+                		closeModal();
+    	       	}
+	        });
             
-            // 4. Close Modal on Escape key press
+            // 4. *** FIX: Stop click propagation inside the modal content (FIXED) ***
+            // ป้องกันไม่ให้การคลิกภายในเนื้อหา Modal ส่งผลไปถึง Backdrop
+            if (modalContent) {
+                modalContent.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                });
+            }
+
+            // 5. Close Modal on Escape key press
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
                     closeModal();
                 }
             });
 
-            // 5. Re-add hover behavior for dropdown (in case of dynamic changes)
+            // 6. Re-add hover behavior for dropdown (in case of dynamic changes)
             document.querySelectorAll('.dropdown').forEach(dropdown => {
                 dropdown.addEventListener('mouseenter', () => {
                     dropdown.querySelector('.dropdown-menu').style.display = 'block';
@@ -931,5 +949,3 @@
 
 </body>
 </html>
-
-
