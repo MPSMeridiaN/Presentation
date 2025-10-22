@@ -464,7 +464,7 @@
         </section>
         <section class="content-section hidden mb-16 opacity-0" id="simulations">
 
-            <body class="p-4 md:p-8 min-h-screen relative">
+            <div class="p-4 md:p-8 min-h-screen relative">
                 <!-- Floating Settings Button (Gear Icon) -->
                 <button class="p-2 bg-gray-700 hover:bg-blue-500 text-blue-300 hover:text-white rounded-full transition duration-200 shadow-lg" id="settingsGearButton">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -773,7 +773,7 @@
                           spoilerHeaders.classList.add('hidden');
                           
                           // Collapse all accordions and reset arrow
-                          document.querySelectorAll('.accordion-header').forEach(header => {
+                          document.querySelectorAll('#scenarioContainer .accordion-header').forEach(header => {
                               const targetId = header.getAttribute('data-target');
                               const content = document.getElementById(targetId);
                               const arrow = document.querySelector(`[data-arrow="${targetId}"]`);
@@ -851,7 +851,7 @@
                           const isExpanded = content.classList.contains('expanded');
                           
                           // 1. Close all other accordions (Keep the one being clicked open if it was closed)
-                          document.querySelectorAll('.collapsible-content.expanded').forEach(expandedContent => {
+                          document.querySelectorAll('#scenarioContainer .collapsible-content.expanded').forEach(expandedContent => {
                               // Collapse only if it's not the one we are about to expand or if we are clicking to collapse the current one
                               if (expandedContent.id !== targetId || isExpanded) {
                                   expandedContent.classList.remove('expanded');
@@ -1016,7 +1016,7 @@
                            }
                       };
                 </script>
-            </body>
+            </div>
         </section>
     </main>
     <div class="hidden fixed inset-0 z-40" id="modal">
