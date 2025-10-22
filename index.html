@@ -114,7 +114,76 @@
 	    background-color: #1C2833; 
 	    color: #EAECEE;             
 	}
-    </style>
+
+	.collapsible-content {
+	    /* Define the open state max-height (use a large value that exceeds content height) */
+	    max-height: 1000px; 
+	    opacity: 1;
+	    transform: translateY(0);
+	    /* Apply smooth transition for opening/closing */
+	    transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+	    overflow: hidden;
+	}
+
+	.collapsible-content.hidden-content {
+	    max-height: 0; /* Fully closed */
+	    opacity: 0;
+	    transform: translateY(-10px);
+	}	
+
+    
+.collapsible-content.expanded {
+    max-height: 1000px !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    pointer-events: auto !important;
+}
+
+
+/* --- Unified transition timing across the entire site --- */
+* {
+  transition: all 0.35s ease-in-out;
+}
+
+/* Accordion, modal, dropdown, and section consistency */
+.collapsible-content,
+.modal-content-transition,
+.modal-backdrop-transition,
+.dropdown-menu,
+.content-section {
+  transition: all 0.35s ease-in-out;
+}
+
+/* API key section smooth collapse with zero spacing */
+#apiKeySection {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  transition: max-height 0.35s ease-in-out, opacity 0.35s ease-in-out,
+              transform 0.35s ease-in-out, margin 0.35s ease-in-out, padding 0.35s ease-in-out;
+}
+
+#apiKeySection.hidden-content {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Slightly adjust spacing of main header area when API box hides */
+#apiKeySection.hidden-content + header,
+#apiKeySection.hidden-content + header + * {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Ensure header + main adjust smoothly */
+header + main {
+  transition: padding-top 0.35s ease-in-out, margin-top 0.35s ease-in-out;
+}
+
+</style>
 
 </head>
 
@@ -480,7 +549,7 @@
                                     <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                 </svg>
                             </button>
-                            <div class="collapsible-content" id="eventDescriptionContent">
+                            <div class="collapsible-content hidden-content" id="eventDescriptionContent">
                                 <div class="accordion-content-body p-6 rounded-b-xl border-t-0">
                                     <p class="whitespace-pre-wrap text-gray-300" id="eventDescriptionText">โปรดใส่ API Key และกดปุ่ม "สร้างสถานการณ์ขัดข้องใหม่" เพื่อเริ่มการจำลอง</p>
                                 </div>
@@ -494,7 +563,7 @@
                                     <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                 </svg>
                             </button>
-                            <div class="collapsible-content" id="rootCauseContent">
+                            <div class="collapsible-content hidden-content" id="rootCauseContent">
                                 <div class="accordion-content-body p-6 rounded-b-xl border-t-0">
                                     <p class="whitespace-pre-wrap text-gray-300" id="rootCauseText"></p>
                                 </div>
@@ -508,7 +577,7 @@
                                     <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                 </svg>
                             </button>
-                            <div class="collapsible-content" id="solutionContent">
+                            <div class="collapsible-content hidden-content" id="solutionContent">
                                 <div class="accordion-content-body p-6 rounded-b-xl border-t-0">
                                     <p class="whitespace-pre-wrap text-gray-300" id="immediateSolutionText"></p>
                                 </div>
@@ -522,7 +591,7 @@
                                     <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                                 </svg>
                             </button>
-                            <div class="collapsible-content" id="precautionsContent">
+                            <div class="collapsible-content hidden-content" id="precautionsContent">
                                 <div class="accordion-content-body p-6 rounded-b-xl border-t-0">
                                     <p class="whitespace-pre-wrap text-gray-300" id="preventativeMeasuresText"></p>
                                 </div>
