@@ -155,6 +155,10 @@
          header + main {
          transition: padding-top 0.35s ease-in-out, margin-top 0.35s ease-in-out;
          }
+#saveApiKeyButton:focus {
+        outline: 4px solid rgba(59, 130, 246, 0.5); /* สีน้ำเงินสว่างพร้อม Opacity */
+        outline-offset: 2px; /* เพิ่มระยะห่างจากขอบปุ่ม */
+    }
     </style>
 </head>
 
@@ -472,6 +476,9 @@
                 <div class="max-w-4xl mx-auto">
                     <!-- API Key Input Section (Initially hidden if key is present) -->
                     <div class="bg-[#2C3E50] p-5 rounded-xl shadow-lg mb-6 border border-[#5DADE2] w-full" id="apiKeySection">
+                        <a class="absolute top-2 right-4 text-xs text-[#5DADE2] hover:text-[#3498DB] transition duration-150 underline font-semibold z-10" href="https://aistudio.google.com/app/apikey" target="_blank">
+    Get Key Here 🔑
+</a>
                         <h2 class="text-xl font-semibold mb-3 text-white flex items-center">
                         🔑 Gemini API Key Setup
                      </h2>
@@ -482,7 +489,7 @@
                                 </label>
                                 <input class="w-full h-10 px-4 py-2 border border-gray-600 rounded-lg bg-[#34495E] text-white focus:ring-blue-400 focus:border-blue-400 transition duration-150" id="apiKeyInput" placeholder="PASTE_YOUR_GEMINI_API_KEY_HERE" type="password" />
                             </div>
-                            <button class="px-5 h-10 bg-[#3498DB] hover:bg-[#5DADE2] text-white font-bold rounded-lg transition duration-200 w-full md:w-auto shadow-md" id="saveApiKeyButton">
+                            <button class="px-5 h-10 bg-[#3498DB] hover:bg-[#5DADE2] text-white font-bold rounded-lg transition duration-200 w-full md:w-auto shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-300" id="saveApiKeyButton">
                                 บันทึก
                             </button>
                         </div>
@@ -493,8 +500,7 @@
                     <header class="text-center mb-10 mt-10 md:mt-0">
                         <h1 class="text-4xl font-extrabold text-[#5DADE2] mb-2">ที่ปรึกษาปฏิบัติการโรงไฟฟ้า CCPP</h1>
                         <p class="text-lg text-gray-400 flex justify-center items-center">
-                            โปรแกรมจำลองการวิเคราะห์การเดินเครื่องและเหตุขัดข้อง
-                            <span id="modelBadge">Model: gemini-2.0-flash</span>
+                            โปรแกรมจำลองการวิเคราะห์การเดินเครื่องและเหตุขัดข้อง <span id="modelBadge" class="ml-2">Model: gemini-2.0-flash</span>
                         </p>
                     </header>
                     <!-- Main Action Button -->
@@ -1635,7 +1641,8 @@
               });
           });
     </script>
-    <button class="fixed bottom-6 right-6 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-xl z-50 transition-all duration-300 ease-out transform hover:bg-egat-yellow hover:text-egat-blue hover:scale-110 hover:shadow-2xl" id="darkModeToggle">
+    <button class="fixed bottom-6 right-6 p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-xl z-50 transition-all duration-300 ease-out transform hover:bg-egat-yellow hover:text-egat-blue hover:scale-110 hover:shadow-2xl"
+    id="darkModeToggle">
         <svg id="sunIcon" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
@@ -1682,5 +1689,3 @@
 </body>
 
 </html>
-
-
