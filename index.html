@@ -48,12 +48,15 @@
          transition: opacity 0.3s ease-in-out;
          }
          .dropdown-menu {
-         display: none; 
-         opacity: 0;
-         transform: translateY(-10px);
-         transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-         min-width: 250px;
-         }
+    display: none; 
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    min-width: max-content; /* Changed from 250px to max-content */
+    width: auto; /* Added to ensure proper width calculation */
+    white-space: nowrap; /* Prevent text wrapping */
+    padding: 0.5rem 0; /* Adjust padding if needed */
+}
          .dropdown:hover .dropdown-menu {
          display: block;
          opacity: 1;
@@ -66,6 +69,10 @@
          text-decoration-thickness: 3px;
          text-underline-offset: 4px;
          }
+.nav-dropdown-link {
+    padding: 0.75rem 1rem; /* Reduced from px-4 py-3 (1rem top/bottom, 1rem left/right) */
+    white-space: nowrap; /* Ensure text doesn't wrap */
+}
          /* Modal Transitions: Use CSS classes that JS can toggle */
          .modal-backdrop-transition {
          transition: opacity 0.3s ease-out;
@@ -178,7 +185,7 @@
                         <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
                      </svg>
                   </a>
-                    <div class="dropdown-menu absolute top-full right-0 w-64 bg-egat-blue shadow-xl rounded-md overflow-hidden z-30 border border-egat-yellow/50">
+                    <div class="dropdown-menu absolute top-full right-0 w-max bg-egat-blue shadow-xl rounded-md overflow-hidden z-30 border border-egat-yellow/50">
                         <a class="nav-link nav-dropdown-link block px-4 py-3 text-white text-sm hover:bg-egat-blue/70 hover:text-egat-yellow transition duration-200" data-parent-target="training" data-target="combined_cycle" href="#combined_cycle">
                      Combined Cycle Power Plant
                      </a>
@@ -498,7 +505,7 @@
                     <!-- End API Key Input Section -->
                     <!-- Header -->
                     <header class="text-center mb-10 mt-10 md:mt-0">
-                        <h1 class="text-4xl font-extrabold text-[#5DADE2] mb-2">ที่ปรึกษาปฏิบัติการโรงไฟฟ้า CCPP</h1>
+                        <h1 class="text-4xl font-extrabold text-[#5DADE2] mb-2">AI Incident Generator</h1>
                         <p class="text-lg text-gray-400 flex justify-center items-center">
                             โปรแกรมจำลองการวิเคราะห์การเดินเครื่องและเหตุขัดข้อง <span id="modelBadge" class="ml-2">Model: gemini-2.0-flash</span>
                         </p>
